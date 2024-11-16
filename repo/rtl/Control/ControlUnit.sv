@@ -1,5 +1,5 @@
 module ControlUnit (
-    input logic  [6:0]  opcode,        // opcode from instruction
+    input logic  [6:0]  opcode,     // opcode from instruction
     output logic        RegWrite,   // controls signal to write to regfile
     output logic [2:0]  ALUctrl,    // ALU control signal
     output logic        ALUsrc,     // selects ALU source (register or immediate)
