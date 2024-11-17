@@ -1,3 +1,5 @@
+// For later because we don't need a memory for first steps
+
 module ram #(
     parameter DATA_WIDTH = 32,
     parameter ADDR_WIDTH = 5
