@@ -5,7 +5,7 @@ module SignExtend (
 );
 
 always_comb() begin
-    case (ImmSrc) begin
+    case (ImmSrc) 
         1'b0: imm_out = {{20{instr[31]}},instr[31:20]};             // I-type
         1'b1: imm_out = {{20{instr[31]}},instr[31:25],instr[11:7]};  // S-type
         default: imm_out = 32'b0;
