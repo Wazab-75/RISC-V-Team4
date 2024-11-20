@@ -1,16 +1,17 @@
 module ControlUnit (
-    input logic  [6:0]  opcode,     // opcode from instruction
-    input logic  [2:0]  funct3,     // funct3 from instruction [14:12]
+    input logic  [31:0] instr,     
+    input logic         EQ,
     output logic        RegWrite,   // controls signal to write to regfile
     output logic [2:0]  ALUctrl,    // ALU control signal
     output logic        ALUsrc,     // selects ALU source (register or immediate)
-    output logic [1:0]  ImmSrc,     // type of immediate extension
+    output logic [1:0]  Immsrc,     // type of immediate extension
     output logic        PCsrc       // if PC branches
 );
 
-    // opcode values corresponding to each instruction
-    localparam ADDI     = 7'b0010011;
-    localparam BNE      = 7'b1100011;
+    logic [6:0] opcode;
+    logic [2:0] funct3;
+    assign opcode = instr[6:0];
+    assign funct3 = instr[14:12];
 
     // control logic based on opcode
     always_comb begin
@@ -19,23 +20,27 @@ module ControlUnit (
         ALUctrl = 3'b000;
         ALUsrc = 0;
         PCsrc = 0;
-        Immsrc = 0;
+        Immsrc = 2'b00;
 
-        case (opcode)
-            ADDI: begin
-                RegWrite = 1;       // write to regfile
-                ALUctrl = 3'b000;   // ALU performs addition
-                ALUsrc = 1;         // use immediate as second operand
-                ImmSrc = 0; 
-                PCsrc = 0;          // no branching
+        case (opcode) 
+            7'b0010011: begin   // I-type
+                if (funct3 == 3'b000) begin  //ADDI
+                    RegWrite = 1;       // write to regfile
+                    ALUctrl = 3'b000;   // ALU performs addition
+                    ALUsrc = 1;         // use immediate as second operand
+                    Immsrc = 2'b00;     // I-type immediate
+                    PCsrc = 0;          // no branching
+                end 
             end
 
-            BNE: begin
-                RegWrite = 0;       // no register write
-                ALUctrl = 3'b001;      // ALU performs subtraction
-                ALUsrc = 0;         // use registers as operands
-                ImmSrc = 1;
-                PCsrc = 1;          // branch if not equal
+            7'b1100011: begin   // B-type
+                if (funct3 == 3'b001) begin   //BNE
+                    RegWrite = 0;       // no register write
+                    ALUctrl = 3'b001;   // ALU performs subtraction
+                    ALUsrc = 0;         // use registers as operands
+                    Immsrc = 2'b10;         // B-type immediate
+                    PCsrc = ~EQ;        // branch if not equal
+                end 
             end
 
             default: begin
@@ -43,7 +48,9 @@ module ControlUnit (
                 ALUctrl = 3'b000;   
                 ALUsrc = 0;
                 PCsrc = 0;
+                Immsrc = 2'b00;
             end
         endcase
     end 
 endmodule 
+
