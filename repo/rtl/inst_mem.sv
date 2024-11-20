@@ -7,7 +7,7 @@ module InstrMem (
     // theoretically we have 4*(2**32) address, but it's too large so we reduce ROM array size to 2**8 - 1, enough for lab4
     logic [7:0] rom_array [2**8-1:0];  // array of instruction memory 
 
-initial begin 
+initial begin
     $display("Loading rom.");
     $readmemh("Instructions.hex", rom_array);  // load instruction from file
 end;
@@ -18,6 +18,4 @@ always_comb    // asynchronous: execute whenever input addr changes
     instr = {rom_array[addr[7:0]+3], rom_array[addr[7:0]+2], rom_array[addr[7:0]+1], rom_array[addr[7:0]]};
     
 endmodule
-
-
 
