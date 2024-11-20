@@ -1,9 +1,10 @@
 module ControlUnit (
     input logic  [6:0]  opcode,     // opcode from instruction
+    input logic  [2:0]  funct3,     // funct3 from instruction [14:12]
     output logic        RegWrite,   // controls signal to write to regfile
     output logic [2:0]  ALUctrl,    // ALU control signal
     output logic        ALUsrc,     // selects ALU source (register or immediate)
-    output logic        ImmSrc,     // type of immediate extension
+    output logic [1:0]  ImmSrc,     // type of immediate extension
     output logic        PCsrc       // if PC branches
 );
 
