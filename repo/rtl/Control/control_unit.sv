@@ -41,7 +41,7 @@ module control_unit (
                 ALUSrc = 0;         // use registers as operands
                 ImmSrc = 2'b10;         // B-type immediate
                 PCSrc = ~EQ;        // branch if not equal
-                ResultSrc= 1;
+                ResultSrc= 0;
                 MemWrite = 0;
                 ALUctrl = funct3;
             end
