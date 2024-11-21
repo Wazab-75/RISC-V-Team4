@@ -1,36 +1,34 @@
-module alu_module #(
+`include "../def.sv"
+
+module alu #(
     parameter DATA_WIDTH = 32
 )(
     input  logic [DATA_WIDTH-1:0]   ALUop1,
     input  logic [DATA_WIDTH-1:0]   ALUop2,
     input  logic [2:0]              ALUctrl,
+
     output logic [DATA_WIDTH-1:0]   ALUout,
     output logic                    EQ
 );
 
     // ALU operations
     always_comb begin
+        
         case (ALUctrl)
-            3'b000: begin
-                ALUout = ALUop1 + ALUop2; // ADD operation
-                EQ = 0; 
-            end
+            `ALU_OPCODE_ADD:     ALUout = ALUop1 + ALUop2;              // ADD operation
 
-            3'b001: begin   // BNE
-                if (ALUop1 == ALUop2) begin
-                    ALUout = 0;cd  
-                    EQ = 1;     // Set EQ to 1 when ALUop1 == ALUop2
-                end else begin
-                    ALUout = 1; 
-                    EQ = 0;     // Set EQ to 0 when ALUop1 != ALUop2
-                end
-            end
+            `ALU_OPCODE_SUB:     ALUout = (ALUop1 == ALUop2) ? 1 : 0;   // SUB operation
 
-            default: begin
-                ALUout = 0; 
-                EQ = 0;     
-            end
+            `ALU_OPCODE_AND:     ALUout = ALUop1 & ALUop2;              // AND operation
+
+            `ALU_OPCODE_OR:     ALUout = ALUop1 | ALUop2;               // OR operation
+
+            `ALU_OPCODE_SLT:     ALUout = (ALUop1 < ALUop2) ? 1 : 0;    // set less than
+
+            default:    ALUout = 0; 
         endcase
+
+        EQ = (ALUout == 0'b0) ? 1 : 0;
     end
 
 endmodule
