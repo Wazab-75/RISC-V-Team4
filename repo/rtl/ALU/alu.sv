@@ -18,7 +18,7 @@ module alu_module #(
 
             3'b001: begin   // BNE
                 if (ALUop1 == ALUop2) begin
-                    ALUout = 0; 
+                    ALUout = 0;cd  
                     EQ = 1;     // Set EQ to 1 when ALUop1 == ALUop2
                 end else begin
                     ALUout = 1; 
