@@ -1,4 +1,4 @@
-`include "../def.sv"
+`include "/def.sv"
 
 module alu #(
     parameter DATA_WIDTH = 32
@@ -17,11 +17,11 @@ module alu #(
         case (ALUctrl)
             `ALU_OPCODE_ADD:     ALUout = ALUop1 + ALUop2;              // ADD operation
 
-            `ALU_OPCODE_SUB:     ALUout = (ALUop1 == ALUop2) ? 1 : 0;   // SUB operation
+            `ALU_OPCODE_SUB:     ALUout = ALUop1 - ALUop2;              // SUB operation
 
             `ALU_OPCODE_AND:     ALUout = ALUop1 & ALUop2;              // AND operation
 
-            `ALU_OPCODE_OR:     ALUout = ALUop1 | ALUop2;               // OR operation
+            `ALU_OPCODE_OR:      ALUout = ALUop1 | ALUop2;               // OR operation
 
             `ALU_OPCODE_SLT:     ALUout = (ALUop1 < ALUop2) ? 1 : 0;    // set less than
 

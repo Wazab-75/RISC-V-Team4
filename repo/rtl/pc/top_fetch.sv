@@ -6,8 +6,8 @@ module top_fetch #(
     input                        clk,
     input                        rst,
     input                        PCSrc,
-    input[DATA_WIDTH-1:0]        ImmExt
-    output[ADDRESS_WIDTH-1:0]    pc,
+    input[DATA_WIDTH-1:0]        ImmExt,
+    output[ADDRESS_WIDTH-1:0]    pc
     
 );
      
