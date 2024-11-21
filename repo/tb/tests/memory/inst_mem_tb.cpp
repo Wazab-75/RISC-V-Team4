@@ -20,21 +20,21 @@ protected:
 
 TEST_F(InstMemTestbench, InstMem0WorksTest)
 {
-    top->addr = 0xBFC00000;
+    top->addr = 0x0;
 
     top->eval();
 
-    EXPECT_EQ(top->dout, 0xff010113);
+    EXPECT_EQ(top->dout, 0x0FF00313);
 
 }
 
 TEST_F(InstMemTestbench, InstMem1WorksTest)
 {
-    top->addr = 0xBFC00008;
+    top->addr = 0x4;
 
     top->eval();
 
-    EXPECT_EQ(top->dout, 0x812423);
+    EXPECT_EQ(top->dout, 0x00000513);
 
 }
 
