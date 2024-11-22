@@ -53,13 +53,13 @@ module top #(
         .instr_24_20(instr[24:20]),
         .ALUctrl    (ALUctrl),
         .ALUSrc     (ALUSrc),
-        .RegWrite   (RegWrite),
-        .Result     (Result),
+        .WE3        (RegWrite),
+        //.Result     (Result),
         .ImmExt     (ImmExt),
         .a0         (a0),
         .ALUResult  (ALUResult),
-        .EQ         (EQ),
-        .WriteData  (WriteData)
+        .EQ         (EQ)
+        //.WriteData  (WriteData)
     );
 
     top_memory memory(
