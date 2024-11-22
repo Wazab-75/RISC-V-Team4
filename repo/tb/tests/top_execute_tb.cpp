@@ -69,9 +69,9 @@ TEST_F(TopExecuteTestbench, AddIRegWorksTest)
             top->instr_24_20 = 0;
             top->instr_11_7 = 6;
             top->ALUctrl = 0;
-            top->ALUSrc = 0;
+            top->ALUSrc = 1;
             top->WE3 = 1;
-            top->ImmExt = 255;
+            top->ImmExt = 11;
         }
         if (i==3){
             top->instr_19_15 = 6;

@@ -1,10 +1,10 @@
 module top_execute #(
     parameter  DATA_WIDTH = 32
 )(
-    input   logic       clk,
-    input   logic   [19:15]     instr_19_15,
-    input   logic   [24:20]     instr_24_20,
-    input   logic   [11:7]      instr_11_7,
+    input   logic                       clk,
+    input   logic  [19:15]              instr_19_15,
+    input   logic  [24:20]              instr_24_20,
+    input   logic  [11:7]               instr_11_7,
     input   logic  [DATA_WIDTH-1:0]     ImmExt,
     input   logic  [2:0]                ALUctrl,
     input   logic                       WE3,
