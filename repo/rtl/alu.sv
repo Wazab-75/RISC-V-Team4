@@ -1,4 +1,4 @@
-`include "/def.sv"
+`include "def.sv"
 
 module alu #(
     parameter DATA_WIDTH = 32

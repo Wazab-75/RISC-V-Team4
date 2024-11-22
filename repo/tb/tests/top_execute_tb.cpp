@@ -22,8 +22,7 @@ protected:
         top->instr_11_7 = 0;
         top->ALUctrl = 0;
         top->ALUSrc = 0;
-        top->RegWrite = 0;
-        top->Result = 0;
+        top->WE3 = 0;
         top->ImmExt = 0;
     }
 };
@@ -41,7 +40,7 @@ TEST_F(TopExecuteTestbench, AddIALUWorksTest)
         top->instr_11_7 = 6;
         top->ALUctrl = 0;
         top->ALUSrc = 1;
-        top->RegWrite = 1;
+        top->WE3 = 1;
         top->ImmExt = 255;
         }
         runSimulation(1);
@@ -71,8 +70,7 @@ TEST_F(TopExecuteTestbench, AddIRegWorksTest)
             top->instr_11_7 = 6;
             top->ALUctrl = 0;
             top->ALUSrc = 0;
-            top->RegWrite = 1;
-            top->Result = 11; 
+            top->WE3 = 1;
             top->ImmExt = 255;
         }
         if (i==3){
@@ -81,8 +79,7 @@ TEST_F(TopExecuteTestbench, AddIRegWorksTest)
             top->instr_11_7 = 7;
             top->ALUctrl = 0;
             top->ALUSrc = 1;
-            top->RegWrite = 1;
-            top->Result = 0; 
+            top->WE3 = 1;
             top->ImmExt = 13;           
         }
         runSimulation(1);
