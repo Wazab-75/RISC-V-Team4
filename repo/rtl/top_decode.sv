@@ -1,8 +1,8 @@
-module top_control # (
+module top_decode # (
     parameter  ADDRESS_WIDTH = 5,
                DATA_WIDTH = 32
 ) (
-    input [ADDRESS_WIDTH-1:0]    pc,
+    input logic [DATA_WIDTH-1:0] instr, 
     input logic        EQ,
     input logic [1:0] ImmSrc,
     output logic       RegWrite,
@@ -10,23 +10,14 @@ module top_control # (
     output logic       ALUSrc,
     output logic       PCSrc,
     output logic [31:0] ImmOp,
-    output logic [DATA_WIDTH-1:0] instr
-    // not sure if needed:
-    // output logic       MemWrite,
-    // output logic       ResultSrc,
+    output logic       MemWrite,
+    output logic       ResultSrc
 );
 
     // Internal signals
-    logic [31:0] instr;      // Instruction fetched from instruction memory
     logic [2:0] funct3;
     logic [6:0]   op;
-    // logic         funct7_5;
-
-    // Instantiate instruction memory
-    inst_mem inst_mem_inst (
-        .addr(pc),
-        .dout(instr)
-    );
+    logic         funct7_5;
 
     // Extract fields from instruction
     assign op        = instr[6:0];
@@ -44,15 +35,16 @@ module top_control # (
         .ALUSrc(ALUSrc),
         .ImmSrc(ImmSrc),
         .PCSrc(PCSrc),
-        // .MemWrite(MemWrite),
-        // .ResultSrc(ResultSrc)
+        .MemWrite(MemWrite),
+        .ResultSrc(ResultSrc)
     );
 
     // Instantiate sign extend unit
     sign_extend sign_extend_inst (
         .ImmSrc(ImmSrc),
-        .dout(instr[31:7]),
-        .immOp(immOp)
+        .Imm_up(instr[31:20]),
+        .Imm_down(instr[11:7]),
+        .ImmExt(ImmOp)
     );
 
 endmodule
