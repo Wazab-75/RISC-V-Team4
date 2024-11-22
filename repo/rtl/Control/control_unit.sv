@@ -1,5 +1,5 @@
 module control_unit (
-    input logic  [14:12] funct3,   
+    input logic  [2:0] funct3,   
     input logic  [6:0]   op,  
     input logic          funct7_5,    
     input logic          EQ,
@@ -12,8 +12,7 @@ module control_unit (
     output logic         ResultSrc
 );
 
-
-
+    logic unused = funct7_5;
     // control logic based on opcode
     always_comb begin
         // default values
