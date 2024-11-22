@@ -39,7 +39,7 @@ TEST_F(TopDecodeTestbench, TopDecodeAddIWorksTest)
 TEST_F(TopDecodeTestbench, TopDecodeBneWorksTest)
 {
     top->instr = 0xfe0318e3;
-    top->EQ    = 1;
+    top->EQ    = 0;
 
     top->eval();
 
