@@ -11,7 +11,7 @@ module pc #(
         if (rst) 
             pc <= {ADDRESS_WIDTH{1'b0}};  
         else 
-            pc <= pc_next;                /
+            pc <= pc_next;                
     end
 
 endmodule
