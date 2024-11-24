@@ -1,5 +1,5 @@
 module pc #(
-    parameter ADDRESS_WIDTH = 5
+    parameter ADDRESS_WIDTH = 32
 )(
     input wire clk,                       
     input wire rst,                       
