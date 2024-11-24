@@ -54,12 +54,12 @@ module top #(
         .ALUctrl    (ALUctrl),
         .ALUSrc     (ALUSrc),
         .WE3        (RegWrite),
-        //.Result     (Result),
+        .Result     (Result),
         .ImmExt     (ImmExt),
         .a0         (a0),
         .ALUResult  (ALUResult),
-        .EQ         (EQ)
-        //.WriteData  (WriteData)
+        .EQ         (EQ),
+        .WriteData  (WriteData)
     );
 
     top_memory memory(

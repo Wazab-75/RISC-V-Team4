@@ -9,13 +9,15 @@ module top_execute #(
     input   logic  [2:0]                ALUctrl,
     input   logic                       WE3,
     input   logic                       ALUSrc,
+    input   logic [DATA_WIDTH-1:0]      Result,
 
     output  logic [DATA_WIDTH-1:0]      ALUResult,
     output  logic                       EQ,
-    output  logic   [DATA_WIDTH-1:0]    a0
+    output  logic [DATA_WIDTH-1:0]      a0,
+    output  logic [DATA_WIDTH-1:0]      WriteData
 );
 
-    logic  [DATA_WIDTH-1:0]    RD1, RD2, ALUin;
+    logic  [DATA_WIDTH-1:0]    RD1, ALUin;
 
     reg_module alu_reg(
         .clk(clk),
@@ -23,14 +25,14 @@ module top_execute #(
         .AD2(instr_24_20),
         .AD3(instr_11_7),
         .WE3(WE3),
-        .WD3(ALUResult),
+        .WD3(Result),
         .RD1(RD1),
-        .RD2(RD2),
+        .RD2(WriteData),
         .a0(a0)
     );
 
     mux alu_mux(
-        .in0(RD2),
+        .in0(WriteData),
         .in1(ImmExt),
         .sel(ALUSrc),
         .out(ALUin)
