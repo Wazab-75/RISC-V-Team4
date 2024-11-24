@@ -1,10 +1,10 @@
 .text
 .globl main
 main:
-    addi    t1, zero, 0xff      # t1 = 255
+    addi    t1, zero, 0x05      # t1 = 5
     addi    a0, zero, 0x0       # output = 0
 mloop:
-    addi    a1, zero, 0x0       #init a1 to 0
+    lw      a0, 0(a1)           # i = 0
 iloop:
     addi    a0, a1, 0           # output = i
     addi    a1, a1, 1           # i++
