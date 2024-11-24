@@ -4,7 +4,7 @@ module inst_mem (
 );
 
     // ROM array: reduced to 2^8 (256 locations), each 8 bits wide
-    logic [7:0] rom_array [0:2^32-1];  
+    logic [7:0] rom_array [32'hBFC00FFF : 32'hBFC00000];  
 
     initial begin
         $display("Loading ROM.");
@@ -13,7 +13,7 @@ module inst_mem (
 
     always_comb begin
         // Concatenate 4 consecutive 8-bit blocks to form a 32-bit instruction
-        dout = {rom_array[addr + 3], rom_array[addr + 2], rom_array[addr + 1], rom_array[addr]};
+        dout = {rom_array[(addr + 3)- 32'hBFC00000],rom_array[(addr + 2) - 32'hBFC00000],rom_array[(addr+ 1) - 32'hBFC00000],rom_array[(addr) - 32'hBFC00000]};
     end
 
 endmodule
