@@ -12,7 +12,7 @@ module top #(
     logic                       PCSrc;
     logic [DATA_WIDTH-1:0]      instr;
     logic                       EQ;
-    logic [2:0]                 ALUctrl;
+    logic [3:0]                 ALUctrl;
     logic                       RegWrite;
     logic                       ALUSrc;
     logic                       MemWrite;
