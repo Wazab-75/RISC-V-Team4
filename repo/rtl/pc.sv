@@ -1,5 +1,5 @@
 module pc #(
-    parameter ADDRESS_WIDTH = 5
+    parameter ADDRESS_WIDTH = 32
 )(
     input wire clk,                       
     input wire rst,                       
@@ -11,7 +11,7 @@ module pc #(
         if (rst) 
             pc <= {ADDRESS_WIDTH{1'b0}};  
         else 
-            pc <= pc_next;                /
+            pc <= pc_next;                
     end
 
 endmodule

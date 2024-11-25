@@ -21,7 +21,43 @@ protected:
     }
 };
 
-TEST_F(ControlUnitTestbench, ControlUnit0WorksTest)
+TEST_F(ControlUnitTestbench, AddIWorksTest)
+{
+    top->op = 0b0010011;
+    top->funct3 = 0b000;
+    top->funct7_5 = 0b0;
+    top->EQ = 0b0;
+
+    top->eval();
+
+    EXPECT_EQ(top->RegWrite, 0b1);
+    EXPECT_EQ(top->ALUSrc, 0b1);
+    EXPECT_EQ(top->MemWrite, 0b0);
+    EXPECT_EQ(top->ResultSrc, 0b0);
+    EXPECT_EQ(top->PCSrc, 0b0);
+    EXPECT_EQ(top->ALUctrl, 0b000);
+
+}
+
+TEST_F(ControlUnitTestbench, BneWorksTest)
+{
+    top->op = 0b1100011;
+    top->funct3 = 0b001;
+    top->funct7_5 = 0b0;
+    top->EQ = 0b0;
+
+    top->eval();
+
+    EXPECT_EQ(top->RegWrite, 0b0);
+    EXPECT_EQ(top->ALUSrc, 0b0);
+    EXPECT_EQ(top->MemWrite, 0b0);
+    EXPECT_EQ(top->ResultSrc, 0b0);
+    EXPECT_EQ(top->PCSrc, 0b1);
+    EXPECT_EQ(top->ALUctrl, 0b001);
+
+}
+
+TEST_F(ControlUnitTestbench, RWorksTest)
 {
     top->op = 0b0110011;
     top->funct3 = 0b000;
@@ -38,7 +74,7 @@ TEST_F(ControlUnitTestbench, ControlUnit0WorksTest)
     EXPECT_EQ(top->ALUctrl, 0b001);
 
 }
-TEST_F(ControlUnitTestbench, ControlUnit1WorksTest)
+TEST_F(ControlUnitTestbench, LwWorksTest)
 {
     top->op = 0b0000011;
     top->funct3 = 0b000;
