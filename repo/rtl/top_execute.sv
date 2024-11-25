@@ -6,7 +6,7 @@ module top_execute #(
     input   logic  [24:20]              instr_24_20,
     input   logic  [11:7]               instr_11_7,
     input   logic  [DATA_WIDTH-1:0]     ImmExt,
-    input   logic  [2:0]                ALUctrl,
+    input   logic  [3:0]                ALUctrl,
     input   logic                       WE3,
     input   logic                       ALUSrc,
     input   logic [DATA_WIDTH-1:0]      Result,
