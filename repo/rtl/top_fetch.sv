@@ -1,17 +1,16 @@
 module top_fetch #(
-    parameter  ADDRESS_WIDTH = 5,
-               DATA_WIDTH = 32
+    parameter  DATA_WIDTH = 32
     
 ) (
     input                        clk,
     input                        rst,
     input                        PCSrc,
-    input[DATA_WIDTH-1:0]        ImmExt
-    output[ADDRESS_WIDTH-1:0]    pc,
+    input[DATA_WIDTH-1:0]        ImmExt,
+    output[DATA_WIDTH-1:0]       pc
     
 );
      
-    logic [ADDRESS_WIDTH-1:0]    pc_next;
+    logic [DATA_WIDTH-1:0]    pc_next;
 
     pc pc_reg(
         .clk (clk),
@@ -20,9 +19,9 @@ module top_fetch #(
         .pc_next (pc_next)
     );
 
-    mux pc_sel(
+    mux #(DATA_WIDTH) pc_sel (
         .in0 (pc + 4),
-        .in1 (pc + ImmExt[ADDRESS_WIDTH-1:0]),
+        .in1 (pc + ImmExt),
         .sel (PCSrc),
         .out (pc_next)
 
