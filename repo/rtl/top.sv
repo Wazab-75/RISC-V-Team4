@@ -1,3 +1,13 @@
+//To refactor into folders
+/*
+`include <mux.sv>
+`include <./fetch/top_fetch.sv>
+`include <./decode/top_decode.sv>
+`include <./execute/top_execute.sv>
+`include <./memory/top_memory.sv>
+`include <./memory/inst_mem.sv>
+*/
+
 module top #(
     parameter   DATA_WIDTH = 32
 ) (
@@ -5,14 +15,14 @@ module top #(
     input   logic rst,
     output  logic [DATA_WIDTH-1:0] a0    
 );
-    
+
 
     logic [DATA_WIDTH-1:0]      pc;
     logic [DATA_WIDTH-1:0]      ImmExt;
     logic                       PCSrc;
     logic [DATA_WIDTH-1:0]      instr;
-    logic                       EQ;
-    logic [3:0]                 ALUctrl;
+    logic                       branch_l;
+    logic [2:0]                 ALUctrl;
     logic                       RegWrite;
     logic                       ALUSrc;
     logic                       MemWrite;
@@ -36,7 +46,7 @@ module top #(
 
     top_decode decode(
         .instr      (instr),
-        .EQ         (EQ),
+        .branch_l   (branch_l),
         .ALUctrl    (ALUctrl),
         .RegWrite   (RegWrite),
         .ALUSrc     (ALUSrc),
@@ -58,7 +68,7 @@ module top #(
         .ImmExt     (ImmExt),
         .a0         (a0),
         .ALUResult  (ALUResult),
-        .EQ         (EQ),
+        .branch_l   (branch_l),
         .WriteData  (WriteData)
     );
 
@@ -68,7 +78,8 @@ module top #(
         .WriteData  (WriteData),
         .ResultSrc  (ResultSrc),
         .MemWrite   (MemWrite),
-        .Result     (Result)
+        .Result     (Result),
+        .funct3     (instr[14:12])
     );
 
     //assign a0 = 32'd5;
