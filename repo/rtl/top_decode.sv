@@ -9,6 +9,7 @@ module top_decode # (
     output logic                 PCSrc,
     output logic [31:0]          ImmExt,
     output logic                 MemWrite,
+    output logic                 MemRead,
     output logic                 ResultSrc
 );
 
@@ -36,6 +37,7 @@ module top_decode # (
         .ImmSrc(ImmSrc),
         .PCSrc(PCSrc),
         .MemWrite(MemWrite),
+        .MemRead(MemRead),
         .ResultSrc(ResultSrc)
     );
 

@@ -13,6 +13,7 @@ module control_unit (
     output logic [1:0]  ImmSrc,     
     output logic        PCSrc,       
     output logic        MemWrite,
+    output logic        MemRead,
     output logic        ResultSrc
 );
 
@@ -25,6 +26,7 @@ module control_unit (
         PCSrc = 0;
         ImmSrc = 2'b00;
         MemWrite = 0;
+        MemRead = 0;
         ResultSrc= 0;
 
         case (op) 
@@ -77,6 +79,7 @@ module control_unit (
                         ImmSrc = 2'b00;
                         PCSrc = 0;
                         MemWrite = 0;
+                        MemRead = 0;
                         ResultSrc= 0;
                     end
                 endcase
@@ -89,6 +92,7 @@ module control_unit (
                 ImmSrc = 2'b00;
                 PCSrc = 0;
                 MemWrite = 0;
+                MemRead = 0;
                 ResultSrc= 0;
             end
         endcase

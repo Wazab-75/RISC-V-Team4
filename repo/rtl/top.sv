@@ -16,6 +16,7 @@ module top #(
     logic                       RegWrite;
     logic                       ALUSrc;
     logic                       MemWrite;
+    logic                       MemRead;
     logic                       ResultSrc;
     logic [DATA_WIDTH-1:0]      ALUResult;
     logic [DATA_WIDTH-1:0]      WriteData;
@@ -41,6 +42,7 @@ module top #(
         .RegWrite   (RegWrite),
         .ALUSrc     (ALUSrc),
         .MemWrite   (MemWrite),
+        .MemRead    (MemRead),
         .ResultSrc  (ResultSrc),
         .PCSrc      (PCSrc),
         .ImmExt     (ImmExt)
@@ -68,6 +70,7 @@ module top #(
         .WriteData  (WriteData),
         .ResultSrc  (ResultSrc),
         .MemWrite   (MemWrite),
+        .MemRead    (MemRead),
         .Result     (Result)
     );
 
