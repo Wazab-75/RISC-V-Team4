@@ -6,37 +6,37 @@ module  Stage1#(
     input logic                     rst,
 
     //instrmem input
-    input logic[DATA_WIDTH-1:0]        addr,
+    input logic[DATA_WIDTH-1:0]        dout,
     //PC input
-    input logic[DATA_WIDTH-1:0]        pc_next,
+    input logic[DATA_WIDTH-1:0]        pc,
 
     //instrmem output
-    output logic[DATA_WIDTH-1:0]        dout,
+    output logic[DATA_WIDTH-1:0]        InstrD,
     //PC output
-    output logic[DATA_WIDTH-1:0]        pc,
+    output logic[DATA_WIDTH-1:0]        pc_next,
 
 );
 
 always_ff @(posedge clk) begin
     if (rst) begin
         //instr
-        dout <= 0;
+        InstrD <= 0;
         //pc
-        pc<= 0;
+        pc_next<= 0;
        
     end
     else if(en) begin
         //instr
-        dout <= dout;
+        InstrD <= InstrD;
         //pc
-        pc<= pc;
+        pc_next<= pc_next;
         
     end
     else begin
         //instr
-        dout <= addr;
+        InstrD <= dout;
         //pc
-        pc<= pc_next;
+        pc_next<= pc;
         
     end
 end
