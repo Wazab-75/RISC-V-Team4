@@ -81,7 +81,7 @@ module top #(
         .ResultSrc  (ResultSrc),
         .MemWrite   (MemWrite),
         .MemRead    (MemRead),
-        .Result     (Result)
+        .Result     (Result),
         .funct3     (instr[14:12])
     );
 

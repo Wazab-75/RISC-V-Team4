@@ -49,7 +49,7 @@ data_mem data_mem(
     .wr_en      (final__wr_en),
     .addr       (final_wr_addr),
     .WriteData  (final_wr_data),
-    .ReadData   (ReadData)
+    .ReadData   (ReadData),
     .funct3     (funct3)
 );
 
