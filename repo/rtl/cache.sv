@@ -3,26 +3,27 @@ module cache#(
               BLOCK_SIZE = 4,  // 4 words per block
               NUM_BLOCKS = 2  // Number of cache lines
 )(
-    input  logic                     clk,
-    
-    input  logic                     rd_en,
-    input  logic                     wr_en,
-    input  logic [DATA_WIDTH-1:0]    addr,
-    input  logic [DATA_WIDTH-1:0]    WriteData,
+    input  logic                               clk,
+    input  logic                               rd_en,
+    input  logic                               wr_en,
+    input  logic [DATA_WIDTH-1:0]              addr,
+    input  logic [DATA_WIDTH-1:0]              WriteData,
+    input  logic [2:0]                         funct3,
 
-    output logic [DATA_WIDTH-1:0]    ReadData_c,
-    output logic                     hit,
-    output logic [DATA_WIDTH-1:0]    write_back_data,
-    output logic                     write_back_valid
-)
+    input  logic [4*DATA_WIDTH-1:0]            fetch_data,
+    input  logic                               fetch_enable,
 
-// Cache storage
-logic [31:0] data_array [NUM_BLOCKS-1:0][BLOCK_SIZE-1:0];
-logic [26:0] tag_array [NUM_BLOCKS-1:0];
-logic        v [NUM_BLOCKS-1:0];
-logic        d [NUM_BLOCKS-1:0];
+    output logic [DATA_WIDTH-1:0]              ReadData_c,
+    output logic                               hit,
+    output logic [4*DATA_WIDTH-1:0]            write_back_data,
+    output logic                               write_back_valid,
+    output logic [DATA_WIDTH-1:0]              write_back_addr
+);
 
-// Address parameter
+logic [DATA_WIDTH-1:0] data_array [NUM_BLOCKS-1:0][BLOCK_SIZE-1:0];   // Data storage (2 sets, 4 words per set)
+logic [26:0] tag_array [NUM_BLOCKS-1:0];         // Tags
+logic        v [NUM_BLOCKS-1:0];                 // Valid bits
+logic        d [NUM_BLOCKS-1:0];                 // Dirty bits
 
 logic [26:0] tag;
 logic        set;
@@ -32,59 +33,74 @@ assign tag = addr[31:5];
 assign set = addr[4];
 assign offset = addr[3:2];
 
-// Internal variables
-logic [31:0] block_data; // Holds data for the selected block
-
-
-// Initialize arrays
 initial begin
-    for (int i = 0; i < NUM_BLOCKS; i++) begin
+    for (int i = 0; i < 2; i++) begin
         v[i] = 0;
         d[i] = 0;
-        for (int j = 0; j < BLOCK_SIZE; j++) begin
-            data_array[i][j] = 32'h0; // Initialize data with zero
+        for (int j = 0; j < 4; j++) begin
+            data_array[i][j] = 32'h0;
         end
     end
 end
 
-
 always_ff @(posedge clk) begin
-
-    if (rd_en || wr_en) begin
-        // Check for hit
+    if (fetch_enable) begin
+        for (int i = 0; i < 4; i++) begin
+            data_array[set][i] <= fetch_data[(i+1)*32-1 -: 32];
+        end
+        tag_array[set] <= tag;
+        v[set] <= 1;
+        d[set] <= wr_en ? 1 : 0;
+    end 
+    else if (rd_en || wr_en) begin
         if (v[set] && tag_array[set] == tag) begin
             hit <= 1;
+
             if (rd_en) begin
-                ReadData_c <= data_array[set][offset];
+                case (funct3)
+                    3'b000: ReadData_c = {{24{data_array[set][offset][7]}}, data_array[set][offset][7:0]};
+                    3'b001: ReadData_c = {{16{data_array[set][offset][15]}}, data_array[set][offset][15:8], data_array[set][offset][7:0]};
+                    3'b010: ReadData_c = data_array[set][offset];
+                    3'b100: ReadData_c = {24'b0, data_array[set][offset][7:0]};
+                    3'b101: ReadData_c = {16'b0, data_array[set][offset][15:8], data_array[set][offset][7:0]};
+                    default: ReadData_c = data_array[set][offset];
+                endcase
             end
-            if (wr_en) begin
-                data_array[set][offset] <= WriteData;
-                d[set] <= 1; // Mark block as dirty
+            else if (wr_en) begin
+                case (funct3)
+                    3'b000: data_array[set][offset][7:0]   <= WriteData[7:0];
+                    3'b001: begin
+                        data_array[set][offset][15:8]  <= WriteData[15:8];
+                        data_array[set][offset][7:0]   <= WriteData[7:0];
+                    end
+                    3'b010: begin
+                        data_array[set][offset][31:24] <= WriteData[31:24];
+                        data_array[set][offset][23:16] <= WriteData[23:16];
+                        data_array[set][offset][15:8]  <= WriteData[15:8];
+                        data_array[set][offset][7:0]   <= WriteData[7:0];
+                    end
+                    default: begin
+                        data_array[set][offset][31:24] <= WriteData[31:24];
+                        data_array[set][offset][23:16] <= WriteData[23:16];
+                        data_array[set][offset][15:8]  <= WriteData[15:8];
+                        data_array[set][offset][7:0]   <= WriteData[7:0];
+                    end
+                endcase
+                d[set] <= 1; // Mark the block as dirty
             end
-        end 
+        end
         
         else begin
-            // Cache miss
             hit <= 0;
-
             if (d[set]) begin
-                // Write back dirty block to memory
-                write_back_data <= data_array[set][offset];
+                for (int i = 0; i < 4; i++) begin
+                    write_back_data[(i+1)*32-1 -: 32] <= data_array[set][i];
+                end
+                write_back_addr <= {tag_array[set], set, 5'b0};
                 write_back_valid <= 1;
             end else begin
                 write_back_valid <= 0;
             end
-
-            // Fetch new block (for now, assume memory fetch logic outside)
-            tag_array[set] <= tag;
-            v[set] <= 1;
-            d[set] <= 0;
-
-            // Placeholder for memory load
-            data_array[set][0] <= 32'hDEADBEEF; // Example data
-            data_array[set][1] <= 32'hCAFEBABE; 
-            data_array[set][2] <= 32'h12345678; 
-            data_array[set][3] <= 32'h87654321; 
         end
     end
 end

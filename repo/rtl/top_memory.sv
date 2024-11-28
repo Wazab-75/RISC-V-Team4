@@ -1,7 +1,3 @@
-// First version of the cache implementation
-// For now when there is a miss, we just write the data back to the memory
-// We will implement the write-back policy later
-
 //`include <./memory/data_mem.sv>
 
 module top_memory #(
@@ -18,43 +14,57 @@ module top_memory #(
 );
 
 logic [DATA_WIDTH-1:0] ReadData;
+logic [4*DATA_WIDTH-1:0] fetch_data;
+logic                  fetch_enable;
 logic [DATA_WIDTH-1:0] Data;
 logic [DATA_WIDTH-1:0] write_back_data;
+logic [DATA_WIDTH-1:0] write_back_addr;
 logic                  write_back_valid;
 logic                  hit;
 logic [DATA_WIDTH-1:0] ReadData_c;
 
-logic                  final__wr_en;
+logic                  mem_wr_en;
 logic [DATA_WIDTH-1:0] final_wr_data;
 logic [DATA_WIDTH-1:0] final_wr_addr;
+logic [4*DATA_WIDTH-1:0] ReadBlockData;
 
-assign final_wr_en = MemWrite | write_back_valid; 
-assign final_wr_data = write_back_valid ? write_back_data : WriteData; 
-assign final_wr_addr = write_back_valid ? ALUResult : ALUResult; 
+assign mem_wr_en = write_back_valid;
 
-cache data_cache(
-    .clk        (clk),
-    .rd_en      (MemRead),
-    .wr_en      (MemWrite),
-    .addr       (ALUResult),
-    .WriteData  (WriteData),
-    .ReadData_c (ReadData_c),
-    .hit        (hit),
+assign fetch_enable = ~hit;
+
+cache data_cache (
+    .clk             (clk),
+    .rd_en           (MemRead),
+    .ReadData_c      (ReadData_c),
+
+    .wr_en           (MemWrite),
+    .WriteData       (WriteData),
+    .addr            (ALUResult),
+    .funct3          (funct3),
+
+    .hit             (hit),
+
+    .fetch_data      (fetch_data),
+    .fetch_enable    (fetch_enable),
+
     .write_back_data (write_back_data),
-    .write_back_valid (write_back_valid)
+    .write_back_valid(write_back_valid),
+    .write_back_addr (write_back_addr)
 );
 
-data_mem data_mem(
-    .clk        (clk),
-    .wr_en      (final__wr_en),
-    .addr       (final_wr_addr),
-    .WriteData  (final_wr_data),
-    .ReadData   (ReadData),
-    .funct3     (funct3)
+data_mem data_mem (
+    .clk              (clk),
+    .wr_en            (mem_wr_en),
+    .addr             (write_back_addr),
+    .WriteBlockData   (write_back_data),
+
+    .ReadBlockData    (ReadBlockData)
 );
+
+assign fetch_data = ReadBlockData;
 
 mux mem_type(
-    .in0        (ReadData),
+    .in0        (ReadBlockData[(ALUResult[3:2]+1)*32-1 -: 32]), // Selects the word to be written to the register
     .in1        (ReadData_c),
     .sel        (hit),
     .out        (Data)
