@@ -1,4 +1,4 @@
-module cache#(
+module cache #(
     parameter DATA_WIDTH = 32,
               BLOCK_SIZE = 4,  // 4 words per block
               NUM_BLOCKS = 2  // Number of cache lines
@@ -58,12 +58,12 @@ always_ff @(posedge clk) begin
 
             if (rd_en) begin
                 case (funct3)
-                    3'b000: ReadData_c = {{24{data_array[set][offset][7]}}, data_array[set][offset][7:0]};
-                    3'b001: ReadData_c = {{16{data_array[set][offset][15]}}, data_array[set][offset][15:8], data_array[set][offset][7:0]};
-                    3'b010: ReadData_c = data_array[set][offset];
-                    3'b100: ReadData_c = {24'b0, data_array[set][offset][7:0]};
-                    3'b101: ReadData_c = {16'b0, data_array[set][offset][15:8], data_array[set][offset][7:0]};
-                    default: ReadData_c = data_array[set][offset];
+                    3'b000: ReadData_c <= {{24{data_array[set][offset][7]}}, data_array[set][offset][7:0]};
+                    3'b001: ReadData_c <= {{16{data_array[set][offset][15]}}, data_array[set][offset][15:8], data_array[set][offset][7:0]};
+                    3'b010: ReadData_c <= data_array[set][offset];
+                    3'b100: ReadData_c <= {24'b0, data_array[set][offset][7:0]};
+                    3'b101: ReadData_c <= {16'b0, data_array[set][offset][15:8], data_array[set][offset][7:0]};
+                    default: ReadData_c <= data_array[set][offset];
                 endcase
             end
             else if (wr_en) begin
@@ -96,7 +96,7 @@ always_ff @(posedge clk) begin
                 for (int i = 0; i < 4; i++) begin
                     write_back_data[(i+1)*32-1 -: 32] <= data_array[set][i];
                 end
-                write_back_addr <= {tag_array[set], set, 5'b0};
+                write_back_addr <= {tag_array[set], set, 4'b0};
                 write_back_valid <= 1;
             end else begin
                 write_back_valid <= 0;

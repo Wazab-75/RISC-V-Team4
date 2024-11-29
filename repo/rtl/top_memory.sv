@@ -13,19 +13,16 @@ module top_memory #(
     output logic [DATA_WIDTH-1:0]  Result
 );
 
-logic [DATA_WIDTH-1:0] ReadData;
 logic [4*DATA_WIDTH-1:0] fetch_data;
 logic                  fetch_enable;
 logic [DATA_WIDTH-1:0] Data;
-logic [DATA_WIDTH-1:0] write_back_data;
+logic [4*DATA_WIDTH-1:0] write_back_data;
 logic [DATA_WIDTH-1:0] write_back_addr;
 logic                  write_back_valid;
 logic                  hit;
 logic [DATA_WIDTH-1:0] ReadData_c;
 
 logic                  mem_wr_en;
-logic [DATA_WIDTH-1:0] final_wr_data;
-logic [DATA_WIDTH-1:0] final_wr_addr;
 logic [4*DATA_WIDTH-1:0] ReadBlockData;
 
 assign mem_wr_en = write_back_valid;
@@ -64,7 +61,7 @@ data_mem data_mem (
 assign fetch_data = ReadBlockData;
 
 mux mem_type(
-    .in0        (ReadBlockData[(ALUResult[3:2]+1)*32-1 -: 32]), // Selects the word to be written to the register
+    .in0        (ReadBlockData[({ALUResult[3:2], 5'b0} + 1)*32-1 -: 32]), // Selects the word to be written to the register file
     .in1        (ReadData_c),
     .sel        (hit),
     .out        (Data)

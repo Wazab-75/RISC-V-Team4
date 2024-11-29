@@ -1,6 +1,5 @@
 module data_mem #(
     parameter   ADDRESS_WIDTH = 32,
-                DATA_WIDTH = 32,
                 BLOCK_WIDTH = 128
 )(
     input  logic                           clk,
@@ -51,7 +50,7 @@ always_comb begin
         ram_array[addr + 11], ram_array[addr + 10], ram_array[addr + 9],  ram_array[addr + 8],
         ram_array[addr + 7],  ram_array[addr + 6],  ram_array[addr + 5],  ram_array[addr + 4],
         ram_array[addr + 3],  ram_array[addr + 2],  ram_array[addr + 1],  ram_array[addr]
-    };
+    }; 
 end
 
 endmodule
