@@ -1,4 +1,6 @@
 `include "def.sv"
+`include "./decode/alu_decoder.sv"
+`include "./decode/main_decoder.sv"
 
 module control_unit (   
     input logic [31:0]  Instr,
@@ -33,7 +35,7 @@ assign funct7 = Instr[31:25];
         ResultSrc= 0;
 
         case (op) 
-            7'1101111: begin   // J-type
+            7'b1101111: begin   // J-type
                 // jal instruction
                 RegWrite = 1;               
                 ALUctrl = `ALU_OPCODE_ADD;    // ALU adds PC + imm to compute the jump target
@@ -109,7 +111,7 @@ assign funct7 = Instr[31:25];
                 end 
             end
 
-            7'1100111: begin   // I-type
+            7'b1100111: begin   // I-type
                 // jalr instruction
                 RegWrite = 1;               
                 ALUctrl = `ALU_OPCODE_ADD;  
