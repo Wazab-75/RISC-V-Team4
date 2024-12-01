@@ -1,4 +1,4 @@
-//`include <./memory/data_mem.sv>
+`include <./memory/data_mem.sv>
 
 module top_memory #(
     parameter  DATA_WIDTH = 32
