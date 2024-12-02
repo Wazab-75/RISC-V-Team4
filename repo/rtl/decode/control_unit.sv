@@ -1,4 +1,6 @@
 `include "def.sv"
+`include "./decode/alu_decoder.sv"
+`include "./decode/main_decoder.sv"
 
 module control_unit (   
     input logic [31:0]  Instr,

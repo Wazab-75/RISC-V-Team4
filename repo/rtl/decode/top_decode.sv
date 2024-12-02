@@ -1,3 +1,6 @@
+`include <./decode/control_unit.sv>
+`include <./decode/sign_extend.sv>
+
 module top_decode # (
     parameter  DATA_WIDTH = 32
 ) (
