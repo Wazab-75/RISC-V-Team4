@@ -21,25 +21,25 @@ end
 always_ff @(posedge clk) begin
     if (wr_en) begin
     
-        ram_array[addr + 3]  <= WriteBlockData[7:0];
-        ram_array[addr + 2]  <= WriteBlockData[15:8];
-        ram_array[addr + 1]  <= WriteBlockData[23:16];
-        ram_array[addr]      <= WriteBlockData[31:24];
+        ram_array[addr]      <= WriteBlockData[7:0];
+        ram_array[addr + 1]  <= WriteBlockData[15:8];
+        ram_array[addr + 2]  <= WriteBlockData[23:16];
+        ram_array[addr + 3]  <= WriteBlockData[31:24];
         
-        ram_array[addr + 7]  <= WriteBlockData[39:32];
-        ram_array[addr + 6]  <= WriteBlockData[47:40];
-        ram_array[addr + 5]  <= WriteBlockData[55:48];
-        ram_array[addr + 4]  <= WriteBlockData[63:56];
+        ram_array[addr + 4]  <= WriteBlockData[39:32];
+        ram_array[addr + 5]  <= WriteBlockData[47:40];
+        ram_array[addr + 6]  <= WriteBlockData[55:48];
+        ram_array[addr + 7]  <= WriteBlockData[63:56];
         
-        ram_array[addr + 11] <= WriteBlockData[71:64];
-        ram_array[addr + 10] <= WriteBlockData[79:72];
-        ram_array[addr + 9]  <= WriteBlockData[87:80];
-        ram_array[addr + 8]  <= WriteBlockData[95:88];
+        ram_array[addr + 8]  <= WriteBlockData[71:64];
+        ram_array[addr + 9]  <= WriteBlockData[79:72];
+        ram_array[addr + 10] <= WriteBlockData[87:80];
+        ram_array[addr + 11] <= WriteBlockData[95:88];
         
-        ram_array[addr + 15] <= WriteBlockData[103:96];
-        ram_array[addr + 14] <= WriteBlockData[111:104];
-        ram_array[addr + 13] <= WriteBlockData[119:112];
-        ram_array[addr + 12] <= WriteBlockData[127:120];
+        ram_array[addr + 12] <= WriteBlockData[103:96];
+        ram_array[addr + 13] <= WriteBlockData[111:104];
+        ram_array[addr + 14] <= WriteBlockData[119:112];
+        ram_array[addr + 15] <= WriteBlockData[127:120];
     
     end
 end

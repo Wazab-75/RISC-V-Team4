@@ -32,18 +32,17 @@ assign fetch_enable = ~hit;
 cache data_cache (
     .clk             (clk),
     .rd_en           (MemRead),
-    .ReadData_c      (ReadData_c),
 
     .wr_en           (MemWrite),
     .WriteData       (WriteData),
     .addr            (ALUResult),
     .funct3          (funct3),
 
-    .hit             (hit),
-
     .fetch_data      (fetch_data),
     .fetch_enable    (fetch_enable),
 
+    .ReadData_c      (ReadData_c),
+    .hit             (hit),
     .write_back_data (write_back_data),
     .write_back_valid(write_back_valid),
     .write_back_addr (write_back_addr)
@@ -60,12 +59,14 @@ data_mem data_mem (
 
 assign fetch_data = ReadBlockData;
 
+
 mux mem_type(
-    .in0        (ReadBlockData[({ALUResult[3:2], 5'b0} + 1)*32-1 -: 32]), // Selects the word to be written to the register file
+    .in0        (ReadBlockData[(ALUResult[3:2] * 32) +: 32]), // Selects the word to be written to the register file
     .in1        (ReadData_c),
     .sel        (hit),
     .out        (Data)
 );
+
 
 mux ResultSlc(
     .in0        (ALUResult),
