@@ -1,5 +1,5 @@
 `include <./fetch/pc.sv>
-`include <./fetch/inst_mem.sv>
+`include <./memory/inst_mem.sv>
 
 module top_fetch #(
     parameter  DATA_WIDTH = 32

@@ -14,16 +14,16 @@ module top_memory #(
 );
 
 logic [4*DATA_WIDTH-1:0] fetch_data;
-logic                  fetch_enable;
-logic [DATA_WIDTH-1:0] Data;
+logic                    fetch_enable;
+logic [DATA_WIDTH-1:0]   Data;
 logic [4*DATA_WIDTH-1:0] write_back_data;
-logic [DATA_WIDTH-1:0] write_back_addr;
-logic                  write_back_valid;
-logic                  hit;
-logic [DATA_WIDTH-1:0] ReadData_c;
-
-logic                  mem_wr_en;
+logic [DATA_WIDTH-1:0]   write_back_addr;
+logic                    write_back_valid;
+logic                    hit;
+logic [DATA_WIDTH-1:0]   cache_read;
+logic                    mem_wr_en;
 logic [4*DATA_WIDTH-1:0] ReadBlockData;
+
 
 assign mem_wr_en = write_back_valid;
 
@@ -32,8 +32,8 @@ assign fetch_enable = ~hit;
 cache data_cache (
     .clk             (clk),
     .rd_en           (MemRead),
-
     .wr_en           (MemWrite),
+    
     .WriteData       (WriteData),
     .addr            (ALUResult),
     .funct3          (funct3),
@@ -41,7 +41,7 @@ cache data_cache (
     .fetch_data      (fetch_data),
     .fetch_enable    (fetch_enable),
 
-    .ReadData_c      (ReadData_c),
+    .cache_read      (cache_read),
     .hit             (hit),
     .write_back_data (write_back_data),
     .write_back_valid(write_back_valid),
@@ -61,8 +61,8 @@ assign fetch_data = ReadBlockData;
 
 
 mux mem_type(
-    .in0        (ReadBlockData[(ALUResult[3:2] * 32) +: 32]), // Selects the word to be written to the register file
-    .in1        (ReadData_c),
+    .in0        (ReadBlockData[(ALUResult[3:2] * 32) +: 32]), // Selects the word to be written
+    .in1        (cache_read),
     .sel        (hit),
     .out        (Data)
 );
