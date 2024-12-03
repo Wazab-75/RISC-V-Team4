@@ -6,7 +6,7 @@ module  Stage1#(
     input logic                     rst,
 
     //instrmem input
-    input logic[DATA_WIDTH-1:0]        dout,
+    input logic[DATA_WIDTH-1:0]         RDi,
     //PC input
     input logic[DATA_WIDTH-1:0]        pc,
 
@@ -34,7 +34,7 @@ always_ff @(posedge clk) begin
     end
     else begin
         //instr
-        InstrD <= dout;
+        InstrD <=  RDi;
         //pc
         pc_next<= pc;
         

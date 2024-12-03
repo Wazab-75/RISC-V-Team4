@@ -10,6 +10,8 @@ module  Stage4#(
     input logic[DATA_WIDTH-1:0]        ALUResultM,
     //datamem input
     input logic[DATA_WIDTH-1:0]        ReadData,
+    //rd
+    input logic[4:0]                   RdM,
    
 
     // control output
@@ -19,6 +21,8 @@ module  Stage4#(
     output logic[DATA_WIDTH-1:0]        ALUResultW,
     //datamem output
     output logic[DATA_WIDTH-1:0]        ReadDataW,
+    //rd
+    output logic[4:0]                   RdW,
     
 
 );
@@ -31,7 +35,8 @@ always_ff @(posedge clk) begin
     ALUResultW <= ALUResultM;
     //data mem
     ReadDataW <= ReadData;
-    
+     //rd
+    RdW <= RdM;
 end
     
 endmodule

@@ -15,6 +15,8 @@ module Stage2#(
     input logic[DATA_WIDTH-1:0]     RD1,
     input logic[DATA_WIDTH-1:0]     RD2,
     //
+    input logic[4:0]                RdD,
+    //
     input logic[4:0]                ReadData,
     // extend input
     input logic[DATA_WIDTH-1:0]     ImmExt,
@@ -32,6 +34,7 @@ module Stage2#(
     output logic[DATA_WIDTH-1:0]     RD1E,
     output logic[DATA_WIDTH-1:0]     RD2E,
     //rd
+    output logic[4:0]                RdE,
     output logic[4:0]                ReadDataE,
     // extend output
     output logic[DATA_WIDTH-1:0]     ImmExtE,
@@ -57,6 +60,7 @@ always_ff @(posedge clk) begin
         ALUSrcE <= 0;
         RD1E <= 0;
         RD2E <= 0;
+        RdE <= 0;
         ReadDataE <= 0;
         ImmExtE <= 0;
         pce <= 0;
@@ -72,6 +76,8 @@ always_ff @(posedge clk) begin
         //regfile
         RD1E <= RD1;
         RD2E <= RD2;
+        //rd
+        RdE <= RdD;
         //rd
         ReadDataE <= ReadData;
         //extend

@@ -12,6 +12,8 @@ module Stage3#(
     input logic[DATA_WIDTH-1:0]        ALUResult,
     //regfile input
     input logic[DATA_WIDTH-1:0]        WriteDataE,
+    //rd
+    input logic[4:0]                   RdE,
     
    
 
@@ -23,6 +25,8 @@ module Stage3#(
     output logic[DATA_WIDTH-1:0]        ALUResultM,
     //regfile output
     output logic[DATA_WIDTH-1:0]        WriteDataM,
+     //rd
+    output logic[4:0]                   RdM,
    
     
 
