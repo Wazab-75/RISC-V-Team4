@@ -1,7 +1,7 @@
 module cache #(
     parameter DATA_WIDTH = 32,
               BLOCK_SIZE = 4,  // 4 words per block
-              NUM_BLOCKS = 2   // Number of cache lines
+              NUM_BLOCKS = 2   // 2 cache lines
 )(
     input  logic                               clk,
     input  logic                               rd_en,
@@ -21,9 +21,9 @@ module cache #(
 );
 
 logic [DATA_WIDTH-1:0] data_array [NUM_BLOCKS-1:0][BLOCK_SIZE-1:0]; // Data storage
-logic [26:0] tag_array [NUM_BLOCKS-1:0];                            // Tags
-logic        v [NUM_BLOCKS-1:0];                                    // Valid bits
-logic        d [NUM_BLOCKS-1:0];                                    // Dirty bits
+logic [26:0]           tag_array [NUM_BLOCKS-1:0];                  // Tags
+logic                  v [NUM_BLOCKS-1:0];                          // Valid bits
+logic                  d [NUM_BLOCKS-1:0];                          // Dirty bits
 
 logic [26:0] tag;
 logic        set;
@@ -49,7 +49,7 @@ always_ff @(posedge clk) begin
     if (wr_en) begin
         if (v[set] && tag_array[set] == tag) begin
             hit <= 1;
-            d[set] <= 1; // Mark block as dirty
+            d[set] <= 1;
         end 
         else begin
             // Cache miss or invalid block
@@ -71,8 +71,8 @@ always_ff @(posedge clk) begin
 
             // Store new data in cache
             tag_array[set] <= tag;
-            v[set] <= 1; // Mark block as valid
-            d[set] <= 1; // Mark block as dirty
+            v[set] <= 1;
+            d[set] <= 1; 
         end
 
         case (funct3)
@@ -86,9 +86,9 @@ always_ff @(posedge clk) begin
             // Cache hit: Read data
             hit <= 1;
             case (funct3)
-                3'b000: cache_read <= {24'b0, data_array[set][offset][7:0]}; // Byte read 
+                3'b000: cache_read <= {24'b0, data_array[set][offset][7:0]};  // Byte read 
                 3'b001: cache_read <= {16'b0, data_array[set][offset][15:0]}; // Half-word read 
-                3'b010: cache_read <= data_array[set][offset];                 // Full word read
+                3'b010: cache_read <= data_array[set][offset];                // Full word read
             endcase
         end 
         else begin
@@ -119,8 +119,8 @@ always_ff @(posedge clk) begin
             end
 
             tag_array[set] <= tag;
-            v[set] <= 1; // Mark block as valid
-            d[set] <= 0; // Newly fetched block is clean
+            v[set] <= 1; 
+            d[set] <= 0; 
 
             cache_read <= {
                 fetch_data[(offset * DATA_WIDTH) + 31 -: 8],
