@@ -44,95 +44,78 @@ initial begin
     end
 end
 
-
+// Cache Operations
 always_ff @(posedge clk) begin
     if (wr_en) begin
         if (v[set] && tag_array[set] == tag) begin
             hit <= 1;
-            d[set] <= 1;
-        end 
-        else begin
-            // Cache miss or invalid block
+            d[set] <= 1; // Mark as dirty
+        end else begin
             hit <= 0;
             if (d[set] && v[set]) begin
-                // Write back dirty block in big-endian order
                 for (int i = 0; i < BLOCK_SIZE; i++) begin
-                    write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= {
-                        data_array[set][i][31:24], data_array[set][i][23:16],
-                        data_array[set][i][15:8], data_array[set][i][7:0]
-                    };
+                    write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= data_array[set][i];
                 end
                 write_back_addr <= {tag_array[set], set, 4'b0};
                 write_back_valid <= 1;
-            end 
-            else begin
+            end else begin
                 write_back_valid <= 0;
             end
 
-            // Store new data in cache
             tag_array[set] <= tag;
             v[set] <= 1;
-            d[set] <= 1; 
+            d[set] <= 1; // Mark as dirty
         end
 
         case (funct3)
-            3'b000: data_array[set][offset][31:24] <= WriteData[7:0];   // Byte write (big-endian)
-            3'b001: data_array[set][offset][31:16] <= WriteData[15:0];  // Half-word write (big-endian)
-            3'b010: data_array[set][offset] <= WriteData;               // Full word write
+            3'b000: data_array[set][offset][7:0]   <= WriteData[7:0];   // Byte write (little-endian)
+            3'b001: data_array[set][offset][15:0]  <= WriteData[15:0];  // Half-word write (little-endian)
+            3'b010: data_array[set][offset]        <= WriteData;        // Full word write
         endcase
-    end 
-    else if (rd_en) begin
+    end else if (rd_en) begin
         if (v[set] && tag_array[set] == tag) begin
-            // Cache hit: Read data
             hit <= 1;
-            case (funct3)
-                3'b000: cache_read <= {24'b0, data_array[set][offset][7:0]};  // Byte read 
-                3'b001: cache_read <= {16'b0, data_array[set][offset][15:0]}; // Half-word read 
-                3'b010: cache_read <= data_array[set][offset];                // Full word read
-            endcase
-        end 
-        else begin
-            
-            // Cache miss: Fetch data from memory
+        end else begin
             hit <= 0;
             if (d[set] && v[set]) begin
-                // Write back dirty block in big-endian order
                 for (int i = 0; i < BLOCK_SIZE; i++) begin
-                    write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= {
-                        data_array[set][i][31:24], data_array[set][i][23:16],
-                        data_array[set][i][15:8], data_array[set][i][7:0]
-                    };
+                    write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= data_array[set][i];
                 end
                 write_back_addr <= {tag_array[set], set, 4'b0};
                 write_back_valid <= 1;
-            end 
-            else begin
+            end else begin
                 write_back_valid <= 0;
             end
 
-            // Fetch and store in big-endian order
             for (int i = 0; i < BLOCK_SIZE; i++) begin
-                data_array[set][i] <= {
-                    fetch_data[(i*DATA_WIDTH) + 31 -: 8], fetch_data[(i*DATA_WIDTH) + 23 -: 8],
-                    fetch_data[(i*DATA_WIDTH) + 15 -: 8], fetch_data[(i*DATA_WIDTH) + 7 -: 8]
-                };
+                data_array[set][i] <= fetch_data[(i*DATA_WIDTH) +: DATA_WIDTH];
             end
 
             tag_array[set] <= tag;
-            v[set] <= 1; 
-            d[set] <= 0; 
-
-            cache_read <= {
-                fetch_data[(offset * DATA_WIDTH) + 31 -: 8],
-                fetch_data[(offset * DATA_WIDTH) + 23 -: 8],
-                fetch_data[(offset * DATA_WIDTH) + 15 -: 8],
-                fetch_data[(offset * DATA_WIDTH) + 7 -: 8]
-            }; 
+            v[set] <= 1;
+            d[set] <= 0;
         end
-    end 
-    else begin
-        // No operation
+    end else begin
         hit <= 0;
+    end
+end
+
+// Cache Read Logic
+always_comb begin
+    if (!hit && fetch_enable) begin
+        case (funct3)
+            3'b000: cache_read = {24'b0, fetch_data[(offset * DATA_WIDTH) +: 8]};  // Byte read
+            3'b001: cache_read = {16'b0, fetch_data[(offset * DATA_WIDTH) +: 16]}; // Half-word read
+            3'b010: cache_read = fetch_data[(offset * DATA_WIDTH) +: DATA_WIDTH];  // Full word read
+            default: cache_read = 32'b0;
+        endcase
+    end else begin
+        case (funct3)
+            3'b000: cache_read = {24'b0, data_array[set][offset][7:0]};  // Byte read
+            3'b001: cache_read = {16'b0, data_array[set][offset][15:0]}; // Half-word read
+            3'b010: cache_read = data_array[set][offset];                // Full word read
+            default: cache_read = 32'b0;
+        endcase
     end
 end
 

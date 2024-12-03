@@ -19,7 +19,7 @@ protected:
     void simulateClockCycle() {
         top->clk = 1;
         top->eval();
-        tfp->dump(ticks++); // Capture the waveform
+        tfp->dump(ticks++);
         top->clk = 0;
         top->eval();
         tfp->dump(ticks++);
@@ -27,29 +27,25 @@ protected:
 
     void reset() {
         initializeInputs();
-        simulateClockCycle(); // Allow the system to reset properly
+        simulateClockCycle();
     }
 
     void finalizeSimulation() {
         for (int i = 0; i < 10; i++) {
-            simulateClockCycle(); // Ensure extra clock cycles to capture all activity
+            simulateClockCycle();
         }
     }
 };
 
-
-// Test 1: Write and Read (Basic Functionality)
 TEST_F(TopMemoryTestbench, WriteAndReadTest) {
     reset();
-    // Write to memory through the cache
     top->ALUResult = 0x10;
     top->WriteData = 0xDEADBEEF;
     top->MemWrite = 1;
-    top->funct3 = 0b010;  // Full word write
+    top->funct3 = 0b010;
     simulateClockCycle();
     top->MemWrite = 0;
 
-    // Read back the same data
     top->ALUResult = 0x10;
     top->MemRead = 1;
     simulateClockCycle();
@@ -58,49 +54,39 @@ TEST_F(TopMemoryTestbench, WriteAndReadTest) {
     EXPECT_EQ(top->Result, 0xDEADBEEF) << "Mismatch during read after write.";
 }
 
-
-// Test 3: Dirty Block Write-Back
 TEST_F(TopMemoryTestbench, DirtyBlockWriteBackTest) {
     reset();
-    top->funct3 = 0b010; // Full word read
+    top->funct3 = 0b010;
 
-    // Step 1: Write to an address to mark it as dirty
-    top->ALUResult = 0x10;       // Address 0x10
-    top->WriteData = 0xBEEFCAFE; // Data to write
+    top->ALUResult = 0x10;
+    top->WriteData = 0xBEEFCAFE;
     top->MemWrite = 1;
-    top->funct3 = 0b010;         // Full word write
+    top->funct3 = 0b010;
     simulateClockCycle();
     top->MemWrite = 0;
 
-    // Step 2: Access a new block to trigger eviction
-    top->ALUResult = 0x30; // Address 0x30 in a different block
+    top->ALUResult = 0x30;
     top->MemRead = 1;
     simulateClockCycle();
     top->MemRead = 0;
     
-    // Step 3: Optionally verify the cache state after eviction
-    top->ALUResult = 0x10; // Re-access address 0x10
+    top->ALUResult = 0x10;
     top->MemRead = 1;
     simulateClockCycle();
     top->MemRead = 0;
 
-    // Ensure cache miss occurred and correct data fetched back
     EXPECT_EQ(top->Result, 0xBEEFCAFE) << "Expected ResultSrc to point to memory during fetch.";
 }
 
-
-// Test 4: Partial Write and Read
 TEST_F(TopMemoryTestbench, PartialWriteTest) {
     reset();
-    // Perform a half-word write
     top->ALUResult = 0x10;
     top->WriteData = 0x00FFFACE;
     top->MemWrite = 1;
-    top->funct3 = 0b001;  // Half-word write
+    top->funct3 = 0b001;
     simulateClockCycle();
     top->MemWrite = 0;
 
-    // Read back the data
     top->ALUResult = 0x10;
     top->MemRead = 1;
     simulateClockCycle();
@@ -109,33 +95,27 @@ TEST_F(TopMemoryTestbench, PartialWriteTest) {
     EXPECT_EQ(top->Result, 0x0000FACE) << "Partial write/read mismatch.";
 }
 
-
-// Test 5: Cache Eviction Policy
 TEST_F(TopMemoryTestbench, CacheEvictionPolicyTest) {
     reset();
-    top->funct3 = 0b010; // Full word read
-    // Write data to cache to fill one set
+    top->funct3 = 0b010;
     top->ALUResult = 0x10;
     top->WriteData = 0xCAFEBABE;
     top->MemWrite = 1;
     simulateClockCycle();
 
-    // Trigger eviction with a new block in the same set
-    top->ALUResult = 0x30; // Different block, same set
+    top->ALUResult = 0x30;
     top->WriteData = 0xDEADFACE;
     simulateClockCycle();
     top->MemWrite = 0;
-    simulateClockCycle();  
-    // Assert eviction
+    simulateClockCycle();
     top->MemRead = 1;
 
-    top->ALUResult = 0x10; // Re-access the evicted block
+    top->ALUResult = 0x10;
     simulateClockCycle();
     simulateClockCycle();
 
     EXPECT_EQ(top->Result, 0xCAFEBABE) << "Evicted data mismatch in memory.";
 }
-
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
