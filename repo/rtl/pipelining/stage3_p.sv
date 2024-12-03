@@ -14,6 +14,8 @@ module Stage3#(
     input logic[DATA_WIDTH-1:0]        WriteDataE,
     //rd
     input logic[4:0]                   RdE,
+    //PC input
+    input logic[DATA_WIDTH-1:0]        PC_PlusE,
     
    
 
@@ -27,6 +29,8 @@ module Stage3#(
     output logic[DATA_WIDTH-1:0]        WriteDataM,
      //rd
     output logic[4:0]                   RdM,
+    //PC output
+    output logic[DATA_WIDTH-1:0]        PC_PlusM
    
     
 
@@ -41,6 +45,10 @@ always_ff @(posedge clk) begin
         ALUResultM <= ALUResult;
         //regfile
         WriteDataM <= WriteDataE;
+        //rd
+        RdM <= RdE;
+        //PC
+        PC_PlusM <= PC_PlusE;
        
        
     end
