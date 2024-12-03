@@ -12,6 +12,8 @@ module  Stage4#(
     input logic[DATA_WIDTH-1:0]        ReadData,
     //rd
     input logic[4:0]                   RdM,
+    //PC input
+    input logic[DATA_WIDTH-1:0]        PC_PlusM,
    
 
     // control output
@@ -23,6 +25,8 @@ module  Stage4#(
     output logic[DATA_WIDTH-1:0]        ReadDataW,
     //rd
     output logic[4:0]                   RdW,
+    //PC output
+    output logic[DATA_WIDTH-1:0]        PC_PlusW
     
 
 );
@@ -37,6 +41,8 @@ always_ff @(posedge clk) begin
     ReadDataW <= ReadData;
      //rd
     RdW <= RdM;
+    //PC
+    PC_PlusW <= PC_PlusM;
 end
     
 endmodule

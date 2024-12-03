@@ -9,11 +9,13 @@ module  Stage1#(
     input logic[DATA_WIDTH-1:0]         RDi,
     //PC input
     input logic[DATA_WIDTH-1:0]        pc,
+    input logic[DATA_WIDTH-1:0]        PC_PlusF,
 
     //instrmem output
     output logic[DATA_WIDTH-1:0]        InstrD,
     //PC output
     output logic[DATA_WIDTH-1:0]        pc_next,
+    output logic[DATA_WIDTH-1:0]        PC_PlusD
 
 );
 
@@ -23,6 +25,7 @@ always_ff @(posedge clk) begin
         InstrD <= 0;
         //pc
         pc_next<= 0;
+        PC_PlusD <= 0; 
        
     end
     else if(en) begin
@@ -30,6 +33,7 @@ always_ff @(posedge clk) begin
         InstrD <= InstrD;
         //pc
         pc_next<= pc_next;
+        PC_PlusD <= PC_PlusD; 
         
     end
     else begin
@@ -37,6 +41,7 @@ always_ff @(posedge clk) begin
         InstrD <=  RDi;
         //pc
         pc_next<= pc;
+        PC_PlusD <= PC_PlusF; 
         
     end
 end

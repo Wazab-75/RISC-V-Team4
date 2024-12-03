@@ -22,6 +22,10 @@ module Stage2#(
     input logic[DATA_WIDTH-1:0]     ImmExt,
     //PC input
     input logic[DATA_WIDTH-1:0]     pc,
+    input logic[DATA_WIDTH-1:0]     PC_PlusD,
+     // forward
+    input logic[4:0]                Rs1D,
+    input logic[4:0]                Rs2D,
     
     
     // control output 
@@ -40,6 +44,11 @@ module Stage2#(
     output logic[DATA_WIDTH-1:0]     ImmExtE,
     //PC output
     output logic[DATA_WIDTH-1:0]     pce,
+    output logic[DATA_WIDTH-1:0]     PC_PlusE,
+    //output
+    output logic[4:0]                Rs1E,
+    output logic[4:0]                Rs2E
+
     
 
     //function3
@@ -64,6 +73,9 @@ always_ff @(posedge clk) begin
         ReadDataE <= 0;
         ImmExtE <= 0;
         pce <= 0;
+        PC_PlusE <= 0;
+        Rs1E <= 0;
+        Rs2E <= 0;
         funct3E<=0;
     end 
     else begin
@@ -84,6 +96,8 @@ always_ff @(posedge clk) begin
         ImmExtE <= ImmExt;
         //PC
         pce <= pc;
+        PC_PlusE <= PC_PlusD;
+
         funct3E<=funct3;
     end
 
