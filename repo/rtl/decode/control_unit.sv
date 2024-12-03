@@ -29,7 +29,7 @@ assign funct7 = Instr[31:25];
         RegWrite = 0;
         ALUctrl = 4'b0000;
         ALUSrc = 0;
-        ImmSrc = 2'b00;
+        ImmSrc = 3'b000;
         PCSrc = 0;
         MemWrite = 0;
         ResultSrc= 0;
@@ -43,7 +43,7 @@ assign funct7 = Instr[31:25];
                 ImmSrc = 3'b100;
                 PCSrc = 1;
                 MemWrite = 0;
-                ResultSrc = pc_next;         
+                ResultSrc = 0;         
             end
 
             7'b0010011: begin   // I-type
@@ -55,7 +55,7 @@ assign funct7 = Instr[31:25];
                     ImmSrc = 3'b000;
                     PCSrc = 0;
                     MemWrite = 0;
-                    ResultSrc = ALUout;              
+                    ResultSrc = 0;              
                 end 
             end
 
@@ -68,7 +68,7 @@ assign funct7 = Instr[31:25];
                     ImmSrc = 3'b001;
                     PCSrc = 0;
                     MemWrite = 1;
-                    ResultSrc = 2'bXX;           
+                    ResultSrc = 0;           
                 end 
             end
 
@@ -81,7 +81,7 @@ assign funct7 = Instr[31:25];
                     ImmSrc = 3'b010;       
                     PCSrc = ~EQ;  
                     MemWrite = 0;
-                    ResultSrc = 2'bXX;  // can be omitted?      
+                    ResultSrc = 0;    
                 end 
             end
 
@@ -91,10 +91,10 @@ assign funct7 = Instr[31:25];
                     RegWrite = 1;  
                     ALUctrl = `ALU_OPCODE_ADD;    
                     ALUSrc = 0;       
-                    ImmSrc = 3'bXX;       
+                    ImmSrc = 3'bXXX;       
                     PCSrc = 0;  
                     MemWrite = 0;
-                    ResultSrc = ALUout;   
+                    ResultSrc = 0;   
                 end 
             end
 
@@ -107,7 +107,7 @@ assign funct7 = Instr[31:25];
                     ImmSrc = 3'b000;       
                     PCSrc = 0;  
                     MemWrite = 0;
-                    ResultSrc = MEM;   
+                    ResultSrc = 0;   
                 end 
             end
 
@@ -119,7 +119,7 @@ assign funct7 = Instr[31:25];
                 ImmSrc = 3'b000;
                 PCSrc = 1;
                 MemWrite = 0;
-                ResultSrc = pc_next;         
+                ResultSrc = 0;         
             end
 
             7'b0010111: begin   // U-type
@@ -130,7 +130,7 @@ assign funct7 = Instr[31:25];
                 ImmSrc = 3'b011;
                 PCSrc = 0;  
                 MemWrite = 0;
-                ResultSrc = ALUout;   
+                ResultSrc = 0;   
             end
 
             7'b0110011: begin
@@ -162,7 +162,7 @@ assign funct7 = Instr[31:25];
                         RegWrite = 0;
                         ALUctrl = 4'b0000;
                         ALUSrc = 0;
-                        ImmSrc = 2'b00;
+                        ImmSrc = 3'b000;
                         PCSrc = 0;
                         MemWrite = 0;
                         ResultSrc= 0;
@@ -174,7 +174,7 @@ assign funct7 = Instr[31:25];
                 RegWrite = 0;
                 ALUctrl = 4'b0000;
                 ALUSrc = 0;
-                ImmSrc = 2'b00;
+                ImmSrc = 3'b000;
                 PCSrc = 0;
                 MemWrite = 0;
                 ResultSrc= 0;
