@@ -15,7 +15,6 @@ module control_unit (
     output logic        MemWrite,
     output logic        ResultSrc
 );
-
 logic  [6:0]  op;
 logic  [2:0]  funct3;
 logic  [6:0]  funct7;
