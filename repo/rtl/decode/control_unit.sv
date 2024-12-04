@@ -38,44 +38,15 @@ assign funct7 = Instr[31:25];
         // R-type
             7'b0110011: begin
                 case(funct3)
-                    3'b000: begin
-                        if (funct7 == 0)   // ADD
-                            ALUctrl = `ALU_OPCODE_ADD;
-                        else if (funct7 == 7'b0100000)   // SUB
-                            ALUctrl = `ALU_OPCODE_SUB;
-                    end
-
-                    3'b001: begin    //sll: Shift Left Logical
-                        ALUctrl = `ALU_OPCODE_SLL;
-                    end
-
-                    3'b010: begin   //slt: Set Less Than
-                        ALUctrl = `ALU_OPCODE_SLT;
-                    end
-                    
-                    3'b011: begin   //sltu: Set Less Than (U)
-                        ALUctrl = // TODO
-                    end
-
-                    3'b100: begin   //XOR
-                        ALUctrl = `ALU_OPCODE_XOR;
-                    end
-
-                    3'b101: begin   
-                        if (funct7 == 0)   //srl: Shift Right Logical
-                            ALUctrl = `ALU_OPCODE_SRL;
-                        else if (funct7 == 7'b0100000)   //sra: Shift Right Arith*
-                            ALUctrl = `ALU_OPCODE_SRA;
-                    end
-
-                    3'b110: begin   // OR
-                        ALUctrl = `ALU_OPCODE_OR;
-                    end
-
-                    3'b111: begin   // AND
-                        ALUctrl = `ALU_OPCODE_AND;
-                    end
-
+                    3'b000: ALUctrl = {3'b000, funct7[5]};   // ADD, SUB
+                    3'b001: ALUctrl = `ALU_OPCODE_SLL;  //sll: Shift Left Logical
+                    3'b010: ALUctrl = `ALU_OPCODE_SLT;  //slt: Set Less Than                    
+                    3'b011: ALUctrl = // TODO           //sltu: Set Less Than (U)
+                    3'b100: ALUctrl = `ALU_OPCODE_XOR;  //XOR
+                    3'b101: ALUctrl = {3'b100, funct7[5]}; //srl: Shift Right Logical, sra: Shift Right Arith*
+                    3'b110: ALUctrl = `ALU_OPCODE_OR;  // OR
+                    3'b111: ALUctrl = `ALU_OPCODE_AND;   // AND
+    
                     default: begin
                         RegWrite = 1;
                         ALUctrl = 4'b0000;
@@ -91,40 +62,14 @@ assign funct7 = Instr[31:25];
         // I-type
             7'b0010011: begin   
                 case(funct3)
-                    3'b000: begin     // addi: ADD Immediate 
-                        ALUctrl = `ALU_OPCODE_ADD;           
-                    end 
-
-                    3'b001: begin    //slli: Shift Left Logical Imm
-                        ALUctrl = `ALU_OPCODE_SLL;
-                    end
-
-                    3'b010: begin   //slti: Set Less Than Imm
-                        ALUctrl = `ALU_OPCODE_SLT;
-                    end
-                    
-                    3'b011: begin   //sltiu: Set Less Than Imm (U)
-                        ALUctrl = // TODO
-                    end
-
-                    3'b100: begin   //xori: XOR Immediate
-                        ALUctrl = `ALU_OPCODE_XOR;
-                    end
-
-                    3'b101: begin   
-                        if (funct7 == 0)   //srli: Shift Right Logical Imm 
-                            ALUctrl = `ALU_OPCODE_SRL;
-                        else if (funct7 == 7'b0100000)   //srai: Shift Right Arith Imm
-                            ALUctrl = `ALU_OPCODE_SRA;
-                    end
-
-                    3'b110: begin   // ori: OR Immediate
-                        ALUctrl = `ALU_OPCODE_OR;
-                    end
-
-                    3'b111: begin   // andi: AND Immediate 
-                        ALUctrl = `ALU_OPCODE_AND;
-                    end
+                    3'b000: ALUctrl = `ALU_OPCODE_ADD;   // addi: ADD Immediate 
+                    3'b001: ALUctrl = `ALU_OPCODE_SLL;   //slli: Shift Left Logical Imm
+                    3'b010: ALUctrl = `ALU_OPCODE_SLT;   //slti: Set Less Than Imm
+                    3'b011: ALUctrl = // TODO            //sltiu: Set Less Than Imm (U)
+                    3'b100: ALUctrl = `ALU_OPCODE_XOR;   //xori: XOR Immediate
+                    3'b101: ALUctrl = {3'b100, funct7[5]}; //srli: Shift Right Logical Imm, srai: Shift Right Arith Imm
+                    3'b110: ALUctrl = `ALU_OPCODE_OR;    // ori: OR Immediate
+                    3'b111: ALUctrl = `ALU_OPCODE_AND;   // andi: AND Immediate 
 
                     default: begin
                         RegWrite = 1;
@@ -142,25 +87,11 @@ assign funct7 = Instr[31:25];
         // I-type
             7'b0000011: begin   
                 case(funct3)
-                    3'b000: begin     //lb: Load Byte 
-                        // TODO
-                    end
-
-                    3'b001: begin    //lh: Load Half
-                        // TODO
-                    end
-
-                    3'b010: begin   //lw: Load Word
-                        // TODO
-                    end
-                    
-                    3'b100: begin   //lbu: Load Byte (U)
-                        // TODO
-                    end
-
-                    3'b101: begin   //lhu: Load Half (U)
-                        // TODO
-                    end
+                    3'b000: // TODO     //lb: Load Byte 
+                    3'b001: // TODO     //lh: Load Half
+                    3'b010: // TODO     //lw: Load Word
+                    3'b100: // TODO     //lbu: Load Byte (U) 
+                    3'b101: // TODO     ////lhu: Load Half (U)
 
                     default: begin
                         RegWrite = 1;
@@ -177,17 +108,9 @@ assign funct7 = Instr[31:25];
         // S-type
             7'b0100011: begin   
                 case(funct3)
-                    3'b000: begin     //sb: Store Byte 
-                        // TODO
-                    end
-
-                    3'b001: begin    //sh: Store Half
-                        // TODO
-                    end
-
-                    3'b010: begin   //sw: Store Word
-                        // TODO
-                    end
+                    3'b000: // TODO    //sb: Store Byte 
+                    3'b001: // TODO    //sh: Store Half
+                    3'b010: // TODO    //sw: Store Word
 
                     default: begin
                         RegWrite = 0;
@@ -204,29 +127,12 @@ assign funct7 = Instr[31:25];
         // B-type
             7'b1100011: begin   
                 case(funct3)
-                    3'b000: begin     //beq: Branch ==
-                        // TODO
-                    end
-
-                    3'b001: begin    //bne: Branch !=
-                        // TODO
-                    end
-                    
-                    3'b100: begin   //blt: Branch <
-                        // TODO
-                    end
-
-                    3'b101: begin   //bge: Branch ≥
-                        // TODO
-                    end
-
-                    3'b110: begin   //bltu: Branch < (U)
-                        // TODO
-                    end
-
-                    3'b111: begin   //bgeu: Branch ≥ (U) 
-                        // TODO
-                    end
+                    3'b000: PCSrc = Zero;    //beq: Branch ==
+                    3'b001: PCSrc = ~Zero;   //bne: Branch !=                 
+                    3'b100: // TODO          //blt: Branch <
+                    3'b101: // TODO          //bge: Branch ≥
+                    3'b110: // TODO          //bltu: Branch < (U)
+                    3'b111: // TODO          //bgeu: Branch ≥ (U)
 
                     default: begin
                         RegWrite = 0;
@@ -242,24 +148,42 @@ assign funct7 = Instr[31:25];
 
         // J-type
             7'b1101111: begin   //jal: Jump And Link
-                // TODO
+                RegWrite = 1;
+                ALUctrl = 4'b0000;
+                ALUSrc = = 1;
+                ImmSrc = 3'b100;
+                PCSrc = 1;
+                MemWrite = 0;
+                ResultSrc= 0;
             end
 
         // I-type    
             7'b1100111: begin    //jalr: Jump And Link Reg
-                // TODO
+                RegWrite = 1;
+                ALUctrl = 4'b0000;
+                ALUSrc = = 1;
+                ImmSrc = 3'b000;
+                PCSrc = 1;
+                MemWrite = 0;
+                ResultSrc= 0;
             end
 
         // U-type
             7'b0110111: begin    //lui: Load Upper Imm
-                // TODO
+                RegWrite = 1;  
+                ALUctrl = `ALU_OPCODE_LUI;    
+                ALUSrc = 1;       
+                ImmSrc = 3'b011;
+                PCSrc = 0;  
+                MemWrite = 0;
+                ResultSrc = 0;   
             end
 
         // U-type
             7'b0010111: begin    //auipc: Add Upper Imm to PC 
                 // TODO
                 RegWrite = 1;  
-                ALUctrl = `ALU_OPCODE_ADD;    
+                ALUctrl = `ALU_OPCODE_LUI;    
                 ALUSrc = 1;       
                 ImmSrc = 3'b011;
                 PCSrc = 0;  
