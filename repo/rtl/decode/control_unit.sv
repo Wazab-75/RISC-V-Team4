@@ -5,7 +5,7 @@
 module control_unit (   
     input logic [31:0]  Instr,
 
-    input logic         EQ,
+    input logic         Zero,
 
     output logic        RegWrite,   
     output logic [3:0]  ALUctrl,    
@@ -79,7 +79,7 @@ assign funct7 = Instr[31:25];
                     ALUctrl = `ALU_OPCODE_SUB;    
                     ALUSrc = 0;       
                     ImmSrc = 3'b010;       
-                    PCSrc = ~EQ;  
+                    PCSrc = ~Zero; 
                     MemWrite = 0;
                     ResultSrc = 0;    
                 end 
