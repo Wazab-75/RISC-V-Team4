@@ -127,12 +127,12 @@ assign funct7 = Instr[31:25];
         // B-type
             7'b1100011: begin   
                 case(funct3)
-                    3'b000: PCSrc = Zero;    //beq: Branch ==
-                    3'b001: PCSrc = ~Zero;   //bne: Branch !=                 
-                    3'b100: // TODO          //blt: Branch <
-                    3'b101: // TODO          //bge: Branch ≥
-                    3'b110: // TODO          //bltu: Branch < (U)
-                    3'b111: // TODO          //bgeu: Branch ≥ (U)
+                    3'b000: ALUctrl = `ALU_OPCODE_BEQ;    //beq: Branch ==
+                    3'b001: ALUctrl = `ALU_OPCODE_BNE;    //bne: Branch !=                 
+                    3'b100: ALUctrl = `ALU_OPCODE_BLT;    //blt: Branch <
+                    3'b101: ALUctrl = `ALU_OPCODE_BGE;    //bge: Branch ≥
+                    3'b110: ALUctrl = `ALU_OPCODE_BLTU;   //bltu: Branch < (U)
+                    3'b111: ALUctrl = `ALU_OPCODE_BGEU;   //bgeu: Branch ≥ (U)
 
                     default: begin
                         RegWrite = 0;
