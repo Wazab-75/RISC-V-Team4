@@ -8,27 +8,26 @@ module alu #(
     input  logic [3:0]              ALUctrl,
 
     output logic [DATA_WIDTH-1:0]   ALUout,
+    output logic                    branch_l,
     output logic                    EQ
 );
 
-    // ALU operations
     always_comb begin
-        
+
         case (ALUctrl)
-            `ALU_OPCODE_ADD:     ALUout = ALUop1 + ALUop2;              // ADD operation
+            `ALU_OPCODE_ADD:     ALUout = ALUop1 + ALUop2;
 
-            `ALU_OPCODE_SUB:     ALUout = ALUop1 - ALUop2;              // SUB operation
+            `ALU_OPCODE_SUB:     ALUout = ALUop1 - ALUop2;
 
-            `ALU_OPCODE_AND:     ALUout = ALUop1 & ALUop2;              // AND operation
+            `ALU_OPCODE_AND:     ALUout = ALUop1 & ALUop2;
 
-            `ALU_OPCODE_OR:      ALUout = ALUop1 | ALUop2;               // OR operation
+            `ALU_OPCODE_OR:      ALUout = ALUop1 | ALUop2;
 
-            `ALU_OPCODE_XOR:     ALUout = ALUop1 ^ ALUop2;              // XOR operation
+            `ALU_OPCODE_XOR:     ALUout = ALUop1 ^ ALUop2;
 
-            `ALU_OPCODE_SLT:     ALUout = (ALUop1 < ALUop2) ? 1 : 0;    // set less than
-            
-            // shift op:
+            `ALU_OPCODE_SLT:     ALUout = (ALUop1 < ALUop2) ? 1 : 0;
 
+            // Shift operations:
             `ALU_OPCODE_LUI:     ALUout = ALUop2 << 12;
 
             `ALU_OPCODE_SLL:     ALUout = ALUop1 << ALUop2;
@@ -37,14 +36,26 @@ module alu #(
 
             `ALU_OPCODE_SRA:     ALUout = ALUop1 >>> ALUop2;
 
-            default:begin 
-                ALUout = 0;
-                EQ = 0;
-            end
+            // Branch instructions:
+            `ALU_OPCODE_BEQ: branch_l = (ALUop1 == ALUop2);
 
+            `ALU_OPCODE_BNE: branch_l = (ALUop1 != ALUop2);
+
+            `ALU_OPCODE_BLT: branch_l = ($signed(ALUop1) < $signed(ALUop2));
+
+            `ALU_OPCODE_BGE: branch_l = ($signed(ALUop1) >= $signed(ALUop2));
+
+            `ALU_OPCODE_BLTU: branch_l = (ALUop1 < ALUop2);
+
+            `ALU_OPCODE_BGEU: branch_l = (ALUop1 >= ALUop2);
+
+            default: begin
+                ALUout = 0;
+                branch_l = 0;
+            end
         endcase
 
-        EQ = (ALUout == 0'b0) ? 1 : 0;
+        EQ = (ALUout == 0) ? 1 : 0;
     end
 
 endmodule
