@@ -5,7 +5,7 @@
 module control_unit (   
     input logic [31:0]  Instr,
 
-    input logic         EQ,
+    input logic         Zero,
 
     output logic        RegWrite,   
     output logic [3:0]  ALUctrl,    
@@ -16,7 +16,6 @@ module control_unit (
     output logic        MemRead,
     output logic        ResultSrc
 );
-
 logic  [6:0]  op;
 logic  [2:0]  funct3;
 logic  [6:0]  funct7;
@@ -30,141 +29,55 @@ assign funct7 = Instr[31:25];
         RegWrite = 0;
         ALUctrl = 4'b0000;
         ALUSrc = 0;
-        ImmSrc = 2'b00;
+        ImmSrc = 3'b000;
         PCSrc = 0;
         MemWrite = 0;
         MemRead = 0;
         ResultSrc= 0;
 
         case (op) 
-            7'b1101111: begin   // J-type
-                // jal instruction
-                RegWrite = 1;               
-                ALUctrl = `ALU_OPCODE_ADD;    // ALU adds PC + imm to compute the jump target
-                ALUSrc = 1;     
-                ImmSrc = 3'b100;
-                PCSrc = 1;
-                MemWrite = 0;
-                ResultSrc = pc_next;         
-            end
 
-            7'b0010011: begin   // I-type
-                // addi instruction
-                if (funct3 == 3'b000) begin 
-                    RegWrite = 1;               
-                    ALUctrl = `ALU_OPCODE_ADD;   
-                    ALUSrc = 1; 
-                    ImmSrc = 3'b000;
-                    PCSrc = 0;
-                    MemWrite = 0;
-                    ResultSrc = ALUout;              
-                end 
-            end
-
-            7'b0100011: begin   // S-type
-                // sb instruction
-                if (funct3 == 3'b000) begin 
-                    RegWrite = 0;               
-                    ALUctrl = `ALU_OPCODE_ADD;   
-                    ALUSrc = 1; 
-                    ImmSrc = 3'b001;
-                    PCSrc = 0;
-                    MemWrite = 1;
-                    ResultSrc = 2'bXX;           
-                end 
-            end
-
-            7'b1100011: begin   // B-type
-                // bne instruction
-                if (funct3 == 3'b001) begin 
-                    RegWrite = 0;  
-                    ALUctrl = `ALU_OPCODE_SUB;    
-                    ALUSrc = 0;       
-                    ImmSrc = 3'b010;       
-                    PCSrc = ~EQ;  
-                    MemWrite = 0;
-                    ResultSrc = 2'bXX;  // can be omitted?      
-                end 
-            end
-
-            7'b0110011: begin   // R-type
-                // add instruction
-                if (funct3 == 3'b000 && funct7 == 0) begin 
-                    RegWrite = 1;  
-                    ALUctrl = `ALU_OPCODE_ADD;    
-                    ALUSrc = 0;       
-                    ImmSrc = 3'bXX;       
-                    PCSrc = 0;  
-                    MemWrite = 0;
-                    ResultSrc = ALUout;   
-                end 
-            end
-
-            7'b0000011: begin   // I-type
-                // lbu instruction
-                if (funct3 == 3'h04) begin 
-                    RegWrite = 1;  
-                    ALUctrl = `ALU_OPCODE_ADD;    
-                    ALUSrc = 1;       
-                    ImmSrc = 3'b000;       
-                    PCSrc = 0;  
-                    MemWrite = 0;
-                    ResultSrc = MEM;   
-                end 
-            end
-
-            7'b1100111: begin   // I-type
-                // jalr instruction
-                RegWrite = 1;               
-                ALUctrl = `ALU_OPCODE_ADD;  
-                ALUSrc = 1;     
-                ImmSrc = 3'b000;
-                PCSrc = 1;
-                MemWrite = 0;
-                ResultSrc = pc_next;         
-            end
-
-            7'b0010111: begin   // U-type
-                // auipc instruction
-                RegWrite = 1;  
-                ALUctrl = `ALU_OPCODE_ADD;    
-                ALUSrc = 1;       
-                ImmSrc = 3'b011;
-                PCSrc = 0;  
-                MemWrite = 0;
-                ResultSrc = ALUout;   
-            end
-
+        // R-type
             7'b0110011: begin
                 case(funct3)
-                    3'b000: begin
-                        RegWrite = 1;
-
-                        if(funct7 == 0)   // ADD
-                            ALUctrl = `ALU_OPCODE_ADD;
-                        else if(funct7 == 1)   // SUB
-                            ALUctrl = `ALU_OPCODE_SUB;
-                    end
-
-                    3'b111: begin   // AND
-                        RegWrite = 1;
-                        ALUctrl = `ALU_OPCODE_AND;
-                    end
-
-                    3'b110: begin   // OR
-                        RegWrite = 1;
-                        ALUctrl = `ALU_OPCODE_OR;
-                    end
-
-                    3'b101: begin   // SLT
-                        RegWrite = 1;
-                        ALUctrl = `ALU_OPCODE_SLT;
-                    end
+                    3'b000: ALUctrl = {3'b000, funct7[5]};   // ADD, SUB
+                    3'b001: ALUctrl = `ALU_OPCODE_SLL;  //sll: Shift Left Logical
+                    3'b010: ALUctrl = `ALU_OPCODE_SLT;  //slt: Set Less Than                    
+                    3'b011: ALUctrl = // TODO           //sltu: Set Less Than (U)
+                    3'b100: ALUctrl = `ALU_OPCODE_XOR;  //XOR
+                    3'b101: ALUctrl = {3'b100, funct7[5]}; //srl: Shift Right Logical, sra: Shift Right Arith*
+                    3'b110: ALUctrl = `ALU_OPCODE_OR;  // OR
+                    3'b111: ALUctrl = `ALU_OPCODE_AND;   // AND
+    
                     default: begin
-                        RegWrite = 0;
+                        RegWrite = 1;
                         ALUctrl = 4'b0000;
                         ALUSrc = 0;
-                        ImmSrc = 2'b00;
+                        ImmSrc = 3'bXXX;
+                        PCSrc = 0;
+                        MemWrite = 0;
+                        ResultSrc= 0;
+                    end
+                endcase
+
+
+        // I-type
+            7'b0010011: begin   
+                case(funct3)
+                    3'b000: ALUctrl = `ALU_OPCODE_ADD;   // addi: ADD Immediate 
+                    3'b001: ALUctrl = `ALU_OPCODE_SLL;   //slli: Shift Left Logical Imm
+                    3'b010: ALUctrl = `ALU_OPCODE_SLT;   //slti: Set Less Than Imm
+                    3'b011: ALUctrl = // TODO            //sltiu: Set Less Than Imm (U)
+                    3'b100: ALUctrl = `ALU_OPCODE_XOR;   //xori: XOR Immediate
+                    3'b101: ALUctrl = {3'b100, funct7[5]}; //srli: Shift Right Logical Imm, srai: Shift Right Arith Imm
+                    3'b110: ALUctrl = `ALU_OPCODE_OR;    // ori: OR Immediate
+                    3'b111: ALUctrl = `ALU_OPCODE_AND;   // andi: AND Immediate 
+
+                    default: begin
+                        RegWrite = 1;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = 1;
+                        ImmSrc = 3'b000;
                         PCSrc = 0;
                         MemWrite = 0;
                         MemRead = 0;
@@ -172,12 +85,144 @@ assign funct7 = Instr[31:25];
                     end
                 endcase
             end
-            
+
+
+        // I-type
+            7'b0000011: begin   
+                case(funct3)
+                    3'b000: // TODO     //lb: Load Byte 
+                    3'b001: // TODO     //lh: Load Half
+                    3'b010: // TODO     //lw: Load Word
+                    3'b100: // TODO     //lbu: Load Byte (U) 
+                    3'b101: // TODO     ////lhu: Load Half (U)
+
+                    default: begin
+                        RegWrite = 1;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = 1;
+                        ImmSrc = 3'b000;
+                        PCSrc = 0;
+                        MemWrite = 0;
+                        ResultSrc= 1;
+                    end
+                endcase
+
+
+        // S-type
+            7'b0100011: begin   
+                case(funct3)
+                    3'b000: // TODO    //sb: Store Byte 
+                    3'b001: // TODO    //sh: Store Half
+                    3'b010: // TODO    //sw: Store Word
+
+                    default: begin
+                        RegWrite = 0;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = 1;
+                        ImmSrc = 3'b001;
+                        PCSrc = 0;
+                        MemWrite = 1;
+                        ResultSrc= 0;
+                    end
+                endcase
+
+
+        // B-type
+            7'b1100011: begin   
+                case(funct3)
+                    3'b000: PCSrc = Zero;    //beq: Branch ==
+                    3'b001: PCSrc = ~Zero;   //bne: Branch !=                 
+                    3'b100: // TODO          //blt: Branch <
+                    3'b101: // TODO          //bge: Branch ≥
+                    3'b110: // TODO          //bltu: Branch < (U)
+                    3'b111: // TODO          //bgeu: Branch ≥ (U)
+
+                    default: begin
+                        RegWrite = 0;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = = 0;
+                        ImmSrc = 3'b010;
+                        PCSrc = 0;
+                        MemWrite = 0;
+                        ResultSrc= 0;
+                    end
+                endcase
+
+
+        // J-type
+            7'b1101111: begin   //jal: Jump And Link
+                RegWrite = 1;
+                ALUctrl = 4'b0000;
+                ALUSrc = = 1;
+                ImmSrc = 3'b100;
+                PCSrc = 1;
+                MemWrite = 0;
+                ResultSrc= 0;
+            end
+
+        // I-type    
+            7'b1100111: begin    //jalr: Jump And Link Reg
+                RegWrite = 1;
+                ALUctrl = 4'b0000;
+                ALUSrc = = 1;
+                ImmSrc = 3'b000;
+                PCSrc = 1;
+                MemWrite = 0;
+                ResultSrc= 0;
+            end
+
+        // U-type
+            7'b0110111: begin    //lui: Load Upper Imm
+                RegWrite = 1;  
+                ALUctrl = `ALU_OPCODE_LUI;    
+                ALUSrc = 1;       
+                ImmSrc = 3'b011;
+                PCSrc = 0;  
+                MemWrite = 0;
+                ResultSrc = 0;   
+            end
+
+        // U-type
+            7'b0010111: begin    //auipc: Add Upper Imm to PC 
+                // TODO
+                RegWrite = 1;  
+                ALUctrl = `ALU_OPCODE_LUI;    
+                ALUSrc = 1;       
+                ImmSrc = 3'b011;
+                PCSrc = 0;  
+                MemWrite = 0;
+                ResultSrc = 0;   
+            end
+
+        // I-type
+            7'b1110011: begin  
+                case (funct7)
+                    7'b0000000: begin //ecall: Environment Call 
+                        // TODO
+                    end
+
+                    7'b0000001: begin //ebreak: Environment Break
+                        // TODO
+                    end
+                    
+                    default: begin
+                        // TODO
+                        RegWrite = 0;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = 0;
+                        ImmSrc = 3'b000;
+                        PCSrc = 0;
+                        MemWrite = 0;
+                        ResultSrc= 0;
+                    end
+                endcase
+            end
+
             default: begin
                 RegWrite = 0;
                 ALUctrl = 4'b0000;
                 ALUSrc = 0;
-                ImmSrc = 2'b00;
+                ImmSrc = 3'b000;
                 PCSrc = 0;
                 MemWrite = 0;
                 MemRead = 0;
