@@ -16,6 +16,7 @@ module top_execute #(
 
     output  logic [DATA_WIDTH-1:0]      ALUResult,
     output  logic                       EQ,
+    output  logic                       branch_l,
     output  logic [DATA_WIDTH-1:0]      a0,
     output  logic [DATA_WIDTH-1:0]      WriteData
 );
@@ -46,6 +47,7 @@ module top_execute #(
         .ALUop2(ALUin),
         .ALUctrl(ALUctrl),
         .ALUout(ALUResult),
+        .branch_l(branch_l),
         .EQ(EQ)
     );
 
