@@ -2,7 +2,6 @@
 
 module control_unit (   
     input logic [31:0]  Instr,
-
     input logic         Zero,
 
     output logic        RegWrite,   
