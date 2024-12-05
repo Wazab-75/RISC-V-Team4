@@ -13,4 +13,6 @@
 `define ALU_OPCODE_SRL              4'b1000  // Shift Right Logical
 `define ALU_OPCODE_SRA              4'b1001  // Shift Right Arithmetic
 
+`define ALU_OPCODE_BLTU             4'b1001  // Branch if Less Than Unsigned  
+
 `endif
