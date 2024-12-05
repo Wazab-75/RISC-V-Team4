@@ -13,16 +13,11 @@ module data_mem #(
 
 logic [7:0] ram_array [32'h0001FFFF:0];
 
-
-//---- Load sine coeff (Lab 4 extension) ----
-
 initial begin
-        $display("Loading Sine Coefficients");
-        $readmemh("../rtl/memory/sinerom.mem", ram_array);  // Load into data mem
-        $display("Finished Loading Sine Coefficients");
+        $display("Loading data memory");
+        $readmemh("data.hex", ram_array, 32'h10000);  // Load into data mem
+        $display("Finished Loading data memory");
 end;
-
-
 
 always_ff @(posedge clk)
     if (wr_en) begin 
@@ -52,7 +47,7 @@ always_ff @(posedge clk)
 
 always_comb
 
-    case (funct3) //Check if right order TODO
+    case (funct3) 
         3'b000: ReadData = {{24{ram_array[addr][7]}}, ram_array[addr]};
         3'b001: ReadData = {{16{ram_array[addr+1][7]}}, ram_array[addr+ 1], ram_array[addr]};
         3'b010: ReadData = {ram_array[addr + 3], ram_array[addr + 2], ram_array[addr+ 1], ram_array[addr]};
