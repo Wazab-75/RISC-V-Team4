@@ -27,7 +27,7 @@ module alu #(
             `ALU_OPCODE_SLT:     ALUout = ($signed(ALUop1) < $signed(ALUop2)) ? 1 : 0;
 
             // Shift operations:
-            `ALU_OPCODE_LUI:     ALUout = ALUop2 << 12;
+            `ALU_OPCODE_LUI:     ALUout = ALUop2;
 
             `ALU_OPCODE_SLL:     ALUout = ALUop1 << ALUop2;
 
@@ -37,12 +37,10 @@ module alu #(
 
             // Branch instructions:
 
-            `ALU_OPCODE_BLTU: branch_l = (ALUop1 < ALUop2);
+            //`ALU_OPCODE_BLTU: branch_l = (ALUop1 < ALUop2);
 
-            default: begin
-                ALUout = 0;
-                branch_l = 0;
-            end
+            default: ALUout = 0;
+                
         endcase
 
         branch_l = (ALUout == 0) ? 1 : 0;

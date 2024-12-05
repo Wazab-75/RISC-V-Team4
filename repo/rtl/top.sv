@@ -11,29 +11,39 @@ module top #(
 ) (
     input   logic clk,
     input   logic rst,
+    input   logic trigger,
     output  logic [DATA_WIDTH-1:0] a0    
 );
-
+    //TODO
+    logic unused_trigger = trigger;
 
     logic [DATA_WIDTH-1:0]      pc;
     logic [DATA_WIDTH-1:0]      ImmExt;
     logic                       PCSrc;
     logic [DATA_WIDTH-1:0]      instr;
-    logic                       branch_l;
-    logic [2:0]                 ALUctrl;
+    logic                       Zero;
+    logic [3:0]                 ALUctrl;
     logic                       RegWrite;
     logic                       ALUSrc;
     logic                       MemWrite;
-    logic                       ResultSrc;
+    logic [1:0]                 ResultSrc;
     logic [DATA_WIDTH-1:0]      ALUResult;
     logic [DATA_WIDTH-1:0]      WriteData;
     logic [DATA_WIDTH-1:0]      Result;
+    logic [4:0]                 rs1;
+    logic [4:0]                 rs2;
+    logic [4:0]                 rd;
+    logic                       PcOp;
+    logic [DATA_WIDTH-1:0]      PCTarget;
+    logic [DATA_WIDTH-1:0]      PCPlus4;
+
 
     top_fetch fetch(
         .clk         (clk),
         .rst         (rst),
         .PCSrc       (PCSrc),
-        .ImmExt      (ImmExt),
+        .PCTarget    (PCTarget),
+        .PCPlus4     (PCPlus4),
         .pc          (pc)
     );
 
@@ -44,21 +54,25 @@ module top #(
 
     top_decode decode(
         .instr      (instr),
-        .branch_l   (branch_l),
+        .Zero       (Zero),
         .ALUctrl    (ALUctrl),
         .RegWrite   (RegWrite),
         .ALUSrc     (ALUSrc),
         .MemWrite   (MemWrite),
         .ResultSrc  (ResultSrc),
         .PCSrc      (PCSrc),
-        .ImmExt     (ImmExt)
+        .ImmExt     (ImmExt),
+        .rs1        (rs1),
+        .rs2        (rs2),
+        .rd         (rd),
+        .PcOp       (PcOp)
     );
 
     top_execute execute(
         .clk        (clk),
-        .instr_11_7 (instr[11:7]),
-        .instr_19_15(instr[19:15]),
-        .instr_24_20(instr[24:20]),
+        .rs1        (rs1),
+        .rs2        (rs2),
+        .rd         (rd),
         .ALUctrl    (ALUctrl),
         .ALUSrc     (ALUSrc),
         .WE3        (RegWrite),
@@ -66,8 +80,11 @@ module top #(
         .ImmExt     (ImmExt),
         .a0         (a0),
         .ALUResult  (ALUResult),
-        .branch_l   (branch_l),
-        .WriteData  (WriteData)
+        .Zero       (Zero),
+        .WriteData  (WriteData),
+        .pc         (pc),
+        .PCTarget   (PCTarget),
+        .PcOp       (PcOp)
     );
 
     top_memory memory(
@@ -77,9 +94,9 @@ module top #(
         .ResultSrc  (ResultSrc),
         .MemWrite   (MemWrite),
         .Result     (Result),
-        .funct3     (instr[14:12])
+        .funct3     (instr[14:12]),
+        .PCPlus4    (PCPlus4)
     );
 
-    //assign a0 = 32'd5;
 
 endmodule
