@@ -1,4 +1,5 @@
 `include <./memory/data_mem.sv>
+`include <./memory/cache.sv>
 
 module top_memory #(
     parameter  DATA_WIDTH = 32
@@ -6,10 +7,10 @@ module top_memory #(
     input  logic                   clk, 
     input  logic [DATA_WIDTH-1:0]  ALUResult,
     input  logic [DATA_WIDTH-1:0]  WriteData,
-    input  logic                   ResultSrc,
+    input  logic [1:0]             ResultSrc,
     input  logic                   MemWrite,
-    input  logic                   MemRead,
     input  logic [2:0]             funct3,
+    input  logic [DATA_WIDTH-1:0]  PCPlus4,
     output logic [DATA_WIDTH-1:0]  Result
 );
 
@@ -31,7 +32,6 @@ assign fetch_enable = ~hit;
 
 cache data_cache (
     .clk             (clk),
-    .rd_en           (MemRead),
     .wr_en           (MemWrite),
     
     .WriteData       (WriteData),
@@ -67,12 +67,15 @@ mux mem_type(
     .out        (Data)
 );
 
+always_comb begin
+    case(ResultSrc) 
+        2'b00: Result = ALUResult;
+        2'b01: Result = Data;
+        2'b10: Result = PCPlus4;
+        //2:b11:TODO
+        default:Result = 0;
+    endcase
+ end
 
-mux ResultSlc(
-    .in0        (ALUResult),
-    .in1        (Data),
-    .sel        (ResultSrc),
-    .out        (Result)
-);
 
 endmodule

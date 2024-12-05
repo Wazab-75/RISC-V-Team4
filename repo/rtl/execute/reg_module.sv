@@ -15,18 +15,15 @@ module reg_module #(
     // 32 registers, each 32-bits wide
     reg [31:0] registers [31:0];
 
-    assign a0 = registers[10];
-
     // Read data from the registers
     assign RD1 = registers[AD1];
     assign RD2 = registers[AD2];
 
     // Writing data on the rising edge of the clock
     always @(posedge clk) begin
-        if (WE3) begin
-            registers[AD3] <= WD3; // Write data to register at address AD3 if WE3 is high
-        end
+        if (WE3 && (AD3 != 0)) registers[AD3] <= WD3;
     end
 
+    assign a0 = registers[10];
 
 endmodule

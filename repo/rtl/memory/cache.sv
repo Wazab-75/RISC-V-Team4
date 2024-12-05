@@ -72,31 +72,34 @@ always_ff @(posedge clk) begin
             3'b001: data_array[set][offset][15:0]  <= WriteData[15:0];  // Half-word write (little-endian)
             3'b010: data_array[set][offset]        <= WriteData;        // Full word write
         endcase
-    end else if (rd_en) begin
-        if (v[set] && tag_array[set] == tag) begin
-            hit <= 1;
-        end else begin
-            hit <= 0;
-            if (d[set] && v[set]) begin
-                for (int i = 0; i < BLOCK_SIZE; i++) begin
-                    write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= data_array[set][i];
-                end
-                write_back_addr <= {tag_array[set], set, 4'b0};
-                write_back_valid <= 1;
-            end else begin
-                write_back_valid <= 0;
-            end
+    end 
+    else begin
+        hit <= 0;
+    end
 
-            for (int i = 0; i < BLOCK_SIZE; i++) begin
-                data_array[set][i] <= fetch_data[(i*DATA_WIDTH) +: DATA_WIDTH];
-            end
-
-            tag_array[set] <= tag;
-            v[set] <= 1;
-            d[set] <= 0;
-        end
+    // Read operation
+    
+    if (v[set] && tag_array[set] == tag) begin
+        hit <= 1;
     end else begin
         hit <= 0;
+        if (d[set] && v[set]) begin
+            for (int i = 0; i < BLOCK_SIZE; i++) begin
+                write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= data_array[set][i];
+            end
+            write_back_addr <= {tag_array[set], set, 4'b0};
+            write_back_valid <= 1;
+        end else begin
+            write_back_valid <= 0;
+        end
+
+        for (int i = 0; i < BLOCK_SIZE; i++) begin
+            data_array[set][i] <= fetch_data[(i*DATA_WIDTH) +: DATA_WIDTH];
+        end
+
+        tag_array[set] <= tag;
+        v[set] <= 1;
+        d[set] <= 0;
     end
 end
 

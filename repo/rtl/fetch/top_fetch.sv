@@ -1,5 +1,5 @@
 `include <./fetch/pc.sv>
-`include <./memory/inst_mem.sv>
+//`include <./fetch/inst_mem.sv>
 
 module top_fetch #(
     parameter  DATA_WIDTH = 32
@@ -8,12 +8,15 @@ module top_fetch #(
     input                        clk,
     input                        rst,
     input                        PCSrc,
-    input[DATA_WIDTH-1:0]        ImmExt,
-    output[DATA_WIDTH-1:0]       pc
+    input [DATA_WIDTH-1:0]       PCTarget,
+    output[DATA_WIDTH-1:0]       pc,
+    output[DATA_WIDTH-1:0]      PCPlus4
     
-);
-     
+);  
+
     logic [DATA_WIDTH-1:0]    pc_next;
+
+    assign PCPlus4 = pc + 4;
 
     pc pc_reg(
         .clk (clk),
@@ -23,8 +26,8 @@ module top_fetch #(
     );
 
     mux #(DATA_WIDTH) pc_sel (
-        .in0 (pc + 4),
-        .in1 (pc + ImmExt),
+        .in0 (PCPlus4),
+        .in1 (PCTarget),
         .sel (PCSrc),
         .out (pc_next)
 

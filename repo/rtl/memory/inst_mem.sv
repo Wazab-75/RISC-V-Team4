@@ -8,7 +8,7 @@ module inst_mem (
 
     initial begin
         $display("Loading ROM.");
-        $readmemh("../rtl/program.hex", rom_array);  // Load instructions into ROM
+        $readmemh("program.hex", rom_array);  // Load instructions into ROM
     end;
 
     always_comb begin
