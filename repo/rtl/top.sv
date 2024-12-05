@@ -59,6 +59,7 @@ module top #(
         .RegWrite   (RegWrite),
         .ALUSrc     (ALUSrc),
         .MemWrite   (MemWrite),
+        .MemRead    (MemRead),
         .ResultSrc  (ResultSrc),
         .PCSrc      (PCSrc),
         .ImmExt     (ImmExt),
@@ -93,6 +94,7 @@ module top #(
         .WriteData  (WriteData),
         .ResultSrc  (ResultSrc),
         .MemWrite   (MemWrite),
+        .MemRead    (MemRead),
         .Result     (Result),
         .funct3     (instr[14:12]),
         .PCPlus4    (PCPlus4)

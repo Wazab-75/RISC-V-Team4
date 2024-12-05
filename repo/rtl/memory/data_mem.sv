@@ -11,7 +11,6 @@ module data_mem #(
 
 logic [7:0] ram_array [32'h0001FFFF:0];
 
-
 initial begin
     $display("Loading Sine Coefficients");
     $readmemh("../rtl/memory/sinerom.mem", ram_array);
@@ -20,7 +19,6 @@ end
 
 always_ff @(posedge clk) begin
     if (wr_en) begin
-    
         ram_array[addr]      <= WriteBlockData[7:0];
         ram_array[addr + 1]  <= WriteBlockData[15:8];
         ram_array[addr + 2]  <= WriteBlockData[23:16];
@@ -40,7 +38,6 @@ always_ff @(posedge clk) begin
         ram_array[addr + 13] <= WriteBlockData[111:104];
         ram_array[addr + 14] <= WriteBlockData[119:112];
         ram_array[addr + 15] <= WriteBlockData[127:120];
-    
     end
 end
 

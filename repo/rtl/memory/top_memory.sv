@@ -9,6 +9,7 @@ module top_memory #(
     input  logic [DATA_WIDTH-1:0]  WriteData,
     input  logic [1:0]             ResultSrc,
     input  logic                   MemWrite,
+    input  logic                   MemRead,
     input  logic [2:0]             funct3,
     input  logic [DATA_WIDTH-1:0]  PCPlus4,
     output logic [DATA_WIDTH-1:0]  Result
@@ -33,6 +34,7 @@ assign fetch_enable = ~hit;
 cache data_cache (
     .clk             (clk),
     .wr_en           (MemWrite),
+    .rd_en           (MemRead),
     
     .WriteData       (WriteData),
     .addr            (ALUResult),
