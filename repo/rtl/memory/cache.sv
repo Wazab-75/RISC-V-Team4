@@ -4,7 +4,6 @@ module cache #(
               NUM_BLOCKS = 2   // 2 cache lines
 )(
     input  logic                               clk,
-    input  logic                               rd_en,
     input  logic                               wr_en,
     input  logic [DATA_WIDTH-1:0]              addr,
     input  logic [DATA_WIDTH-1:0]              WriteData,
@@ -71,6 +70,7 @@ always_ff @(posedge clk) begin
             3'b000: data_array[set][offset][7:0]   <= WriteData[7:0];   // Byte write (little-endian)
             3'b001: data_array[set][offset][15:0]  <= WriteData[15:0];  // Half-word write (little-endian)
             3'b010: data_array[set][offset]        <= WriteData;        // Full word write
+            default: data_array[set][offset]       <= WriteData; 
         endcase
     end 
     else begin
@@ -78,7 +78,7 @@ always_ff @(posedge clk) begin
     end
 
     // Read operation
-    
+
     if (v[set] && tag_array[set] == tag) begin
         hit <= 1;
     end else begin

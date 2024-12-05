@@ -1,10 +1,11 @@
-#include "base_testbench.h"
+#include "testbench.h"
+#include <cstdlib>
 
-Vdut *top;
-VerilatedVcdC *tfp;
+#define CYCLES 10000
+
 unsigned int ticks = 0;
 
-class TopMemoryTestbench : public BaseTestbench {
+class TopMemoryTestbench : public Testbench {
 protected:
     void initializeInputs() override {
         top->clk = 0;
@@ -15,125 +16,89 @@ protected:
         top->MemRead = 0;
         top->funct3 = 0;
     }
-
-    void simulateClockCycle() {
-        top->clk = 1;
-        top->eval();
-        tfp->dump(ticks++);
-        top->clk = 0;
-        top->eval();
-        tfp->dump(ticks++);
-    }
-
-    void reset() {
-        initializeInputs();
-        simulateClockCycle();
-    }
-
-    void finalizeSimulation() {
-        for (int i = 0; i < 10; i++) {
-            simulateClockCycle();
-        }
-    }
 };
 
 TEST_F(TopMemoryTestbench, WriteAndReadTest) {
-    reset();
+    initializeInputs();
     top->ALUResult = 0x10;
     top->WriteData = 0xDEADBEEF;
     top->MemWrite = 1;
     top->funct3 = 0b010;
-    simulateClockCycle();
+    runSimulation(1);  // Simulate one clock cycle
     top->MemWrite = 0;
 
     top->ALUResult = 0x10;
     top->MemRead = 1;
-    simulateClockCycle();
+    runSimulation(1);  // Simulate one clock cycle
     top->MemRead = 0;
 
     EXPECT_EQ(top->Result, 0xDEADBEEF) << "Mismatch during read after write.";
 }
 
 TEST_F(TopMemoryTestbench, DirtyBlockWriteBackTest) {
-    reset();
+    initializeInputs();
     top->funct3 = 0b010;
 
     top->ALUResult = 0x10;
     top->WriteData = 0xBEEFCAFE;
     top->MemWrite = 1;
     top->funct3 = 0b010;
-    simulateClockCycle();
+    runSimulation(1);
     top->MemWrite = 0;
 
     top->ALUResult = 0x30;
     top->MemRead = 1;
-    simulateClockCycle();
+    runSimulation(1);
     top->MemRead = 0;
-    
+
     top->ALUResult = 0x10;
     top->MemRead = 1;
-    simulateClockCycle();
+    runSimulation(1);
     top->MemRead = 0;
 
     EXPECT_EQ(top->Result, 0xBEEFCAFE) << "Expected ResultSrc to point to memory during fetch.";
 }
 
 TEST_F(TopMemoryTestbench, PartialWriteTest) {
-    reset();
+    initializeInputs();
     top->ALUResult = 0x10;
     top->WriteData = 0x00FFFACE;
     top->MemWrite = 1;
     top->funct3 = 0b001;
-    simulateClockCycle();
+    runSimulation(1);
     top->MemWrite = 0;
 
     top->ALUResult = 0x10;
     top->MemRead = 1;
-    simulateClockCycle();
+    runSimulation(1);
     top->MemRead = 0;
 
     EXPECT_EQ(top->Result, 0x0000FACE) << "Partial write/read mismatch.";
 }
 
 TEST_F(TopMemoryTestbench, CacheEvictionPolicyTest) {
-    reset();
+    initializeInputs();
     top->funct3 = 0b010;
     top->ALUResult = 0x10;
     top->WriteData = 0xCAFEBABE;
     top->MemWrite = 1;
-    simulateClockCycle();
+    runSimulation(1);
 
     top->ALUResult = 0x30;
     top->WriteData = 0xDEADFACE;
-    simulateClockCycle();
+    runSimulation(1);
     top->MemWrite = 0;
-    simulateClockCycle();
+    runSimulation(1);
     top->MemRead = 1;
 
     top->ALUResult = 0x10;
-    simulateClockCycle();
-    simulateClockCycle();
+    runSimulation(2);  // Simulate two clock cycles
 
     EXPECT_EQ(top->Result, 0xCAFEBABE) << "Evicted data mismatch in memory.";
 }
 
 int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
-
-    top = new Vdut;
-    tfp = new VerilatedVcdC;
-
-    Verilated::traceEverOn(true);
-    top->trace(tfp, 99);
-    tfp->open("waveform.vcd");
-
-    int res = RUN_ALL_TESTS();
-
-    top->final();
-    tfp->close();
-
-    delete top;
-    delete tfp;
-
+    auto res = RUN_ALL_TESTS();
     return res;
 }
