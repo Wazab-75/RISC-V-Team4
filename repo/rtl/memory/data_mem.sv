@@ -12,10 +12,10 @@ module data_mem #(
 logic [7:0] ram_array [32'h0001FFFF:0];
 
 initial begin
-    $display("Loading Sine Coefficients");
-    $readmemh("../rtl/memory/sinerom.mem", ram_array);
-    $display("Finished Loading Sine Coefficients");
-end
+        $display("Loading data memory");
+        $readmemh("data.hex", ram_array, 32'h10000);  // Load into data mem
+        $display("Finished Loading data memory");
+end;
 
 always_ff @(posedge clk) begin
     if (wr_en) begin

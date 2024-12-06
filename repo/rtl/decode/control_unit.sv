@@ -10,7 +10,7 @@ module control_unit (
     output logic [2:0]  ImmSrc,     
     output logic        PCSrc,       
     output logic        MemWrite,
-    output logic        MemRead,
+    output logic        MemRead,  // Added signal
     output logic [1:0]  ResultSrc,
     output logic [4:0]  rs1,
     output logic [4:0]  rs2,
@@ -34,107 +34,174 @@ logic  [6:0]  funct7;
     assign funct7 = Instr[31:25];
 
     always_comb begin
-    
-        case (op) 
-            // R-type
+        
+    case (op) 
+        // R-type
             7'b0110011: begin
                 case(funct3)
                     3'b000: ALUctrl = {3'b000, funct7[5]};   // ADD, SUB
-                    3'b001: ALUctrl = `ALU_OPCODE_SLL;       // SLL: Shift Left Logical
-                    3'b010: ALUctrl = `ALU_OPCODE_SLT;       // SLT: Set Less Than                    
-                    3'b100: ALUctrl = `ALU_OPCODE_XOR;       // XOR
-                    3'b101: ALUctrl = {3'b100, funct7[5]};   // SRL: Shift Right Logical, SRA: Shift Right Arithmetic
-                    3'b110: ALUctrl = `ALU_OPCODE_OR;        // OR
-                    3'b111: ALUctrl = `ALU_OPCODE_AND;       // AND
+                    3'b001: ALUctrl = `ALU_OPCODE_SLL;  //sll: Shift Left Logical
+                    3'b010: ALUctrl = `ALU_OPCODE_SLT;  //slt: Set Less Than                    
+                    //3'b011: ALUctrl = // TODO           //sltu: Set Less Than (U)
+                    3'b100: ALUctrl = `ALU_OPCODE_XOR;  //XOR
+                    3'b101: ALUctrl = {3'b100, funct7[5]}; //srl: Shift Right Logical, sra: Shift Right Arith*
+                    3'b110: ALUctrl = `ALU_OPCODE_OR;  // OR
+                    3'b111: ALUctrl = `ALU_OPCODE_AND;   // AND
                     default: ALUctrl = 0;
                 endcase    
-                RegWrite = 1;
-                ALUSrc = 0;
-                ImmSrc = 3'bXXX;
-                Branch = 0;
-                MemWrite = 0;
-                MemRead = 0;
-                ResultSrc = 0;
+                    RegWrite = 1;
+                    ALUSrc = 0;
+                    ImmSrc = 3'bXXX;
+                    Branch = 0;
+                    MemWrite = 0;
+                    MemRead = 0;  // No memory read for R-type
+                    ResultSrc= 0;
             end
 
-            // I-type Arithmetic
+        // I-type
             7'b0010011: begin   
                 case(funct3)
-                    3'b000: ALUctrl = `ALU_OPCODE_ADD;       // ADDI: ADD Immediate 
-                    3'b001: ALUctrl = `ALU_OPCODE_SLL;       // SLLI: Shift Left Logical Imm
-                    3'b010: ALUctrl = `ALU_OPCODE_SLT;       // SLTI: Set Less Than Imm
-                    3'b100: ALUctrl = `ALU_OPCODE_XOR;       // XORI: XOR Immediate
-                    3'b101: ALUctrl = {3'b100, funct7[5]};   // SRLI/SRAI: Shift Right Logical/Arithmetic Imm
-                    3'b110: ALUctrl = `ALU_OPCODE_OR;        // ORI: OR Immediate
-                    3'b111: ALUctrl = `ALU_OPCODE_AND;       // ANDI: AND Immediate 
-                    default: ALUctrl = 0;
+                    3'b000: ALUctrl = `ALU_OPCODE_ADD;   // addi: ADD Immediate 
+                    3'b001: ALUctrl = `ALU_OPCODE_SLL;   //slli: Shift Left Logical Imm
+                    3'b010: ALUctrl = `ALU_OPCODE_SLT;   //slti: Set Less Than Imm
+                    //3'b011: ALUctrl = // TODO            //sltiu: Set Less Than Imm (U)
+                    3'b100: ALUctrl = `ALU_OPCODE_XOR;   //xori: XOR Immediate
+                    3'b101: ALUctrl = {3'b100, funct7[5]}; //srli: Shift Right Logical Imm, srai: Shift Right Arith Imm
+                    3'b110: ALUctrl = `ALU_OPCODE_OR;    // ori: OR Immediate
+                    3'b111: ALUctrl = `ALU_OPCODE_AND;   // andi: AND Immediate 
+                    default ALUctrl = 0;
                 endcase
-                RegWrite = 1;
-                ALUSrc = 1;
-                ImmSrc = 3'b000;
-                Branch = 0;
-                MemWrite = 0;
-                MemRead = 0;
-                ResultSrc = 0;
+                        RegWrite = 1;
+                        ALUSrc = 1;
+                        ImmSrc = 3'b000;
+                        Branch = 0;
+                        MemWrite = 0;
+                        MemRead = 0;  // No memory read for arithmetic I-type
+                        ResultSrc= 0;
             end
 
-            // I-type Load
+
+        // I-type (Load Instructions)
             7'b0000011: begin   
-                RegWrite = 1;
-                ALUctrl = 4'b0000;
-                ALUSrc = 1;
-                ImmSrc = 3'b000;
-                Branch = 0;
-                MemWrite = 0;
-                MemRead = 1;  // Enable memory read for load instructions
-                ResultSrc = 1;
-            end
+                        RegWrite = 1;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = 1;
+                        ImmSrc = 3'b000;
+                        Branch = 0;
+                        MemWrite = 0;
+                        MemRead = 1;  // Enable MemRead for load instructions
+                        ResultSrc = 1;
+                    end
+            
 
-            // S-type Store
+        // S-type (Store Instructions)
             7'b0100011: begin   
-                RegWrite = 0;
-                ALUctrl = 4'b0000;
-                ALUSrc = 1;
-                ImmSrc = 3'b001;
-                Branch = 0;
-                MemWrite = 1;
-                MemRead = 0;
-                ResultSrc = 0;
-            end
+                        RegWrite = 0;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = 1;
+                        ImmSrc = 3'b001;
+                        Branch = 0;
+                        MemWrite = 1;
+                        MemRead = 0;  // No MemRead for store instructions
+                        ResultSrc = 0;
+                    end
 
-            // B-type Branch
+        // B-type (Branch Instructions)
             7'b1100011: begin   
                 case(funct3)
-                    3'b000: ALUctrl = `ALU_OPCODE_SUB;    // BEQ: Branch ==
-                    3'b001: ALUctrl = `ALU_OPCODE_SUB;    // BNE: Branch !=                 
-                    3'b100: ALUctrl = `ALU_OPCODE_SLT;    // BLT: Branch <
-                    3'b101: ALUctrl = `ALU_OPCODE_SLT;    // BGE: Branch ≥
-                    3'b110: ALUctrl = `ALU_OPCODE_SLT;    // BLTU: Branch < (U)
-                    3'b111: ALUctrl = `ALU_OPCODE_SLT;    // BGEU: Branch ≥ (U)
-                    default: ALUctrl = 0;
+                    // neg jump defined elsewhere
+                    3'b000: ALUctrl = `ALU_OPCODE_SUB;    //beq: Branch ==
+                    3'b001: ALUctrl = `ALU_OPCODE_SUB;    //bne: Branch !=                 
+                    3'b100: ALUctrl = `ALU_OPCODE_SLT;    //blt: Branch <
+                    3'b101: ALUctrl = `ALU_OPCODE_SLT;    //bge: Branch ≥
+                    3'b110: ALUctrl = `ALU_OPCODE_SLT;    //bltu: Branch < (U)
+                    3'b111: ALUctrl = `ALU_OPCODE_SLT;    //bgeu: Branch ≥ (U)
+                    default ALUctrl = 0;
                 endcase
-                RegWrite = 0;
-                ALUSrc = 0;
-                ImmSrc = 3'b010;
-                Branch = 1;
-                MemWrite = 0;
-                MemRead = 0;
-                ResultSrc = 0;
+                        RegWrite = 0;
+                        ALUSrc =  0;
+                        ImmSrc = 3'b010;
+                        Branch = 1;
+                        MemWrite = 0;
+                        MemRead = 0;  // No memory read for branches
+                        ResultSrc= 0;
+
             end
 
-            // J-type Jump
-            7'b1101111: begin   // JAL: Jump And Link
+        // J-type
+            7'b1101111: begin   //jal: Jump And Link
                 RegWrite = 1;
                 ALUctrl = 4'b0000;
-                ALUSrc = 1;
+                ALUSrc =  1;
                 ImmSrc = 3'b100;
                 Branch = 1;
                 MemWrite = 0;
-                MemRead = 0;
+                MemRead = 0;  // No memory read for jumps
                 ResultSrc = 2'b10;
             end
 
-            // Default case
+        // I-type    
+            7'b1100111: begin    //jalr: Jump And Link Reg
+                RegWrite = 1;
+                ALUctrl = 4'b0000;
+                ALUSrc =  1;
+                ImmSrc = 3'b000;
+                Branch = 1;
+                MemWrite = 0;
+                MemRead = 0;  // No memory read for jumps
+                ResultSrc = 2'b10;
+            end
+
+        // U-type
+            7'b0110111: begin    //lui: Load Upper Imm
+                RegWrite = 1;  
+                ALUctrl = `ALU_OPCODE_LUI;    
+                ALUSrc = 1;       
+                ImmSrc = 3'b011;
+                Branch = 0;  
+                MemWrite = 0;
+                MemRead = 0;  // No memory read for LUI
+                ResultSrc = 0;   
+            end
+
+        // U-type
+            7'b0010111: begin    //auipc: Add Upper Imm to PC 
+                // TODO
+                RegWrite = 1;  
+                ALUctrl = `ALU_OPCODE_LUI;    
+                ALUSrc = 1;       
+                ImmSrc = 3'b011;
+                Branch = 0;  
+                MemWrite = 0;
+                MemRead = 0;  // No memory read for AUIPC
+                ResultSrc = 0;   
+            end
+
+        // I-type
+            7'b1110011: begin  
+                case (funct7)
+                    7'b0000000: begin //ecall: Environment Call 
+                        // TODO
+                    end
+
+                    7'b0000001: begin //ebreak: Environment Break
+                        // TODO
+                    end
+                    
+                    default: begin
+                        // TODO
+                        RegWrite = 0;
+                        ALUctrl = 4'b0000;
+                        ALUSrc = 0;
+                        ImmSrc = 3'b000;
+                        Branch = 0;
+                        MemWrite = 0;
+                        MemRead = 0;  // Default case
+                        ResultSrc= 0;
+                    end
+                endcase
+            end
+
             default: begin
                 RegWrite = 0;
                 ALUctrl = 4'b0000;
@@ -142,26 +209,25 @@ logic  [6:0]  funct7;
                 ImmSrc = 3'b000;
                 Branch = 0;
                 MemWrite = 0;
-                MemRead = 0;
+                MemRead = 0;  // Default case
                 ResultSrc = 0;
             end
         endcase
 
-        // Unconditional Jump operations
+        //Unconditonal Jump operations
         if (op == 7'b1101111 || op == 7'b1100111) Jump = 1;
         else Jump = 0;
 
-        // Check if BNE, BGE, or BGEU
+        //Check if bne, bge or bgeu
         if (funct3 == 3'b001 || funct3 == 3'b101 || funct3 == 3'b111) Branch_neg = 1;
         else Branch_neg = 0;
 
-        // Assign PCSrc
+        //Assign PCSrc
         PCSrc = Jump || (Branch && (Branch_neg ? !Zero : Zero));
 
-        // Select PC target for branch operations
+        //Select PC target for branch operations
         if (op == 7'b1100111) PcOp = 1;
         else PcOp = 0;
 
     end 
-
 endmodule 

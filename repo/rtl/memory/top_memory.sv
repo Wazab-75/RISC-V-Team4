@@ -74,7 +74,6 @@ always_comb begin
         2'b00: Result = ALUResult;
         2'b01: Result = Data;
         2'b10: Result = PCPlus4;
-        //2:b11:TODO
         default:Result = 0;
     endcase
  end

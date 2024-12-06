@@ -26,6 +26,7 @@ module top #(
     logic                       RegWrite;
     logic                       ALUSrc;
     logic                       MemWrite;
+    logic                       MemRead;
     logic [1:0]                 ResultSrc;
     logic [DATA_WIDTH-1:0]      ALUResult;
     logic [DATA_WIDTH-1:0]      WriteData;
