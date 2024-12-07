@@ -25,24 +25,20 @@ logic                    hit;
 logic [DATA_WIDTH-1:0]   cache_read;
 logic                    mem_wr_en;
 logic [4*DATA_WIDTH-1:0] ReadBlockData;
-
+logic [DATA_WIDTH-1:0]   selected_data;
 
 assign mem_wr_en = write_back_valid;
-
 assign fetch_enable = ~hit;
 
 cache data_cache (
     .clk             (clk),
     .wr_en           (MemWrite),
     .rd_en           (MemRead),
-    
     .WriteData       (WriteData),
     .addr            (ALUResult),
     .funct3          (funct3),
-
     .fetch_data      (fetch_data),
     .fetch_enable    (fetch_enable),
-
     .cache_read      (cache_read),
     .hit             (hit),
     .write_back_data (write_back_data),
@@ -55,15 +51,16 @@ data_mem data_mem (
     .wr_en            (mem_wr_en),
     .addr             (write_back_addr),
     .WriteBlockData   (write_back_data),
-
+    .mem_read_addr    (ALUResult),
+    .funct3           (funct3),
+    .selected_data    (selected_data),
     .ReadBlockData    (ReadBlockData)
 );
 
 assign fetch_data = ReadBlockData;
 
-
 mux mem_type(
-    .in0        (ReadBlockData[(ALUResult[3:2] * 32) +: 32]), // Selects the word to be written
+    .in0        (selected_data),
     .in1        (cache_read),
     .sel        (hit),
     .out        (Data)
@@ -76,6 +73,6 @@ always_comb begin
         2'b10: Result = PCPlus4;
         default:Result = 0;
     endcase
- end
+end
 
 endmodule
