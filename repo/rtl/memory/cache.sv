@@ -1,8 +1,8 @@
 module cache #(
     parameter DATA_WIDTH = 32,
-              BLOCK_SIZE = 4,    // 4 words per block (16 bytes total)
-              WAYS       = 2,
-              NUM_SETS   = 128   // 2-way associative, 128 sets
+              BLOCK_SIZE = 4,    // 4 words per block
+              WAYS       = 2,    // 2-way associative
+              NUM_SETS   = 128 
 )(
     input  logic                     clk,
     input  logic                     rd_en,
@@ -21,7 +21,6 @@ module cache #(
     output logic [DATA_WIDTH-1:0]    write_back_addr
 );
 
-// Address breakdown
 logic [20:0] tag;
 logic [6:0]  index;
 logic [1:0]  offset;      
@@ -58,6 +57,9 @@ end
 logic hit_found;
 logic [WAYS-1:0] way_hit_vector;
 
+logic [DATA_WIDTH:0] selected_word;
+logic [DATA_WIDTH:0] fetched_word;
+
 always_comb begin
     hit_found = 0;
     way_hit_vector = 1'b0;
@@ -93,6 +95,7 @@ always_ff @(posedge clk) begin
                     // Write back dirty block
                     for (int i = 0; i < BLOCK_SIZE; i++)
                         write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= data_array[index][replace_way][i];
+
                     write_back_addr  <= {tag_array[index][replace_way], index, 4'b0000};
                     write_back_valid <= 1'b1;
                 end
@@ -110,15 +113,10 @@ always_ff @(posedge clk) begin
             end
 
             case (funct3)
-                3'b000: begin
-                    data_array[index][hit_way_idx][offset][(byte_offset*8) +:8] <= WriteData[7:0];
-                end
-                3'b001: begin 
-                    data_array[index][hit_way_idx][offset][(byte_offset[1]*16) +:16] <= WriteData[15:0];
-                end
-                3'b010: begin
-                    data_array[index][hit_way_idx][offset] <= WriteData;
-                end
+                3'b000: data_array[index][hit_way_idx][offset][(byte_offset*8) +:8] <= WriteData[7:0];
+                3'b001: data_array[index][hit_way_idx][offset][(byte_offset[1]*16) +:16] <= WriteData[15:0];
+                3'b010: data_array[index][hit_way_idx][offset] <= WriteData;
+
                 default: data_array[index][hit_way_idx][offset] <= WriteData;
             endcase
 
@@ -130,6 +128,7 @@ always_ff @(posedge clk) begin
                     // Write back dirty block
                     for (int i = 0; i < BLOCK_SIZE; i++)
                         write_back_data[(i+1)*DATA_WIDTH-1 -: DATA_WIDTH] <= data_array[index][replace_way][i];
+
                     write_back_addr  <= {tag_array[index][replace_way], index, 4'b0000};
                     write_back_valid <= 1'b1;
                 end
@@ -149,36 +148,62 @@ end
 
 // Cache Read Logic
 always_comb begin
-    logic [31:0] selected_word;
+    if (!hit && fetch_enable) begin
+        fetched_word = fetch_data[(offset*DATA_WIDTH) +: DATA_WIDTH];
+        
+        case (funct3)
+            3'b000: begin
+                logic [7:0] b_data = fetched_word[(byte_offset*8) +: 8];
+                cache_read = {{24{b_data[7]}}, b_data};
+            end
+            3'b001: begin
+                logic [15:0] h_data = fetched_word[(byte_offset[1]*16) +: 16];
+                cache_read = {{16{h_data[15]}}, h_data};
+            end
+            3'b010: cache_read = fetched_word;
+            
+            3'b100: begin
+                logic [7:0] b_data = fetched_word[(byte_offset*8) +: 8];
+                cache_read = {24'b0, b_data};
+            end
+            3'b101: begin 
+                logic [15:0] h_data = fetched_word[(byte_offset[1]*16) +:16];
+                cache_read = {16'b0, h_data};
+            end
+            default: cache_read = fetched_word;
+        endcase
+    end
 
-    if (hit_found) begin
-        int rd_way = 0;
-        for (int w = 0; w < WAYS; w++)
-            if (way_hit_vector[w]) rd_way = w;
-        selected_word = data_array[index][rd_way][offset];
-    end 
+    else begin
+        if (hit_found) begin
+            int rd_way = 0;
+            for (int w = 0; w < WAYS; w++)
+                if (way_hit_vector[w]) rd_way = w;
+            selected_word = data_array[index][rd_way][offset];
+        end 
 
-    case (funct3)
-        3'b000: begin
-            logic [7:0] b_data = selected_word[(byte_offset*8)+:8];
-            cache_read = {{24{b_data[7]}}, b_data};
-        end
-        3'b001: begin
-            logic [15:0] h_data = selected_word[(byte_offset[1]*16)+:16];
-            cache_read = {{16{h_data[15]}}, h_data};
-        end
-        3'b010: cache_read = selected_word;
-        3'b100: begin
-            logic [7:0] b_data = selected_word[(byte_offset*8)+:8];
-            cache_read = {24'b0, b_data};
-        end
-        3'b101: begin
-            logic [15:0] h_data = selected_word[(byte_offset[1]*16)+:16];
-            cache_read = {16'b0, h_data};
-        end
-        default:
-            cache_read = selected_word;
-    endcase
+        case (funct3)
+            3'b000: begin
+                logic [7:0] b_data = selected_word[(byte_offset*8)+:8];
+                cache_read = {{24{b_data[7]}}, b_data};
+            end
+            3'b001: begin
+                logic [15:0] h_data = selected_word[(byte_offset[1]*16)+:16];
+                cache_read = {{16{h_data[15]}}, h_data};
+            end
+            3'b010: cache_read = selected_word;
+
+            3'b100: begin
+                logic [7:0] b_data = selected_word[(byte_offset*8)+:8];
+                cache_read = {24'b0, b_data};
+            end
+            3'b101: begin
+                logic [15:0] h_data = selected_word[(byte_offset[1]*16)+:16];
+                cache_read = {16'b0, h_data};
+            end
+            default: cache_read = selected_word;
+        endcase
+    end
 end
 
 endmodule
