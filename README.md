@@ -66,3 +66,34 @@ A RISC-V RV32I processor was implemented with cache and pipelining...
        commit id: "Combine Pipeline and Cache"
        commit id: "Complete CPU"
 ```
+
+## Instructions Implemented
+All RV32I Base Integer Instructions
+| Type    | Instruction                   |
+| --------| ----------------------------- | 
+| R       | add, sub, xor, or, and        |               
+| R       | sll, srl, sra, slt, sltu      |    
+| I       | addi, subi, xori, ori, andi   |               
+| I       | slli, srli, srai, slti, sltiu |           
+| I       | lb, lh, lw, lbu, lhu          |                           
+| S       | sb, sh, sw                    |     
+| B       | beq, bne, blt, bge, bltu, begu|                                                 
+| J       | jal                           |                                                 
+| I       | jalr                          |     
+| U       | lui, auipc                    |                                                                                             
+| I       | ecall, ebreak                 |                                                                                             
+
+## Parameter Specifications
+| Parameter    | Value               |
+| -------------| --------------------| 
+| Instruction Memory    | a        |               
+| Data Width ...
+TBC...
+
+## Other Files
+| File Name   | Content               |
+| ------------| --------------------| 
+| README.md   |      |               
+| .gitignore  |  |
+TBC...
+
