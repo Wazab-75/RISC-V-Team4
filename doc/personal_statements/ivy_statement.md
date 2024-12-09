@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Individual Personal Statement - Ivy 
 
 **Name:** Ivy Yu
@@ -51,3 +52,7 @@ The following code shows the concatenation of 4 consecutive 8-bit blocks to form
 
 
 ### Sign Extension:
+=======
+## Individual Personal Statement - Ivy (github_name)
+**Name:** 
+>>>>>>> 0ea127cc132fea0759bab6f9da350f1673b06c0e
