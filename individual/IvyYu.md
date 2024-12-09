@@ -1,1 +1,0 @@
-## Ivy Yu Individual Statement

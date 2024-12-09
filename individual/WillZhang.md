@@ -1,1 +1,0 @@
-## Will Zhang Individual Statement

@@ -1,1 +1,0 @@
-## Ata de Germay Individual Statement

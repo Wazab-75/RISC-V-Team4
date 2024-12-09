@@ -1,1 +1,0 @@
-## Radaan Madhan Individual Statement
