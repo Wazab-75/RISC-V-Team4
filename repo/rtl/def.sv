@@ -15,4 +15,13 @@
 
 `define ALU_OPCODE_BLTU             4'b1001  // Branch if Less Than Unsigned  
 
+`define ALU_OPCODE_MUL       4'b1010  // Multiply
+`define ALU_OPCODE_MULH      4'b1011  // Multiply High (Signed x Signed)
+// `define ALU_OPCODE_MULHSU    4'b1100  // Multiply High (Signed x Unsigned)
+// `define ALU_OPCODE_MULHU     4'b1101  // Multiply High (Unsigned x Unsigned)
+`define ALU_OPCODE_DIV       4'b1110  // Divide (Signed)
+// `define ALU_OPCODE_DIVU      4'b1111  // Divide (Unsigned)
+`define ALU_OPCODE_REM       4'b0001  // Remainder (Signed)
+// `define ALU_OPCODE_REMU      4'b0010  // Remainder (Unsigned)
+
 `endif

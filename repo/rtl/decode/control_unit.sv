@@ -37,15 +37,47 @@ logic  [6:0]  funct7;
     case (op) 
         // R-type
             7'b0110011: begin
-                case(funct3)
-                    3'b000: ALUctrl = {3'b000, funct7[5]};   // ADD, SUB
-                    3'b001: ALUctrl = `ALU_OPCODE_SLL;  //sll: Shift Left Logical
-                    3'b010: ALUctrl = `ALU_OPCODE_SLT;  //slt: Set Less Than                    
-                    //3'b011: ALUctrl = // TODO           //sltu: Set Less Than (U)
-                    3'b100: ALUctrl = `ALU_OPCODE_XOR;  //XOR
-                    3'b101: ALUctrl = {3'b100, funct7[5]}; //srl: Shift Right Logical, sra: Shift Right Arith*
-                    3'b110: ALUctrl = `ALU_OPCODE_OR;  // OR
-                    3'b111: ALUctrl = `ALU_OPCODE_AND;   // AND
+                case(funct7)
+
+                    // Advanced arithmetic (multiplication & division)
+                    7'b0000001: begin
+                        case(funct3)
+                            3'b000: ALUctrl = `ALU_OPCODE_MUL;  
+                            3'b001: ALUctrl = `ALU_OPCODE_MULH;  // MUL High 
+                            // TODO 3'b010: ALUctrl = `ALU_OPCODE_MULSU; // MUL High (S) (U)                 
+                            // TODO 3'b011: ALUctrl = `ALU_OPCODE_MULU; // MUL High (U)
+                            3'b100: ALUctrl = `ALU_OPCODE_DIV;  // DIV
+                            // TODO 3'b101: ALUctrl = `ALU_OPCODE_DIVU; //DIV (U)
+                            3'b110: ALUctrl = `ALU_OPCODE_REM;  // Remainder
+                            // TODO 3'b111: ALUctrl = `ALU_OPCODE_REMU; // Remainder (U)
+                            default: ALUctrl = 0;
+                        endcase
+                    end
+
+                    // Basic arithmetic
+                    7'b0000000: begin
+                        case(funct3)
+                            3'b000: ALUctrl = {3'b000, funct7[5]};   // ADD, SUB
+                            3'b001: ALUctrl = `ALU_OPCODE_SLL;  //sll: Shift Left Logical
+                            3'b010: ALUctrl = `ALU_OPCODE_SLT;  //slt: Set Less Than                    
+                            //3'b011: ALUctrl = // TODO           //sltu: Set Less Than (U)
+                            3'b100: ALUctrl = `ALU_OPCODE_XOR;  //XOR
+                            3'b101: ALUctrl = {3'b100, funct7[5]}; //srl: Shift Right Logical, sra: Shift Right Arith*
+                            3'b110: ALUctrl = `ALU_OPCODE_OR;  // OR
+                            3'b111: ALUctrl = `ALU_OPCODE_AND;   // AND
+                            default: ALUctrl = 0;
+                        endcase
+                    end
+
+                    // other basic arithmetic 
+                    7'b0100000: begin
+                        case(funct3)
+                            3'b000: ALUctrl = `ALU_OPCODE_SUB;   // SUB
+                            3'b101: ALUctrl = `ALU_OPCODE_SRA;   // sra
+                            default: ALUctrl = 0;
+                        endcase
+                    end
+
                     default: ALUctrl = 0;
                 endcase    
                     RegWrite = 1;
