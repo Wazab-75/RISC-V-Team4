@@ -1,9 +1,10 @@
-<<<<<<< HEAD
 ## Individual Personal Statement - Ivy 
 
 **Name:** Ivy Yu
 
 **CID:** 02379950
+
+**Team:** Group 4
 
 ## Overview
 - [Introduction](#introduction)
@@ -52,7 +53,93 @@ The following code shows the concatenation of 4 consecutive 8-bit blocks to form
 
 
 ### Sign Extension:
-=======
-## Individual Personal Statement - Ivy (github_name)
-**Name:** 
->>>>>>> 0ea127cc132fea0759bab6f9da350f1673b06c0e
+This sign extend module takes an immediate value (Imm_in) and outputs a 32-bit sign-extended immediate (ImmExt). Depending on the instruction type (I-type, S-type, B-type, U-type, or J-type), specified by the 3-bit logic input ImmSrc, the module selects and extends the appropriate bits from Imm_in to construct the immediate value. A case statement is used to map the ImmSrc to the corresponding immediate type, making the design concise and readable while reducing the chances of errors in interpreting the instruction format.
+
+![instruction format](../image/instruction_format.png)
+
+```sv
+    case (ImmSrc)
+        3'b000: ImmExt = {{20{Imm_in[31]}}, Imm_in[31:20]};             // I-type
+        3'b001: ImmExt = {{20{Imm_in[31]}}, Imm_in[31:25], Imm_in[11:7]};   // S-type  
+        3'b010: ImmExt = {{20{Imm_in[31]}}, Imm_in[7], Imm_in[30:25], Imm_in[11:8], 1'b0};   // B-type  
+        3'b011: ImmExt = {Imm_in[31:12], 12'b0};   // U-type  
+        3'b100: ImmExt = {{12{Imm_in[31]}}, Imm_in[19:12], Imm_in[20], Imm_in[30:21], 1'b0};   // J-type  
+        default: ImmExt = 32'b0;
+        // R-type has no immediate
+    endcase
+```
+The main challenge was correctly interpreting and extracting the relevant bit fields for each instruction type. This required a detailed understanding of how the immediate values are encoded in the RISC-V instruction set. Furthermore, I improved my debugging ability as I utilised testbenches to validate the correctness of my module. 
+
+##### Relevant Commits:
+- TODO
+
+### Control unit:
+Developing the control unit was my most significant contribution to the project, where I implemented all RV32I Base Integer Instructions. The control_unit module serves as the backbone of the RISC-V CPU, decoding 32-bit instructions to produce the control signals necessary for various instruction types. It processes the 32-bit instruction input (Instr) and the zero logic input (Zero) to output control signals including RegWrite, ALUctrl, ALUSrc, MemWrite, ImmSrc, and PCSrc, enabling coordination between each module within the CPU. By extracting key fields such as rs1, rs2, rd, funct3, and funct7, the module employs case-based logic to handle R-type, I-type, S-type, B-type, U-type, and J-type instructions. Additionally, it manages branching and jumping operations by calculating the target program counter (PCSrc) based on the Zero flag and the branch type.
+
+| Type    | Instruction                   |
+| --------| ----------------------------- | 
+| R       | add, sub, xor, or, and        |               
+| R       | sll, srl, sra, slt, sltu      |    
+| I       | addi, subi, xori, ori, andi   |               
+| I       | slli, srli, srai, slti, sltiu |           
+| I       | lb, lh, lw, lbu, lhu          |                           
+| S       | sb, sh, sw                    |     
+| B       | beq, bne, blt, bge, bltu, begu|                                                 
+| J       | jal                           |                                                 
+| I       | jalr                          |     
+| U       | lui, auipc                    |                                                                                             
+| I       | ecall, ebreak                 |    
+
+```sv
+module control_unit (   
+    input logic [31:0]  Instr,
+    input logic         Zero,
+
+    output logic        RegWrite,   
+    output logic [3:0]  ALUctrl,    
+    output logic        ALUSrc,     
+    output logic [2:0]  ImmSrc,     
+    output logic        PCSrc,       
+    output logic        MemWrite,
+    output logic [1:0]  ResultSrc,
+    output logic [4:0]  rs1,
+    output logic [4:0]  rs2,
+    output logic [4:0]  rd,
+    output logic        PcOp
+);
+```
+
+One of the challenges I faced was implementing the large number of instructions and complex logic while maintaining a clean and readable design. I utilized case statements to organize and differentiate between various instructions, determining their respective outputs and how they interact with the ALU and program counter (PC). By using nested case statements and adopting better syntax, I made the implementation more concise.
+
+ Developing this module deepened my understanding of the CPU's capabilities and the types of instructions it can execute. Additionally, I understood better how the modules coalesce to form a working CPU, which has furthered my interest for instruction architecture. For instance, the MemWrite output connects to the data memory module as a write-enable signal, which is set to 1 only for S-type (store) instructions, ensuring data is stored in memory.
+
+ ```sv
+    case (op) 
+    // S-type
+        7'b0100011: begin   
+                    RegWrite = 0;
+                    ALUctrl = 4'b0000;
+                    ALUSrc = 1;
+                    ImmSrc = 3'b001;
+                    Branch = 0;
+                    MemWrite = 1;
+                    ResultSrc= 0;
+                end
+        ...
+```
+
+Building the control unit was a rewarding experience that allowed me to improve my SystemVerilog skills. Interpreting RISC-V instruction formats and extracting fields like rs1, rs2, rd, funct3, and funct7 was challenging, especially with the need to handle diverse instruction types like R-type, I-type, and J-type. However, it was incredibly satisfying to successfully design such a complex module and witness its contribution to the overall functionality of the CPU.
+
+##### Relevant Commits:
+- TODO
+
+
+## Cache for instruction memory: 
+- TODO
+
+##### Relevant Commits:
+- TODO
+
+
+## Conclusion: 
+- TODO

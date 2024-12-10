@@ -77,7 +77,7 @@ TBC...
 |              | [ALU](./repo/rtl/execute/alu.sv)                |        |      |     |    X     |
 |              | [Register File](./repo/rtl/decode/reg_module.sv)   |   /    |      |  /  |    X     |
 |              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv)  |   /    |      |  /  |          |
-|              | [Control Unit](./repo/rtl/decode/control_unit.sv)    |   /    |      |     |    /     |
+|              | [Control Unit](./repo/rtl/decode/control_unit.sv)    |   /    |      |  X   |    /     |
 |              | [Sign Extend](./repo/rtl/decode/sign_extend.sv)     |        |      |  X  |          |
 |              | [Testbench](./repo/tb_unit/tests/verify.cpp)               |   X    |   /  |  /  |    /     |
 |              | [F1 program](./repo/rtl/F1/f1/f1_tb.cpp)             |        |  X   |     |          |
