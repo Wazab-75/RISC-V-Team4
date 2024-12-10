@@ -60,6 +60,9 @@ logic [WAYS-1:0] way_hit_vector;
 logic [DATA_WIDTH:0] selected_word;
 logic [DATA_WIDTH:0] fetched_word;
 
+logic [DATA_WIDTH-1:0] miss_count;
+logic [DATA_WIDTH-1:0] hit_count;
+
 always_comb begin
     hit_found = 0;
     way_hit_vector = 1'b0;
@@ -84,12 +87,14 @@ always_ff @(posedge clk) begin
         if (wr_en) begin
             int hit_way_idx = 0;
             if (hit_found) begin
+                hit_count <= hit_count + 1;
                 // Write hit
                 for (int w = 0; w < WAYS; w++)
                     if (way_hit_vector[w]) hit_way_idx = w;
                 d[index][hit_way_idx] <= 1;
             end 
             else begin
+                miss_count <= miss_count + 1;
                 // Write miss
                 if (v[index][replace_way] && d[index][replace_way]) begin
                     // Write back dirty block
@@ -123,6 +128,7 @@ always_ff @(posedge clk) begin
         end 
         else if (rd_en) begin
             if (!hit_found) begin
+                miss_count <= miss_count + 1;
                 // Read miss
                 if (v[index][replace_way] && d[index][replace_way]) begin
                     // Write back dirty block
@@ -142,6 +148,7 @@ always_ff @(posedge clk) begin
                 d[index][replace_way] <= 0; 
                 next_way[index] <= ~next_way[index];
             end
+            else hit_count <= hit_count + 1;
         end
     end
 end
