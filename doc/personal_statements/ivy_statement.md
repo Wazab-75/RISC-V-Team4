@@ -109,7 +109,7 @@ module control_unit (
 );
 ```
 
-One of the challenges I faced was implementing the large number of instructions and complex logic while maintaining a clean and readable design. I utilized case statements to organize and differentiate between various instructions, determining their respective outputs and how they interact with the ALU and program counter (PC). By using nested case statements and adopting better syntax, I made the implementation more concise.
+One challenge I faced was implementing the large number of instructions and complex logic while maintaining a clean and readable design. I utilized case statements to organize and differentiate between various instructions, determining their respective outputs and how they interact with the ALU and program counter (PC). By using nested case statements and adopting better syntax, I made the implementation more concise.
 
  Developing this module deepened my understanding of the CPU's capabilities and the types of instructions it can execute. Additionally, I understood better how the modules coalesce to form a working CPU, which has furthered my interest for instruction architecture. For instance, the MemWrite output connects to the data memory module as a write-enable signal, which is set to 1 only for S-type (store) instructions, ensuring data is stored in memory.
 
@@ -135,7 +135,36 @@ Building the control unit was a rewarding experience that allowed me to improve 
 
 
 ## Cache for instruction memory: 
-- TODO
+Cache is vital for enhancing performance by minimizing memory access latency and boosting overall system efficiency. I collaborated with a team member to design a CPU cache system, focusing on developing the cache for the instruction memory, finally integrating the instruction memory cache (cache_inst), the data memory cache (cache_data), along with their original non-cache parts (inst_mem and data_mem) into a top-level module (top_memory). 
+
+```sv
+module cache_inst #(
+    parameter DATA_WIDTH = 32,
+              BLOCK_SIZE = 4,
+              WAYS       = 2,
+              NUM_SETS   = 32
+)(
+    input  logic                     clk,               // Clock signal
+    input  logic [DATA_WIDTH-1:0]    addr,              // Address for cache access
+    input  logic [4*DATA_WIDTH-1:0]  fetch_data,        // Data fetched from memory
+    input  logic                     fetch_enable,      // Fetch enable signal
+
+    output logic [DATA_WIDTH-1:0]    cache_read,        // Data read from cache
+    output logic                     hit,               // Cache hit indicator
+    output logic [DATA_WIDTH-1:0]    fetch_addr,        // Address to fetch data from memory
+    output logic                     fetch_request      // Fetch request signal
+);
+```
+
+The cache_inst module is a parameterized, set-associative cache. It handles address decoding, hit detection, and cache read operations (writes are unnecessary since it is a ROM). 
+
+The number of sets is configured to 32, representing a 75% reduction from the original instruction memory size. This value of num_sets balances hardware efficiency and performance. While fewer sets may increase cache misses, the design leverages spatial locality to maintain acceptable hit rates and reduces hardware resource usage and power consumption. 
+
+The module takes an address as input, decomposing it into tag, index, and offset components for efficient lookup. It detects cache hits by comparing tags and valid bits, providing immediate access to data on a hit. In the event of a cache miss, the CPU fetches data from memory, updates the cache, and maintains valid and tag arrays for coherence. 
+
+Writing the cache modules was a valuable experience that deepened my understanding of cache design and its integration into CPU architectures. It reinforced my understanding of concepts like spatial and temporal locality, which are fundamental to optimizing memory access patterns. 
+
+A major obstacle I faced was managing the trade-offs between hardware complexity and performance. For instance, implementing a 2-way set-associative cache required balancing increased hardware resources for multiple tag comparisons against the benefit of reducing conflict misses. Integrating all the cache modules into a top-level design was a critical learning experience in modular design and testing. Debugging the interactions between modules, especially ensuring coherence and consistency in fetch operations, provided valuable insight into the intricacies of building a robust system. 
 
 ##### Relevant Commits:
 - TODO
