@@ -7,15 +7,13 @@ module data_mem #(
     input  logic [ADDRESS_WIDTH-1:0]       addr,
     input  logic [BLOCK_WIDTH-1:0]         WriteBlockData,
     input  logic [ADDRESS_WIDTH-1:0]       mem_read_addr,
-    input  logic [2:0]                     funct3,
-    output logic [ADDRESS_WIDTH-1:0]       selected_data,
     output logic [BLOCK_WIDTH-1:0]         ReadBlockData
 );
 
 logic [7:0] ram_array [32'h0001FFFF:0];
 
-logic [ADDRESS_WIDTH-1:0] block_aligned_addr;
-assign block_aligned_addr = mem_read_addr & 32'hFFFFFFF0;
+logic [ADDRESS_WIDTH-1:0] aligned_addr;
+assign aligned_addr = mem_read_addr & 32'hFFFFFFF0;
 
 initial begin
     $display("Loading data memory");
@@ -49,24 +47,15 @@ end
 
 always_comb begin
     ReadBlockData = {
-        ram_array[block_aligned_addr + 15], ram_array[block_aligned_addr + 14],
-        ram_array[block_aligned_addr + 13], ram_array[block_aligned_addr + 12],
-        ram_array[block_aligned_addr + 11], ram_array[block_aligned_addr + 10],
-        ram_array[block_aligned_addr + 9],  ram_array[block_aligned_addr + 8],
-        ram_array[block_aligned_addr + 7],  ram_array[block_aligned_addr + 6],
-        ram_array[block_aligned_addr + 5],  ram_array[block_aligned_addr + 4],
-        ram_array[block_aligned_addr + 3],  ram_array[block_aligned_addr + 2],
-        ram_array[block_aligned_addr + 1],  ram_array[block_aligned_addr]
+        ram_array[aligned_addr + 15], ram_array[aligned_addr + 14],
+        ram_array[aligned_addr + 13], ram_array[aligned_addr + 12],
+        ram_array[aligned_addr + 11], ram_array[aligned_addr + 10],
+        ram_array[aligned_addr + 9],  ram_array[aligned_addr + 8],
+        ram_array[aligned_addr + 7],  ram_array[aligned_addr + 6],
+        ram_array[aligned_addr + 5],  ram_array[aligned_addr + 4],
+        ram_array[aligned_addr + 3],  ram_array[aligned_addr + 2],
+        ram_array[aligned_addr + 1],  ram_array[aligned_addr]
     };
-
-    case (funct3)
-        3'b000: selected_data = {{24{ram_array[mem_read_addr][7]}}, ram_array[mem_read_addr]};
-        3'b001: selected_data = {{16{ram_array[mem_read_addr+1][7]}}, ram_array[mem_read_addr+1], ram_array[mem_read_addr]};
-        3'b010: selected_data = {ram_array[mem_read_addr+3], ram_array[mem_read_addr+2], ram_array[mem_read_addr+1], ram_array[mem_read_addr]};
-        3'b100: selected_data = {24'b0, ram_array[mem_read_addr]};
-        3'b101: selected_data = {16'b0, ram_array[mem_read_addr+1], ram_array[mem_read_addr]};
-        default: selected_data = {ram_array[mem_read_addr+3], ram_array[mem_read_addr+2], ram_array[mem_read_addr+1], ram_array[mem_read_addr]};
-    endcase
 end
 
 endmodule
