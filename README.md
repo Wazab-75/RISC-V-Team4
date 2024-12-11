@@ -82,7 +82,7 @@ TBC...
 |              | [Testbench](./repo/tb_unit/tests/verify.cpp)               |   X    |   /  |  /  |    /     |
 |              | [F1 program](./repo/rtl/F1/f1/f1_tb.cpp)             |        |  X   |     |          |
 | Single Cycle | [Data Memory](./repo/rtl/memory/data_mem.sv)        |   X    |      |     |    X     |
-|              | [Program Counter](./repo/rtl/fetch/pc.sv)       |        |      |     |          |
+|              | [Program Counter](./repo/rtl/fetch/pc.sv)       |        |  X    |     |          |
 |              | [ALU](./repo/rtl/execute/alu.sv)                |        |      |     |    X     |
 |              | [Register File](./repo/rtl/decode/reg_module.sv)   |   /    |      |     |          |
 |              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv)  |        |      |  X  |          |
@@ -97,6 +97,8 @@ TBC...
 |              | [Two-way set associative cache]() |        |      |     |    X     |
 |              | [Instruction Cache]() |        |      |  X  |          |
 | Full CPU     | [Combine Pipeline and Cache]() |   X    |  X   |     |          |
+|              | [F1 test on vbuddy](./repo/tb/f1/f1_tb.cpp)|        |   X   |     |       |
+|              | [Ref test on vbuddy](./repo/tb/ref/ref_tb.cpp)|        |    X   |     |       |
 
 
 ## Project Progression
