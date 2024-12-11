@@ -12,10 +12,6 @@ iloop:
     addi    a1, a1, 1           # i++
     bne     a1, t1, iloop       # if i != 255, goto iloop
     bne     a0, zero, finish    # enter finish state
-    
 
 finish:      # expected result is 254
     bne     a0, zero, finish     # loop forever
-    
-    
-    
