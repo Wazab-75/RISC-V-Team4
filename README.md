@@ -3,13 +3,14 @@
 ## Project Description
 A RISC-V RV32I processor was implemented with cache and pipelining...
 
+// small introduction to the project / the goal of the project
+
 ## Team #4 Members
 
 | Athanase de Germay de Cirfontaine (repo manager) | Radaan Kumar Madhan| Ivy Yu | Will Zhang |
 |-|-|-|-|
 
 ## Overview
-- [Introduction](#introduction)
 - [Quick start](#quick-start)
 - [CPU Design](#cpu-design)
   - [Instructions Implemented](#instructions-implemented)
@@ -25,10 +26,6 @@ A RISC-V RV32I processor was implemented with cache and pipelining...
 - [Will Zhang](/doc/personal_statement/will_statement.md)
 - [Athanase de Germay de Cirfontaine](/doc/personal_statement/ata_statement.md)
 
-
-## Introduction
-
-// small introduction to the project / the goal of the project
 
 ## Quick start
 
@@ -55,11 +52,18 @@ All RV32I Base Integer Instructions
 | I       | ecall, ebreak                 |                                                                                             
 
 ### Parameter Specifications
-| Parameter    | Value               |
-| -------------| --------------------| 
-| Instruction Memory    | a        |               
-| Data Width ...
-TBC...
+| Parameter            | Value       |
+|----------------------|-------------|
+| Data Width           | 32 bits     |
+| Instruction Memory   | 2^12 bits   |
+| Instruction Width    | 32 bits     |
+| Register File        | 32 * 32 bits|
+| Data Memory          | 2^16 bits   |
+| Cache Memory         | 4096 bytes  |
+| Data Cache Block Size| 4 * 32 bits |
+| Instruction Cache    | 516 bytes   |
+| Pipeline Stages      | 5           |
+
 
 ### Work Evidence
 // TODO: Add description and tests for the F1 program / sine / pdf

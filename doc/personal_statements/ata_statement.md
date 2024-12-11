@@ -137,7 +137,7 @@ The management of the cache memory follows these principles: If the data in the 
 ```sv
 output logic [4*DATA_WIDTH-1:0]  write_back_data,
 output logic                     write_back_valid,
-output logic [DATA_WIDTH-1:0]    write_back_addr;
+output logic [DATA_WIDTH-1:0]    write_back_addr
 
 
 // Read miss
@@ -152,3 +152,40 @@ end
 ```
 
 Instead of waiting for the `fetch_data` to be stored and then read, we immediately send the data to the `top_memory` via the `read_cache` output. This reduces latency and the time needed to access the data.
+
+
+## Testing
+
+Testing is, in general, the most important part of the project, as you need to ensure that every single possibility is taken into account. We thought that each module should be tested independently to avoid potential errors and save time. This is why, before using the provided testbench, we created our own testbenches to test the modules in [tb_unit](../../repo/tb_unit/).  
+
+The testbench created for the cache consisted of five tests, three of which concerned most of the features already covered by the main memory to verify that nothing was corrupted. The last two tests focused on the cache memory's misses and hits.
+
+Another important factor to take into consideration is the miss rate of the cache memory, which will reflect the efficiency of our cache. This was tested using the pdf testbench, which provide a lot of different cases over the gestion of the cache. After doing some tests, we got a **miss-rate = 2.26%** for **around 3% of the memory size.**
+
+#### Relevant testbench:
+
+- [top_memory_tb.cpp](https://github.com/Wazab-75/RISC-V-Team4/blob/cache/repo/tb_unit/tests/top_memory_tb.cpp)
+
+
+## Merge of Cache and Pipeline
+
+
+
+## Challenges
+
+During this project, my main challenge was managing the signals from cache memory to main memory and interpreting them consistently. At first, `data_mem` was little-endian and byte-addressed, while the cache memory was big-endian and word-addressed. This caused a lot of confusion and errors in the data transfer.  
+
+Another issue I encountered was managing the offset and byte offset. The address received via the ALU and then processed by the main memory was not always aligned with the data stored in the cache. The memory was then sending four words that should normally be stored in different sets to the cache. This caused a lot of confusion, as I was inspecting the signals and the wrong part of the data was processed.
+
+
+## Learning Outcomes
+
+In my opinion, the most important part of this project was the management of the project itself. All team members had to work together to ensure that the project evolved in the right direction. Instead of having one single way of doing things, each individual had to ensure their work could be easily integrated with the rest of the project. This is why creating modules like `def.sv` was so important, to preserve a structure and avoid conflicts.
+
+The second most important part, outside of technical knowledge, was managing a Git repository. We are all exposed to this tool in our daily work, but we never truly take the time to learn its features and maintain a clean repository when working alone. This project was a great opportunity for me to avoid putting it off until later.
+
+Finally, I learned a lot about the architecture of a CPU. Even though we learned about all these components in the course, it does not compare to the experience gained from implementing them yourself. Your understanding of the subject deepens as you have to fully comprehend the link between each wire and module.
+
+## Conclusion
+
+In conclusion, even if the cache is just a "toy-extension" in this project and it doesn't significantly change the program's execution time, it was important to understand how it works and how it is implemented. Learning the RISC-V architecture was a great opportunity, not only because it teaches us how a CPU works but also because this knowledge is very valuable in the industry and could be highly useful in the future.
