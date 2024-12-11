@@ -18,9 +18,6 @@ module top #(
     output  logic [DATA_WIDTH-1:0] a0    
 );
 
-    //for testing
-    logic unused_trigger;
-    assign unused_trigger = trigger;
 
     logic [DATA_WIDTH-1:0]      pc;
     logic [DATA_WIDTH-1:0]      ImmExt;
@@ -91,6 +88,7 @@ module top #(
 
     top_decode decode(
         .clk        (clk),
+        .trigger    (trigger),
         .instr      (instrD),
         .ALUctrl    (ALUctrl),
         .ALUSrc     (ALUSrc),

@@ -24,15 +24,15 @@ else
     files=("$@")
 fi
 
-# Cleanup
-rm -rf obj_dir
-
 cd $SCRIPT_DIR
+
+# Wipe previous test output
+rm -rf test_out/*
 
 # Iterate through files
 for file in "${files[@]}"; do
     name=$(basename "$file" _tb.cpp | cut -f1 -d\-)
-    
+
     # If verify.cpp -> we are testing the top module
     if [ $name == "verify.cpp" ]; then
         name="top"
@@ -45,29 +45,22 @@ for file in "${files[@]}"; do
                 -y ${RTL_FOLDER} \
                 --prefix "Vdut" \
                 -o Vdut \
-                -LDFLAGS "-lgtest -lgtest_main -lpthread" \
+                -LDFLAGS "-lgtest -lgtest_main -lpthread"
 
     # Build C++ project with automatically generated Makefile
     make -j -C obj_dir/ -f Vdut.mk
-    
+
     # Run executable simulation file
     ./obj_dir/Vdut
-    
+
     # Check if the test succeeded or not
     if [ $? -eq 0 ]; then
         ((passes++))
     else
         ((fails++))
     fi
-    
+
 done
 
-# Exit as a pass or fail (for CI purposes)
-if [ $fails -eq 0 ]; then
-    echo "${GREEN}Success! All ${passes} test(s) passed!"
-    exit 0
-else
-    total=$((passes + fails))
-    echo "${RED}Failure! Only ${passes} test(s) passed out of ${total}."
-    exit 1
-fi
+# Save obj_dir in test_out
+mv obj_dir test_out/
