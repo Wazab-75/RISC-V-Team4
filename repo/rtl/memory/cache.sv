@@ -65,7 +65,7 @@ logic [DATA_WIDTH-1:0] hit_count;
 
 always_comb begin
     hit_found = 0;
-    way_hit_vector = 1'b0;
+    way_hit_vector = 2'b0;
     for (int w = 0; w < WAYS; w++) begin
         if (v[index][w] && (tag_array[index][w] == tag)) begin
             hit_found = 1;
@@ -156,7 +156,7 @@ end
 // Cache Read Logic
 always_comb begin
     if (!hit && fetch_enable) begin
-        fetched_word = fetch_data[(offset*DATA_WIDTH) +: DATA_WIDTH];
+        fetched_word = fetch_data[(offset*DATA_WIDTH) +: DATA_WIDTH]; // Generates 33 bits !!
         
         case (funct3)
             3'b000: begin
