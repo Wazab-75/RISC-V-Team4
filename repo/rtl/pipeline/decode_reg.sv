@@ -20,6 +20,7 @@ module decode_reg #(
     input  logic [11:7]            RdD,
     input  logic [19:15]           rs1D,
     input  logic [24:20]           rs2D,
+    input  logic                   MemReadD,
 
     //Flush
     input  logic                   FlushD,
@@ -44,7 +45,8 @@ module decode_reg #(
     output logic                   RegWriteE,
     output logic [11:7]            RdE,
     output logic [19:15]           rs1E,
-    output logic [24:20]           rs2E
+    output logic [24:20]           rs2E,
+    output logic                   MemReadE
 );
 
 
@@ -70,6 +72,7 @@ module decode_reg #(
             RdE <= 0;
             rs1E <= 0;
             rs2E <= 0;
+            MemReadE <= 0;
         end
         else begin
             if (!StallD) begin
@@ -91,6 +94,7 @@ module decode_reg #(
             RdE <= RdD;
             rs1E <= rs1D;
             rs2E <= rs2D;
+            MemReadE <= MemReadD;
             end
         end
     end

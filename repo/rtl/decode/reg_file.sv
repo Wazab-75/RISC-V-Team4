@@ -3,7 +3,6 @@ module reg_file #(
     parameter DATA_WIDTH = 32
 ) (
     input  logic                           clk,
-    input  logic                           trigger,
     input  logic [ADDRESS_WIDTH-1:0]       AD1,
     input  logic [ADDRESS_WIDTH-1:0]       AD2,
     input  logic [ADDRESS_WIDTH-1:0]       AD3,
@@ -19,7 +18,6 @@ logic [DATA_WIDTH-1:0] registers [2**ADDRESS_WIDTH-1:0];
 always_ff @(negedge clk)
     begin
         if (WE3 && (AD3 != 0)) registers[AD3] <= WD3;
-        registers[5] <= {31'b0,trigger};
     end
 
 always_comb begin

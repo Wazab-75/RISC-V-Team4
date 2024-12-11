@@ -52,6 +52,7 @@ module hazard_unit (
 
     //flush
     assign FlushF = PCSrcE;
+    //assign FlushE = lwStall | PCSrcE;
     assign FlushD = lwStall || PCSrcE;
 
 endmodule

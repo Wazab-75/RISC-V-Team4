@@ -7,7 +7,8 @@ module main_decoder (
     output logic          MemWrite,
     output logic [1:0]    ResultSrc,
     output logic          Branch,
-    output logic          PcOp
+    output logic          PcOp,
+    output logic          MemRead
 );
 
 always_comb begin
@@ -124,6 +125,8 @@ case (op)
         PcOp        = 1'b0;
     end
 endcase
+    if (op == 7'b0000011) MemRead = 1;
+    else MemRead = 0;
 end
 
 endmodule

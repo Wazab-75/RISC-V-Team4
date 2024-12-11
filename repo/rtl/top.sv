@@ -18,6 +18,9 @@ module top #(
     output  logic [DATA_WIDTH-1:0] a0    
 );
 
+    //for testing
+    logic unused_trigger;
+    assign unused_trigger = trigger;
 
     logic [DATA_WIDTH-1:0]      pc;
     logic [DATA_WIDTH-1:0]      ImmExt;
@@ -39,6 +42,7 @@ module top #(
     logic                       branch_neg;
     logic                       RegWriteD;
     logic [DATA_WIDTH-1:0]      ReadData;
+    logic                       MemRead;
 
 
 
@@ -88,7 +92,6 @@ module top #(
 
     top_decode decode(
         .clk        (clk),
-        .trigger    (trigger),
         .instr      (instrD),
         .ALUctrl    (ALUctrl),
         .ALUSrc     (ALUSrc),
@@ -105,7 +108,8 @@ module top #(
         .RegWrite   (RegWriteW),
         .RegWriteD  (RegWriteD),
         .Rd         (RdW),
-        .a0         (a0)
+        .a0         (a0),
+        .MemRead    (MemRead)
     );
 
 //--------------------------------
@@ -129,7 +133,8 @@ module top #(
     logic                   RegWriteE;
     logic [11:7]            RdE;
     logic [19:15]           rs1E;
-    logic [24:20]           rs2E;    
+    logic [24:20]           rs2E;
+    logic                   MemReadE;    
 
 
     decode_reg pipeline_decode(
@@ -152,6 +157,7 @@ module top #(
         .RdD         (instrD[11:7]),
         .rs1D        (instrD[19:15]),
         .rs2D        (instrD[24:20]),
+        .MemReadD    (MemRead),
 
         .FlushD      (FlushD),
         .StallD      (StallD),
@@ -173,7 +179,8 @@ module top #(
         .RegWriteE   (RegWriteE),
         .RdE         (RdE),
         .rs1E        (rs1E),
-        .rs2E        (rs2E)
+        .rs2E        (rs2E),
+        .MemReadE    (MemReadE)
     );
 
 //--------------------------------
@@ -215,6 +222,7 @@ module top #(
     logic                    MemWriteM;
     logic [1:0]              ResultSrcM;
     logic [14:12]            funct3M;
+    logic                    MemReadM;
 
     execute_reg pipeline_execute(
         .clk         (clk),
@@ -226,6 +234,8 @@ module top #(
         .ALUResultE  (ALUResult),
         .WriteDataE  (rd2_h),
         .funct3E     (instr_14_12E),
+        .MemReadE    (MemReadE),
+
         .MemWriteM   (MemWriteM),
         .ResultSrcM  (ResultSrcM),
         .PCPlus4M    (PCPlus4M),
@@ -233,7 +243,8 @@ module top #(
         .RdM         (RdM),
         .ALUResultM  (ALUResultM),
         .WriteDataM  (WriteDataM),
-        .funct3M     (funct3M)
+        .funct3M     (funct3M),
+        .MemReadM    (MemReadM)
     );
 
 
@@ -241,11 +252,13 @@ module top #(
 //------------MEMORY--------------
 //--------------------------------
 
-    top_memory memory(
+
+        top_memory memory(
         .clk        (clk), 
         .ALUResult  (ALUResultM),
         .WriteData  (WriteDataM),
         .MemWrite   (MemWriteM),
+        .MemRead    (MemReadM),
         .ReadData   (ReadData),
         .funct3     (funct3M)
     );

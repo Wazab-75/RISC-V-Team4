@@ -6,7 +6,6 @@ module top_decode #(
     parameter DATA_WIDTH = 32
 ) (
     input  logic                   clk,
-    input  logic                   trigger,
     input  logic [DATA_WIDTH-1:0]  instr,
     input  logic [DATA_WIDTH-1:0]  Result,
     input  logic [11:7]            Rd,
@@ -23,7 +22,8 @@ module top_decode #(
     output logic [DATA_WIDTH-1:0]  rd1,
     output logic [DATA_WIDTH-1:0]  rd2,
     output logic                   RegWriteD,
-    output logic [DATA_WIDTH-1:0]  a0
+    output logic [DATA_WIDTH-1:0]  a0,
+    output logic                   MemRead
 ); 
 
 logic [2:0] ImmSrc;
@@ -41,7 +41,8 @@ control_unit control_unit (
     .PcOp       (PcOp),
     .Branch     (Branch),
     .Jump       (Jump),
-    .branch_neg (branch_neg)
+    .branch_neg (branch_neg),
+    .MemRead    (MemRead)
 );
 
 sign_extend sign_extend(
@@ -52,7 +53,6 @@ sign_extend sign_extend(
 
 reg_file reg_file (
     .clk        (clk),
-    .trigger    (trigger),
     .AD1        (instr[19:15]),
     .AD2        (instr[24:20]),
     .AD3        (Rd),

@@ -15,7 +15,8 @@ module control_unit (
     output logic          Jump,
     output logic          Branch,
     output logic          branch_neg,
-    output logic          PcOp
+    output logic          PcOp,
+    output logic          MemRead
 );
 
 
@@ -30,7 +31,8 @@ main_decoder main_decode(
     .MemWrite       (MemWrite),
     .ResultSrc      (ResultSrc),
     .Branch         (Branch),
-    .PcOp           (PcOp)
+    .PcOp           (PcOp),
+    .MemRead        (MemRead)
 );
 
 
