@@ -48,9 +48,6 @@ The following code shows the concatenation of 4 consecutive 8-bit blocks to form
     end
 ```
 
-##### Relevant Commits:
-- TODO
-
 
 ### Sign Extension:
 This sign extend module takes an immediate value (Imm_in) and outputs a 32-bit sign-extended immediate (ImmExt). Depending on the instruction type (I-type, S-type, B-type, U-type, or J-type), specified by the 3-bit logic input ImmSrc, the module selects and extends the appropriate bits from Imm_in to construct the immediate value. A case statement is used to map the ImmSrc to the corresponding immediate type, making the design concise and readable while reducing the chances of errors in interpreting the instruction format.
@@ -70,9 +67,6 @@ This sign extend module takes an immediate value (Imm_in) and outputs a 32-bit s
 ```
 The main challenge was correctly interpreting and extracting the relevant bit fields for each instruction type. This required a detailed understanding of how the immediate values are encoded in the RISC-V instruction set. Furthermore, I improved my debugging ability as I utilised testbenches to validate the correctness of my module. 
 
-##### Relevant Commits:
-- TODO
-
 ### Control unit:
 Developing the control unit was my most significant contribution to the project, where I implemented all RV32I Base Integer Instructions. The control_unit module serves as the backbone of the RISC-V CPU, decoding 32-bit instructions to produce the control signals necessary for various instruction types. It processes the 32-bit instruction input (Instr) and the zero logic input (Zero) to output control signals including RegWrite, ALUctrl, ALUSrc, MemWrite, ImmSrc, and PCSrc, enabling coordination between each module within the CPU. By extracting key fields such as rs1, rs2, rd, funct3, and funct7, the module employs case-based logic to handle R-type, I-type, S-type, B-type, U-type, and J-type instructions. Additionally, it manages branching and jumping operations by calculating the target program counter (PCSrc) based on the Zero flag and the branch type.
 
@@ -87,9 +81,7 @@ Developing the control unit was my most significant contribution to the project,
 | B       | beq, bne, blt, bge, bltu, begu|                                                 
 | J       | jal                           |                                                 
 | I       | jalr                          |     
-| U       | lui, auipc                    |                                                                                             
-| I       | ecall, ebreak                 |    
-
+| U       | lui, auipc                    |                                                                                        
 ```sv
 module control_unit (   
     input logic [31:0]  Instr,
@@ -130,9 +122,6 @@ One challenge I faced was implementing the large number of instructions and comp
 
 Building the control unit was a rewarding experience that allowed me to improve my SystemVerilog skills. Interpreting RISC-V instruction formats and extracting fields like rs1, rs2, rd, funct3, and funct7 was challenging, especially with the need to handle diverse instruction types like R-type, I-type, and J-type. However, it was incredibly satisfying to successfully design such a complex module and witness its contribution to the overall functionality of the CPU.
 
-##### Relevant Commits:
-- TODO
-
 
 ## Cache for instruction memory: 
 Cache is vital for enhancing performance by minimizing memory access latency and boosting overall system efficiency. I collaborated with a team member to design a CPU cache system, focusing on developing the cache for the instruction memory, finally integrating the instruction memory cache (cache_inst), the data memory cache (cache_data), along with their original non-cache parts (inst_mem and data_mem) into a top-level module (top_memory). 
@@ -166,9 +155,7 @@ Writing the cache modules was a valuable experience that deepened my understandi
 
 A major obstacle I faced was managing the trade-offs between hardware complexity and performance. For instance, implementing a 2-way set-associative cache required balancing increased hardware resources for multiple tag comparisons against the benefit of reducing conflict misses. Integrating all the cache modules into a top-level design was a critical learning experience in modular design and testing. Debugging the interactions between modules, especially ensuring coherence and consistency in fetch operations, provided valuable insight into the intricacies of building a robust system. 
 
-##### Relevant Commits:
-- TODO
-
-
 ## Conclusion: 
-- TODO
+Through this project, I gained a comprehensive, hands-on understanding of the inner workings of a single-cycle CPU and its subsystems—specifically, the decode phase components such as instruction memory, sign extension, and the control unit, as well as the design and integration of an instruction cache. On the technical front, delving into instruction decoding and immediate generation deepened my knowledge of RISC-V instruction formats and cemented my understanding of how CPU modules collaborate. Implementing the control unit particularly honed my skills in translating architectural specifications into effective, maintainable SystemVerilog code. I also became more adept at structuring logic around parameterization, modular design, and careful handling of memory resources to balance complexity and performance.
+
+Beyond the technical aspects, this project underscored the importance of teamwork, communication, and responsibility in collaborative engineering efforts. By working closely with my teammates, I learned how open dialogue, mutual support, and shared accountability are crucial to resolving design challenges, refining ideas, and ensuring project coherence. Navigating the interplay of multiple modules and merging our respective contributions helped me appreciate how effective cooperation and active feedback channels can elevate not only the final product but also the learning process itself. Ultimately, this project not only strengthened my technical competency but also enriched my ability to function productively in a team-based environment.
