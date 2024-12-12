@@ -13,6 +13,7 @@
     - [Sign Extension](#sign-extension)
     - [Control Unit](#control-unit)
 - [Cache for instruction memory](#cache-for-instruction-memory)
+- [RV32M - multiplication](#RV32M-multiplication)
 - [Conclusion](#conclusion)
 
 
@@ -154,6 +155,9 @@ The module takes an address as input, decomposing it into tag, index, and offset
 Writing the cache modules was a valuable experience that deepened my understanding of cache design and its integration into CPU architectures. It reinforced my understanding of concepts like spatial and temporal locality, which are fundamental to optimizing memory access patterns. 
 
 A major obstacle I faced was managing the trade-offs between hardware complexity and performance. For instance, implementing a 2-way set-associative cache required balancing increased hardware resources for multiple tag comparisons against the benefit of reducing conflict misses. Integrating all the cache modules into a top-level design was a critical learning experience in modular design and testing. Debugging the interactions between modules, especially ensuring coherence and consistency in fetch operations, provided valuable insight into the intricacies of building a robust system. 
+
+## RV32M - multiplication:
+As an addition beyond the project requirements, I implemented a portion of the RV32M extension, enabling multiplication functionality. While division and remainder operations were not included due to the use of integers and floating points, I modified the control unit module and ALU to support the MUL instruction. To ensure its proper functionality, I developed a dedicated testbench to validate its operation. The process of creating and using testbenches was particularly valuable, as it reinforced the critical skill of thoroughly verifying that every component works as intended.
 
 ## Conclusion: 
 Through this project, I gained a comprehensive, hands-on understanding of the inner workings of a single-cycle CPU and its subsystems—specifically, the decode phase components such as instruction memory, sign extension, and the control unit, as well as the design and integration of an instruction cache. On the technical front, delving into instruction decoding and immediate generation deepened my knowledge of RISC-V instruction formats and cemented my understanding of how CPU modules collaborate. Implementing the control unit particularly honed my skills in translating architectural specifications into effective, maintainable SystemVerilog code. I also became more adept at structuring logic around parameterization, modular design, and careful handling of memory resources to balance complexity and performance.
