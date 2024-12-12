@@ -21,10 +21,10 @@ A RISC-V RV32I processor was implemented with cache and pipelining...
 - [Conclusion](#conclusion)
 
 ## Personal statement
-- [Radaan Kumar Madhan](./doc/personal_statement/radaan_statement.md)
-- [Ivy Yu](/doc/personal_statement/ivy_statement.md)
-- [Will Zhang](/doc/personal_statement/will_statement.md)
-- [Athanase de Germay de Cirfontaine](/doc/personal_statement/ata_statement.md)
+- [Radaan Kumar Madhan](./doc/personal_statements/radaan_statement.md)
+- [Ivy Yu](/doc/personal_statements/ivy_statement.md)
+- [Will Zhang](/doc/personal_statements/will_statement.md)
+- [Athanase de Germay de Cirfontaine](/doc/personal_statements/ata_statement.md)
 
 
 ## Quick start
