@@ -64,8 +64,7 @@ RV32I Base Integer Instructions:
 
 ### Work Evidence
 #### F1 test
-<video controls src="test results/output7.mp4" title="Title"></video>
-<video controls src="test results/output4.mp4" title="Title"></video>
+
 
 #### Reference test
 Pipelined test results:
