@@ -64,21 +64,21 @@ RV32I Base Integer Instructions:
 
 ### Work Evidence
 #### F1 test
-<video controls src="output3.mp4" title="Title"></video>  
-<video controls src="output4.mp4" title="Title"></video>
+<video controls src="test results/output3.mp4" title="Title"></video>
+<video controls src="test results/output4.mp4" title="Title"></video>
 
 #### Reference test
-Pipelined test results
-gaussian: <img src="681462ef06bf3c84baf8f5024200be6.jpg"  width="300"/>
-noisy:    <img src="f8d76ad07916d43d87348d207cfa5da.jpg"  width="300"/>
-sine:     <img src="93eb1143bb1878fb0c00a05ea7a242a.jpg"  width="300"/>
-triangle: <img src="f444b263f704aa9aaab6b1f866a2b60.jpg"  width="300"/>
- 
-2-way associative cache test results
-gaussian: <img src="3e2dd63725751f1d9a43ca8e9636fc6.jpg"  width="300"/>
-noisy: <img src="924bfd5aa070ede5961719fb59fb789.jpg"  width="300"/>
-sine:  <img src="7e5c652624a083f44021e08fcd2df92.jpg"  width="300"/>
-triangle:  <img src="c055a3b9133be986a8f3f52b0272bae.jpg"  width="300"/>
+Pipelined test results:
+- gaussian: <img src="test results/681462ef06bf3c84baf8f5024200be6.jpg" width="300" />
+- noisy: <img src="test results/f8d76ad07916d43d87348d207cfa5da.jpg" width="300" />
+- sine: <img src="test results/93eb1143bb1878fb00c00a05ea7a242a.jpg" width="300" />
+- triangle: <img src="test results/f444b263f704aa9aaab6b1f866a2b60.jpg" width="300" />
+
+2-way associative cache test results:
+- gaussian: <img src="test results/3e2dd63725751f1d9a43ca8e9636fc6.jpg" width="300" />
+- noisy: <img src="test results/924bfd5aa070ede5961719fb59fb789.jpg" width="300" />
+- sine: <img src="test results/7e5c652624a083f44021e08fcd2df92.jpg" width="300" />
+- triangle: <img src="test results/c055a3b9133be986a8f3f52b0272bae.jpg" width="300" />
 
 
 
