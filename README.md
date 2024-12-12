@@ -26,10 +26,10 @@ Pipelining is a fundamental and highly effective technique in processor design, 
 
 To handle these hazards and maintain the efficiency of the pipeline, we employ the following strategies:
 
-- **Advanced Hazard Handling with a Hazard Unit:** A more sophisticated method involves designing a Hazard Unit to dynamically manage hazards through:
-  - **Forwarding:** Bypass intermediate pipeline stages to supply dependent instructions with the necessary data without waiting for it to be written back to the register file.
-  - **Stalling:** Pause the pipeline by freezing specific stages to resolve data dependencies or avoid incorrect execution.
-  - **Flushing:** Clear invalid instructions from the pipeline, typically used to handle control hazards like branch mispredictions.
+**Advanced Hazard Handling with a Hazard Unit:** A more sophisticated method involves designing a Hazard Unit to dynamically manage hazards through:
+ - **Forwarding:** Bypass intermediate pipeline stages to supply dependent instructions with the necessary data without waiting for it to be written back to the register file.
+ - **Stalling:** Pause the pipeline by freezing specific stages to resolve data dependencies or avoid incorrect execution.
+ - **Flushing:** Clear invalid instructions from the pipeline, typically used to handle control hazards like branch mispredictions.
 
 By implementing these techniques, the pipelined processor achieves both high performance and correctness, effectively managing the complexities introduced by instruction-level parallelism.
 
