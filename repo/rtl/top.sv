@@ -3,8 +3,6 @@
 `include <./decode/top_decode.sv>
 `include <./execute/top_execute.sv>
 `include <./memory/top_memory.sv>
-`include <./memory/inst_mem.sv>
-
 
 module top #(
     parameter   DATA_WIDTH = 32
@@ -45,12 +43,8 @@ module top #(
         .PCSrc       (PCSrc),
         .PCTarget    (PCTarget),
         .PCPlus4     (PCPlus4),
-        .pc          (pc)
-    );
-
-    inst_mem inst_mem (
-        .addr       (pc),
-        .dout       (instr)
+        .pc          (pc),
+        .dout        (instr)
     );
 
     top_decode decode(
