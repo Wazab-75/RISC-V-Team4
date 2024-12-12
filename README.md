@@ -12,14 +12,15 @@ Pipelining is a fundamental and highly effective technique in processor design, 
 
 5. **W (Write Register):** Write results back to the register file.
 
-- It is important to note that not all instructions utilize every stage. For instance, instructions like `ADD` primarily involve the **D**, **E**, and **W** stages, while load instructions (`LW`) require **D**, **E**, **M**, and **W** stages. Through pipelining, multiple instructions are executed simultaneously, each occupying a different stage in the pipeline during the same clock cycle. 
+- It is important to note that not all instructions utilize every stage. For instance, instructions like `ADD` primarily involve the **D**, **E**, and **W** stages, while load instructions (`LW`) require **D**, **E**, **M**, and **W** stages. Through pipelining, multiple instructions are executed simultaneously, each occupying a different stage in the pipeline during the same clock cycle. For example: When the first instruction completes the **F** stage, the second instruction begins its **F** stage while the first instruction moves to the **D** stage.
 
-For example: When the first instruction completes the **F** stage, the second instruction begins its **F** stage while the first instruction moves to the **D** stage.
 
 - While pipelining significantly boosts instruction throughput, it also introduces challenges such as **data hazards** and **control hazards**:
 
 1. **Data Hazards:** Occur when one instruction depends on the result of a previous instruction that is still in the pipeline.
 2. **Control Hazards:** Arise due to branch instructions, where the next instruction's address depends on the outcome of a branch decision.
+
+----
 
 ### Hazard Mitigation Techniques
 
