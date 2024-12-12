@@ -71,7 +71,7 @@ RV32I Base Integer Instructions:
 Pipelined test results:
 - gaussian: <img src="test results/681462ef06bf3c84baf8f5024200be6.png" width="300" />
 - noisy: <img src="test results/f8d76ad07916d43d87348d207cfa5da.png" width="300" />
-- sine: <img src="test results/93eb1143bb1878fb00c00a05ea7a242a.png" width="300" />
+- sine: <img src="test results/93eb1143bb1878fb0c00a05ea7a242a.png" width="300" />
 - triangle: <img src="test results/f444b263f704aa9aaab6b1f866a2b60.png" width="300" />
 
 2-way associative cache test results:
