@@ -48,8 +48,7 @@ All RV32I Base Integer Instructions
 | B       | beq, bne, blt, bge, bltu, begu|                                                 
 | J       | jal                           |                                                 
 | I       | jalr                          |     
-| U       | lui, auipc                    |                                                                                             
-| I       | ecall, ebreak                 |                                                                                             
+| U       | lui, auipc                    |                                                                                          
 
 ### Parameter Specifications
 | Parameter            | Value       |
