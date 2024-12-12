@@ -11,6 +11,9 @@ module alu #(
     output logic                    branch_l
 );
 
+wire signed [63:0] product;
+assign product = $signed(ALUop1) * $signed(ALUop2);
+
     always_comb begin
 
         case (ALUctrl)
@@ -39,12 +42,8 @@ module alu #(
 
             //`ALU_OPCODE_BLTU: branch_l = (ALUop1 < ALUop2);
 
-            // Multiplication and division:
+            // Multiplication:
             `ALU_OPCODE_MUL:    ALUout = ALUop1 * ALUop2;
-            `ALU_OPCODE_MULH:   ALUout = ($signed(ALUop1) * $signed(ALUop2)) >> DATA_WIDTH;
-            `ALU_OPCODE_DIV:    ALUout = ALUop1 / ALUop2;
-            `ALU_OPCODE_REM:    ALUout = ALUop1 % ALUop2;
-            
             default: ALUout = 0;
                 
         endcase

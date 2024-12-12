@@ -44,12 +44,12 @@ logic  [6:0]  funct7;
                         case(funct3)
                             3'b000: ALUctrl = `ALU_OPCODE_MUL;  
                             3'b001: ALUctrl = `ALU_OPCODE_MULH;  // MUL High 
-                            // TODO 3'b010: ALUctrl = `ALU_OPCODE_MULSU; // MUL High (S) (U)                 
-                            // TODO 3'b011: ALUctrl = `ALU_OPCODE_MULU; // MUL High (U)
-                            3'b100: ALUctrl = `ALU_OPCODE_DIV;  // DIV
-                            // TODO 3'b101: ALUctrl = `ALU_OPCODE_DIVU; //DIV (U)
-                            3'b110: ALUctrl = `ALU_OPCODE_REM;  // Remainder
-                            // TODO 3'b111: ALUctrl = `ALU_OPCODE_REMU; // Remainder (U)
+                            // 3'b010: ALUctrl = `ALU_OPCODE_MULSU; // MUL High (S) (U)                 
+                            // 3'b011: ALUctrl = `ALU_OPCODE_MULU; // MUL High (U)
+                            // 3'b100: ALUctrl = `ALU_OPCODE_DIV;  // DIV
+                            // 3'b101: ALUctrl = `ALU_OPCODE_DIVU; //DIV (U)
+                            // 3'b110: ALUctrl = `ALU_OPCODE_REM;  // Remainder
+                            // 3'b111: ALUctrl = `ALU_OPCODE_REMU; // Remainder (U)
                             default: ALUctrl = 0;
                         endcase
                     end
