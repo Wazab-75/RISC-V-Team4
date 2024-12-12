@@ -63,7 +63,26 @@ RV32I Base Integer Instructions:
 
 
 ### Work Evidence
-// TODO: Add description and tests for the F1 program / sine / pdf
+#### F1 test
+<video controls src="output.mp4" title="Title"></video>
+<video controls src="output2.mp4" title="Title"></video>
+
+#### Reference test
+Pipelined test results
+gaussian: ![alt text](681462ef06bf3c84baf8f5024200be6.png)  
+noisy: ![alt text](f8d76ad07916d43d87348d207cfa5da.png)  
+sine: ![alt text](93eb1143bb1878fb0c00a05ea7a242a.png)  
+triangle: ![alt text](f444b263f704aa9aaab6b1f866a2b60.png) 
+
+2-way associative cache test results
+gaussian: ![alt text](3e2dd63725751f1d9a43ca8e9636fc6.png)  
+noisy: ![alt text](924bfd5aa070ede5961719fb59fb789.png)  
+sine: ![alt text](7e5c652624a083f44021e08fcd2df92.png)  
+triangle: ![alt text](c055a3b9133be986a8f3f52b0272bae.png)
+
+
+
+
 
 
 ## Team Contribution
