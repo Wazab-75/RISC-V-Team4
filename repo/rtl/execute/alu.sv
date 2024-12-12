@@ -11,9 +11,6 @@ module alu #(
     output logic                    branch_l
 );
 
-wire signed [63:0] product;
-assign product = $signed(ALUop1) * $signed(ALUop2);
-
     always_comb begin
 
         case (ALUctrl)
@@ -44,6 +41,7 @@ assign product = $signed(ALUop1) * $signed(ALUop2);
 
             // Multiplication:
             `ALU_OPCODE_MUL:    ALUout = ALUop1 * ALUop2;
+            
             default: ALUout = 0;
                 
         endcase
