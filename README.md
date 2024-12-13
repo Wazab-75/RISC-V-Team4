@@ -1,146 +1,18 @@
-# RISC-V RV32I Processor
-
-## Project Description
-A RISC-V RV32I processor was implemented with cache and pipelining...
-
-## Team #4 Members
-
-| Athanase de Germay de Cirfontaine (repo manager) | Radaan Kumar Madhan| Ivy Yu | Will Zhang |
-|-|-|-|-|
+# RV32M - multiplication 
 
 ## Overview
-- [Introduction](#introduction)
-- [Quick start](#quick-start)
-- [CPU Design](#cpu-design)
-  - [Instructions Implemented](#instructions-implemented)
-  - [Parameter Specifications](#parameter-specifications)
-  - [Work Evidence](#work-evidence)
-- [Team Contribution](#team-contribution)
-- [Project Progression](#project-progression)
-- [Conclusion](#conclusion)
+In this branch, we extended the functionality of our design by partially implementing the RV32M extension of the RISC-V instruction set. Specifically, we incorporated the MUL instruction, which performs integer multiplication. This addition enhances the computational capabilities of our system.
 
-## Personal statement
-- [Radaan Kumar Madhan](./doc/personal_statement/radaan_statement.md)
-- [Ivy Yu](/doc/personal_statement/ivy_statement.md)
-- [Will Zhang](/doc/personal_statement/will_statement.md)
-- [Athanase de Germay de Cirfontaine](/doc/personal_statement/ata_statement.md)
+## Design Decisions
+While the RV32M extension includes a range of arithmetic operations, such as division (DIV), and remainder (REM), we deliberately chose to implement only the MUL instruction. This decision was because our system focuses on integer arithmetic, and we do not currently support floating-point operations, which makes certain instructions in the RV32M extension less relevant to our goals.
 
+## Implementation Details
+The addition of the MUL instruction required modifications to two primary modules in our system:
 
-## Introduction
+Control Unit: Adjustments were made to recognize the MUL instruction in the instruction decoding process and generate appropriate control signals to direct the execution flow.
 
-// small introduction to the project / the goal of the project
+Arithmetic Logic Unit (ALU): The ALU was enhanced to perform multiplication operations. 
 
-## Quick start
+To ensure the correctness and reliability of our implementation, comprehensive testbenches were developed and executed. 
 
-// all the commands to execute the code / install the dependencies
-
-## CPU Design
-
-// small introduction to the different parts of the CPU / the instructions and the parameters
-
-### Instructions Implemented
-All RV32I Base Integer Instructions
-| Type    | Instruction                   |
-| --------| ----------------------------- | 
-| R       | add, sub, xor, or, and        |               
-| R       | sll, srl, sra, slt, sltu      |    
-| I       | addi, subi, xori, ori, andi   |               
-| I       | slli, srli, srai, slti, sltiu |           
-| I       | lb, lh, lw, lbu, lhu          |                           
-| S       | sb, sh, sw                    |     
-| B       | beq, bne, blt, bge, bltu, begu|                                                 
-| J       | jal                           |                                                 
-| I       | jalr                          |     
-| U       | lui, auipc                    |                                                                                             
-| I       | ecall, ebreak                 |                                                                                             
-
-### Parameter Specifications
-| Parameter    | Value               |
-| -------------| --------------------| 
-| Instruction Memory    | a        |               
-| Data Width ...
-TBC...
-
-### Work Evidence
-// TODO: Add description and tests for the F1 program / sine / pdf
-
-
-## Team Contribution
-
-- Work Contribution Table
-- `/` refers to **minor contribution**
-- `X` refers to **major contribution**
-
-| Steps        | Files  | Radaan (RadaanMadhan) | Will (will03216) | Ivy (Ivy-yu7) | Athanase (Wazab-75) |
-| ------------ | ----------------------------------------------- | :----: | :--: | :-: | :------: |
-| Lab 4        | [Program Counter](./repo/rtl/fetch/pc.sv)       |        |  X   |     |          |
-|              | [ALU](./repo/rtl/execute/alu.sv)                |        |      |     |    X     |
-|              | [Register File](./repo/rtl/decode/reg_module.sv)   |   /    |      |  /  |    X     |
-|              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv)  |   /    |      |  /  |          |
-|              | [Control Unit](./repo/rtl/decode/control_unit.sv)    |   /    |      |  X   |    /     |
-|              | [Sign Extend](./repo/rtl/decode/sign_extend.sv)     |        |      |  X  |          |
-|              | [Testbench](./repo/tb_unit/tests/verify.cpp)               |   X    |   /  |  /  |    /     |
-|              | [F1 program](./repo/rtl/F1/f1/f1_tb.cpp)             |        |  X   |     |          |
-| Single Cycle | [Data Memory](./repo/rtl/memory/data_mem.sv)        |   X    |      |     |    X     |
-|              | [Program Counter](./repo/rtl/fetch/pc.sv)       |        |      |     |          |
-|              | [ALU](./repo/rtl/execute/alu.sv)                |        |      |     |    X     |
-|              | [Register File](./repo/rtl/decode/reg_module.sv)   |   /    |      |     |          |
-|              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv)  |        |      |  X  |          |
-|              | [Control Unit](./repo/rtl/decode/control_unit.sv)    |   /    |      |  X  |    /     |
-|              | [Sign Extend](./repo/rtl/decode/sign_extend.sv)     |        |      |  X  |          |
-|              | [Testbench](./repo/tb/tests/verify.cpp)       |   X    |   /  |  /  |    /     |
-| Pipeline     | [Pipeline flip-flop stages]() |   X    |  X   |     |          |
-|              | [Hazard unit]()    |   X    |  X   |     |          |
-|              | [Prediction stage]() |   X    |   /  |     |          |
-| Cache        | [Memory](./repo/rtl/memory/top_memory.sv)              |   /    |      |     |    X     |
-|              | [Direct mapped cache]()  |        |      |     |    X     |
-|              | [Two-way set associative cache]() |        |      |     |    X     |
-|              | [Instruction Cache]() |        |      |  X  |          |
-| Full CPU     | [Combine Pipeline and Cache]() |   X    |  X   |     |          |
-
-
-## Project Progression
-```mermaid
-    gitGraph
-       checkout main
-       commit id: "Basic Lab 4 CPU"
-       commit id: "Single-Cycle CPU"
-
-       branch pipeline
-       branch cache
-
-       checkout pipeline
-       commit id: "Pipeline flip-flop stages"
-       commit id: "Hazard unit"
-
-       checkout cache
-       commit id: "Memory"
-       commit id: "Direct mapped cache"
-
-       checkout pipeline
-       commit id: "Debugging"
-       commit id: "F1 program"
-       commit id: "PDF program"
-
-       checkout main
-       merge pipeline
-       merge cache
-       commit id: "Combine Pipeline and Cache"
-       commit id: "Complete CPU"
-```
-
-
-## File Structure
-
-// TODO: Add the file structure of the repo
-
-## Other Files
-| File Name   | Content               |
-| ------------| --------------------| 
-| README.md   |      |               
-| .gitignore  |  |
-TBC...
-
-## Conclusion
-
-// TODO: Add the conclusion of the project
+Future work could explore implementing the remaining instructions of the RV32M extension, perhaps using floating point instead of integers. 
