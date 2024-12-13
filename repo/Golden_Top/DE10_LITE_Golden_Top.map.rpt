@@ -1,0 +1,1276 @@
+Analysis & Synthesis report for DE10_LITE_Golden_Top
+Fri Dec 13 14:38:03 2024
+Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Analysis & Synthesis RAM Summary
+  9. Registers Removed During Synthesis
+ 10. Removed Registers Triggering Further Register Optimizations
+ 11. General Register Statistics
+ 12. Registers Packed Into Inferred Megafunctions
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Source assignments for top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0|altsyncram_ql71:auto_generated
+ 15. Parameter Settings for User Entity Instance: top:cpu_top
+ 16. Parameter Settings for User Entity Instance: top:cpu_top|top_fetch:fetch
+ 17. Parameter Settings for User Entity Instance: top:cpu_top|top_fetch:fetch|pc_reg:pc_reg
+ 18. Parameter Settings for User Entity Instance: top:cpu_top|inst_mem:inst_mem
+ 19. Parameter Settings for User Entity Instance: top:cpu_top|top_decode:decode
+ 20. Parameter Settings for User Entity Instance: top:cpu_top|top_decode:decode|sign_extend:sign_extend
+ 21. Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute
+ 22. Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|reg_file:reg_file
+ 23. Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|mux:ALuSrc1Sel
+ 24. Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|mux:ALuSrc2Sel
+ 25. Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|mux:AluSrc2PcOpSel
+ 26. Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|alu:alu
+ 27. Parameter Settings for User Entity Instance: top:cpu_top|top_memory:memory
+ 28. Parameter Settings for User Entity Instance: top:cpu_top|top_memory:memory|data_mem:data_mem
+ 29. Parameter Settings for User Entity Instance: top:cpu_top|top_memory:memory|mux:ResultSlc
+ 30. Parameter Settings for Inferred Entity Instance: top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0
+ 31. altsyncram Parameter Settings by Entity Instance
+ 32. Port Connectivity Checks: "top:cpu_top|top_execute:execute|mux:AluSrc2PcOpSel"
+ 33. Port Connectivity Checks: "top:cpu_top"
+ 34. Post-Synthesis Netlist Statistics for Top Partition
+ 35. Elapsed Time Per Partition
+ 36. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Fri Dec 13 14:38:02 2024       ;
+; Quartus Prime Version              ; 20.1.0 Build 711 06/05/2020 SJ Lite Edition ;
+; Revision Name                      ; DE10_LITE_Golden_Top                        ;
+; Top-level Entity Name              ; DE10_LITE_Golden_Top                        ;
+; Family                             ; MAX 10                                      ;
+; Total logic elements               ; 17,204                                      ;
+;     Total combinational functions  ; 16,244                                      ;
+;     Dedicated logic registers      ; 3,072                                       ;
+; Total registers                    ; 3072                                        ;
+; Total pins                         ; 185                                         ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 8,192                                       ;
+; Embedded Multiplier 9-bit elements ; 0                                           ;
+; Total PLLs                         ; 0                                           ;
+; UFM blocks                         ; 0                                           ;
+; ADC blocks                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                  ;
++------------------------------------------------------------------+----------------------+----------------------+
+; Option                                                           ; Setting              ; Default Value        ;
++------------------------------------------------------------------+----------------------+----------------------+
+; Device                                                           ; 10M50DAF484C6GES     ;                      ;
+; Top-level entity name                                            ; DE10_LITE_Golden_Top ; DE10_LITE_Golden_Top ;
+; Family name                                                      ; MAX 10               ; Cyclone V            ;
+; Use smart compilation                                            ; Off                  ; Off                  ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                   ; On                   ;
+; Enable compact report table                                      ; Off                  ; Off                  ;
+; Restructure Multiplexers                                         ; Auto                 ; Auto                 ;
+; Create Debugging Nodes for IP Cores                              ; Off                  ; Off                  ;
+; Preserve fewer node names                                        ; On                   ; On                   ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable               ; Enable               ;
+; Verilog Version                                                  ; Verilog_2001         ; Verilog_2001         ;
+; VHDL Version                                                     ; VHDL_1993            ; VHDL_1993            ;
+; State Machine Processing                                         ; Auto                 ; Auto                 ;
+; Safe State Machine                                               ; Off                  ; Off                  ;
+; Extract Verilog State Machines                                   ; On                   ; On                   ;
+; Extract VHDL State Machines                                      ; On                   ; On                   ;
+; Ignore Verilog initial constructs                                ; Off                  ; Off                  ;
+; Iteration limit for constant Verilog loops                       ; 5000                 ; 5000                 ;
+; Iteration limit for non-constant Verilog loops                   ; 250                  ; 250                  ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                   ; On                   ;
+; Infer RAMs from Raw Logic                                        ; On                   ; On                   ;
+; Parallel Synthesis                                               ; On                   ; On                   ;
+; DSP Block Balancing                                              ; Auto                 ; Auto                 ;
+; NOT Gate Push-Back                                               ; On                   ; On                   ;
+; Power-Up Don't Care                                              ; On                   ; On                   ;
+; Remove Redundant Logic Cells                                     ; Off                  ; Off                  ;
+; Remove Duplicate Registers                                       ; On                   ; On                   ;
+; Ignore CARRY Buffers                                             ; Off                  ; Off                  ;
+; Ignore CASCADE Buffers                                           ; Off                  ; Off                  ;
+; Ignore GLOBAL Buffers                                            ; Off                  ; Off                  ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                  ; Off                  ;
+; Ignore LCELL Buffers                                             ; Off                  ; Off                  ;
+; Ignore SOFT Buffers                                              ; On                   ; On                   ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                  ; Off                  ;
+; Optimization Technique                                           ; Balanced             ; Balanced             ;
+; Carry Chain Length                                               ; 70                   ; 70                   ;
+; Auto Carry Chains                                                ; On                   ; On                   ;
+; Auto Open-Drain Pins                                             ; On                   ; On                   ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                  ; Off                  ;
+; Auto ROM Replacement                                             ; On                   ; On                   ;
+; Auto RAM Replacement                                             ; On                   ; On                   ;
+; Auto DSP Block Replacement                                       ; On                   ; On                   ;
+; Auto Shift Register Replacement                                  ; Auto                 ; Auto                 ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto                 ; Auto                 ;
+; Auto Clock Enable Replacement                                    ; On                   ; On                   ;
+; Strict RAM Replacement                                           ; Off                  ; Off                  ;
+; Allow Synchronous Control Signals                                ; On                   ; On                   ;
+; Force Use of Synchronous Clear Signals                           ; Off                  ; Off                  ;
+; Auto RAM Block Balancing                                         ; On                   ; On                   ;
+; Auto RAM to Logic Cell Conversion                                ; Off                  ; Off                  ;
+; Auto Resource Sharing                                            ; Off                  ; Off                  ;
+; Allow Any RAM Size For Recognition                               ; Off                  ; Off                  ;
+; Allow Any ROM Size For Recognition                               ; Off                  ; Off                  ;
+; Allow Any Shift Register Size For Recognition                    ; Off                  ; Off                  ;
+; Use LogicLock Constraints during Resource Balancing              ; On                   ; On                   ;
+; Ignore translate_off and synthesis_off directives                ; Off                  ; Off                  ;
+; Timing-Driven Synthesis                                          ; On                   ; On                   ;
+; Report Parameter Settings                                        ; On                   ; On                   ;
+; Report Source Assignments                                        ; On                   ; On                   ;
+; Report Connectivity Checks                                       ; On                   ; On                   ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                  ; Off                  ;
+; Synchronization Register Chain Length                            ; 2                    ; 2                    ;
+; Power Optimization During Synthesis                              ; Normal compilation   ; Normal compilation   ;
+; HDL message level                                                ; Level2               ; Level2               ;
+; Suppress Register Optimization Related Messages                  ; Off                  ; Off                  ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000                 ; 5000                 ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000                 ; 5000                 ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                  ; 100                  ;
+; Clock MUX Protection                                             ; On                   ; On                   ;
+; Auto Gated Clock Conversion                                      ; Off                  ; Off                  ;
+; Block Design Naming                                              ; Auto                 ; Auto                 ;
+; SDC constraint protection                                        ; Off                  ; Off                  ;
+; Synthesis Effort                                                 ; Auto                 ; Auto                 ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                   ; On                   ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                  ; Off                  ;
+; Analysis & Synthesis Message Level                               ; Medium               ; Medium               ;
+; Disable Register Merging Across Hierarchies                      ; Auto                 ; Auto                 ;
+; Resource Aware Inference For Block RAM                           ; On                   ; On                   ;
++------------------------------------------------------------------+----------------------+----------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 20          ;
+; Maximum allowed            ; 14          ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 14          ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.1%      ;
+;     Processor 3            ;   0.0%      ;
+;     Processor 4            ;   0.0%      ;
+;     Processor 5            ;   0.0%      ;
+;     Processor 6            ;   0.0%      ;
+;     Processor 7            ;   0.0%      ;
+;     Processors 8-14        ;   0.0%      ;
++----------------------------+-------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                                                                      ;
++-------------------------------------------------------+-----------------+-------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path                      ; Used in Netlist ; File Type                                             ; File Name with Absolute Path                                                                                    ; Library ;
++-------------------------------------------------------+-----------------+-------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+---------+
+; memory/top_memory.sv                                  ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/top_memory.sv                                  ;         ;
+; memory/inst_mem.sv                                    ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv                                    ;         ;
+; memory/data_mem.sv                                    ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/data_mem.sv                                    ;         ;
+; fetch/top_fetch.sv                                    ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/fetch/top_fetch.sv                                    ;         ;
+; fetch/pc_reg.sv                                       ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/fetch/pc_reg.sv                                       ;         ;
+; decode/top_decode.sv                                  ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/top_decode.sv                                  ;         ;
+; decode/sign_extend.sv                                 ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/sign_extend.sv                                 ;         ;
+; decode/main_decoder.sv                                ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/main_decoder.sv                                ;         ;
+; decode/control_unit.sv                                ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/control_unit.sv                                ;         ;
+; decode/alu_decoder.sv                                 ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/alu_decoder.sv                                 ;         ;
+; execute/top_execute.sv                                ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/top_execute.sv                                ;         ;
+; execute/reg_file.sv                                   ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/reg_file.sv                                   ;         ;
+; execute/alu.sv                                        ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/alu.sv                                        ;         ;
+; DE10_LITE_Golden_Top.v                                ; yes             ; User Verilog HDL File                                 ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v                                ;         ;
+; top.sv                                                ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv                                                ;         ;
+; mux.sv                                                ; yes             ; User SystemVerilog HDL File                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/mux.sv                                                ;         ;
+; program_test.hex                                      ; yes             ; Auto-Found Hexadecimal (Intel-Format) File            ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/program_test.hex                                      ;         ;
+; altsyncram.tdf                                        ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/altsyncram.tdf                                           ;         ;
+; stratix_ram_block.inc                                 ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/stratix_ram_block.inc                                    ;         ;
+; lpm_mux.inc                                           ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/lpm_mux.inc                                              ;         ;
+; lpm_decode.inc                                        ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/lpm_decode.inc                                           ;         ;
+; aglobal201.inc                                        ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/aglobal201.inc                                           ;         ;
+; a_rdenreg.inc                                         ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/a_rdenreg.inc                                            ;         ;
+; altrom.inc                                            ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/altrom.inc                                               ;         ;
+; altram.inc                                            ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/altram.inc                                               ;         ;
+; altdpram.inc                                          ; yes             ; Megafunction                                          ; c:/intelfpga_lite/20.1/quartus/libraries/megafunctions/altdpram.inc                                             ;         ;
+; db/altsyncram_ql71.tdf                                ; yes             ; Auto-Generated Megafunction                           ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/db/altsyncram_ql71.tdf                                ;         ;
+; db/de10_lite_golden_top.ram0_inst_mem_ca4b5cb.hdl.mif ; yes             ; Auto-Generated Auto-Found Memory Initialization File  ; C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/db/de10_lite_golden_top.ram0_inst_mem_ca4b5cb.hdl.mif ;         ;
++-------------------------------------------------------+-----------------+-------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+---------+
+
+
++-------------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                       ;
++---------------------------------------------+---------------------+
+; Resource                                    ; Usage               ;
++---------------------------------------------+---------------------+
+; Estimated Total logic elements              ; 17,204              ;
+;                                             ;                     ;
+; Total combinational functions               ; 16244               ;
+; Logic element usage by number of LUT inputs ;                     ;
+;     -- 4 input functions                    ; 13023               ;
+;     -- 3 input functions                    ; 3028                ;
+;     -- <=2 input functions                  ; 193                 ;
+;                                             ;                     ;
+; Logic elements by mode                      ;                     ;
+;     -- normal mode                          ; 15940               ;
+;     -- arithmetic mode                      ; 304                 ;
+;                                             ;                     ;
+; Total registers                             ; 3072                ;
+;     -- Dedicated logic registers            ; 3072                ;
+;     -- I/O registers                        ; 0                   ;
+;                                             ;                     ;
+; I/O pins                                    ; 185                 ;
+; Total memory bits                           ; 8192                ;
+;                                             ;                     ;
+; Embedded Multiplier 9-bit elements          ; 0                   ;
+;                                             ;                     ;
+; Maximum fan-out node                        ; MAX10_CLK1_50~input ;
+; Maximum fan-out                             ; 3104                ;
+; Total fan-out                               ; 71290               ;
+; Average fan-out                             ; 3.60                ;
++---------------------------------------------+---------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                                     ;
++----------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+; Compilation Hierarchy Node                   ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name                                                                                           ; Entity Name          ; Library Name ;
++----------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+; |DE10_LITE_Golden_Top                        ; 16244 (12)          ; 3072 (0)                  ; 8192        ; 0          ; 0            ; 0       ; 0         ; 185  ; 0            ; 0          ; |DE10_LITE_Golden_Top                                                                                         ; DE10_LITE_Golden_Top ; work         ;
+;    |top:cpu_top|                             ; 16232 (0)           ; 3072 (0)                  ; 8192        ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top                                                                             ; top                  ; work         ;
+;       |inst_mem:inst_mem|                    ; 0 (0)               ; 0 (0)                     ; 8192        ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|inst_mem:inst_mem                                                           ; inst_mem             ; work         ;
+;          |altsyncram:rom_array_rtl_0|        ; 0 (0)               ; 0 (0)                     ; 8192        ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0                                ; altsyncram           ; work         ;
+;             |altsyncram_ql71:auto_generated| ; 0 (0)               ; 0 (0)                     ; 8192        ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0|altsyncram_ql71:auto_generated ; altsyncram_ql71      ; work         ;
+;       |top_decode:decode|                    ; 71 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode                                                           ; top_decode           ; work         ;
+;          |control_unit:control_unit|         ; 32 (5)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|control_unit:control_unit                                 ; control_unit         ; work         ;
+;             |alu_decoder:alu_decode|         ; 7 (7)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|control_unit:control_unit|alu_decoder:alu_decode          ; alu_decoder          ; work         ;
+;             |main_decoder:main_decode|       ; 20 (20)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|control_unit:control_unit|main_decoder:main_decode        ; main_decoder         ; work         ;
+;          |sign_extend:sign_extend|           ; 39 (39)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|sign_extend:sign_extend                                   ; sign_extend          ; work         ;
+;       |top_execute:execute|                  ; 2032 (0)            ; 992 (0)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute                                                         ; top_execute          ; work         ;
+;          |alu:alu|                           ; 581 (581)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu                                                 ; alu                  ; work         ;
+;          |mux:ALuSrc1Sel|                    ; 33 (33)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|mux:ALuSrc1Sel                                          ; mux                  ; work         ;
+;          |mux:AluSrc2PcOpSel|                ; 39 (39)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|mux:AluSrc2PcOpSel                                      ; mux                  ; work         ;
+;          |reg_file:reg_file|                 ; 1379 (1379)         ; 992 (992)                 ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|reg_file:reg_file                                       ; reg_file             ; work         ;
+;       |top_fetch:fetch|                      ; 187 (156)           ; 32 (0)                    ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_fetch:fetch                                                             ; top_fetch            ; work         ;
+;          |pc_reg:pc_reg|                     ; 31 (31)             ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_fetch:fetch|pc_reg:pc_reg                                               ; pc_reg               ; work         ;
+;       |top_memory:memory|                    ; 13942 (0)           ; 2048 (0)                  ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory                                                           ; top_memory           ; work         ;
+;          |data_mem:data_mem|                 ; 10065 (10065)       ; 2048 (2048)               ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem                                         ; data_mem             ; work         ;
+;          |mux:ResultSlc|                     ; 3877 (3877)         ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|mux:ResultSlc                                             ; mux                  ; work         ;
++----------------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+---------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                                                                                            ;
++----------------------------------------------------------------------------------------------------+------+------+--------------+--------------+--------------+--------------+------+-------------------------------------------------------+
+; Name                                                                                               ; Type ; Mode ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size ; MIF                                                   ;
++----------------------------------------------------------------------------------------------------+------+------+--------------+--------------+--------------+--------------+------+-------------------------------------------------------+
+; top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0|altsyncram_ql71:auto_generated|ALTSYNCRAM ; AUTO ; ROM  ; 256          ; 32           ; --           ; --           ; 8192 ; db/DE10_LITE_Golden_Top.ram0_inst_mem_ca4b5cb.hdl.mif ;
++----------------------------------------------------------------------------------------------------+------+------+--------------+--------------+--------------+--------------+------+-------------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                               ;
++--------------------------------------------------------------------+---------------------------------------------+
+; Register name                                                      ; Reason for Removal                          ;
++--------------------------------------------------------------------+---------------------------------------------+
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][31] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][30] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][29] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][28] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][27] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][26] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][25] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][24] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][23] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][22] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][21] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][20] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][19] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][18] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][17] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][16] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][15] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][14] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][13] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][12] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][11] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][10] ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][9]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][8]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][7]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][6]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][5]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][4]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][3]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][2]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][1]  ; Stuck at GND due to stuck port clock_enable ;
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][0]  ; Stuck at GND due to stuck port clock_enable ;
+; Total Number of Removed Registers = 32                             ;                                             ;
++--------------------------------------------------------------------+---------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                                                             ;
++--------------------------------------------------------------------+--------------------------------+-------------------------------------------------------------------+
+; Register name                                                      ; Reason for Removal             ; Registers Removed due to This Register                            ;
++--------------------------------------------------------------------+--------------------------------+-------------------------------------------------------------------+
+; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][25] ; Stuck at GND                   ; top:cpu_top|top_execute:execute|reg_file:reg_file|registers[0][0] ;
+;                                                                    ; due to stuck port clock_enable ;                                                                   ;
++--------------------------------------------------------------------+--------------------------------+-------------------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 3072  ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 3042  ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------------------------------------------------------+
+; Registers Packed Into Inferred Megafunctions                                                     ;
++-------------------------------------------+-----------------------------------------------+------+
+; Register Name                             ; Megafunction                                  ; Type ;
++-------------------------------------------+-----------------------------------------------+------+
+; top:cpu_top|inst_mem:inst_mem|dout[0..31] ; top:cpu_top|inst_mem:inst_mem|rom_array_rtl_0 ; RAM  ;
++-------------------------------------------+-----------------------------------------------+------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                                        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------+
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_fetch:fetch|pc_reg:pc_reg|pc[1]                   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[255][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[254][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[253][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[252][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[251][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[250][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[249][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[248][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[247][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[246][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[245][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[244][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[243][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[242][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[241][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[240][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[239][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[238][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[237][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[236][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[235][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[234][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[233][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[232][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[231][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[230][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[229][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[228][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[227][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[226][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[225][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[224][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[223][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[222][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[221][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[220][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[219][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[218][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[217][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[216][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[215][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[214][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[213][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[212][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[211][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[210][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[209][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[208][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[207][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[206][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[205][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[204][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[203][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[202][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[201][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[200][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[199][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[198][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[197][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[196][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[195][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[194][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[193][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[192][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[191][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[190][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[189][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[188][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[187][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[186][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[185][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[184][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[183][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[182][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[181][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[180][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[179][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[178][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[177][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[176][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[175][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[174][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[173][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[172][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[171][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[170][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[169][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[168][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[167][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[166][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[165][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[164][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[163][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[162][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[161][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[160][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[159][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[158][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[157][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[156][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[155][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[154][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[153][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[152][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[151][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[150][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[149][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[148][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[147][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[146][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[145][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[144][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[143][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[142][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[141][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[140][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[139][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[138][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[137][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[136][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[135][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[134][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[133][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[132][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[131][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[130][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[129][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[128][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[127][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[126][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[125][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[124][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[123][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[122][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[121][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[120][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[119][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[118][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[117][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[116][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[115][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[114][5] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[113][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[112][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[111][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[110][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[109][6] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[108][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[107][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[106][4] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[105][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[104][0] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[103][3] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[102][7] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[101][2] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[100][1] ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[99][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[98][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[97][6]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[96][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[95][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[94][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[93][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[92][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[91][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[90][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[89][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[88][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[87][6]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[86][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[85][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[84][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[83][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[82][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[81][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[80][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[79][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[78][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[77][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[76][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[75][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[74][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[73][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[72][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[71][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[70][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[69][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[68][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[67][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[66][6]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[65][6]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[64][6]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[63][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[62][6]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[61][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[60][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[59][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[58][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[57][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[56][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[55][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[54][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[53][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[52][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[51][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[50][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[49][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[48][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[47][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[46][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[45][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[44][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[43][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[42][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[41][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[40][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[39][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[38][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[37][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[36][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[35][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[34][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[33][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[32][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[31][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[30][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[29][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[28][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[27][0]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[26][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[25][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[24][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[23][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[22][4]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[21][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[20][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[19][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[18][2]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[17][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[16][7]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[15][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[14][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[13][5]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[12][1]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[11][3]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[10][6]  ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[9][6]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[8][6]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[7][6]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[6][6]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[5][6]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[4][6]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[3][0]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[2][7]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[1][7]   ;
+; 17:1               ; 8 bits    ; 88 LEs        ; 16 LEs               ; 72 LEs                 ; Yes        ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|data_mem:data_mem|ram_array[0][6]   ;
+; 3:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|sign_extend:sign_extend|Mux9        ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|mux:AluSrc2PcOpSel|out[14]        ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|sign_extend:sign_extend|Mux11       ;
+; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_fetch:fetch|pc[28]                                ;
+; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|sign_extend:sign_extend|Mux2        ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 12 LEs               ; 4 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_decode:decode|sign_extend:sign_extend|Mux20       ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|reg_file:reg_file|Mux6            ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|reg_file:reg_file|Mux54           ;
+; 13:1               ; 8 bits    ; 64 LEs        ; 48 LEs               ; 16 LEs                 ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu|Mux22                     ;
+; 13:1               ; 8 bits    ; 64 LEs        ; 48 LEs               ; 16 LEs                 ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu|Mux8                      ;
+; 129:1              ; 7 bits    ; 602 LEs       ; 602 LEs              ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|mux:ResultSlc|out[3]                ;
+; 14:1               ; 4 bits    ; 36 LEs        ; 24 LEs               ; 12 LEs                 ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu|Mux24                     ;
+; 14:1               ; 4 bits    ; 36 LEs        ; 24 LEs               ; 12 LEs                 ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu|Mux4                      ;
+; 130:1              ; 8 bits    ; 688 LEs       ; 688 LEs              ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|mux:ResultSlc|out[22]               ;
+; 15:1               ; 2 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu|Mux28                     ;
+; 15:1               ; 2 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu|Mux2                      ;
+; 258:1              ; 8 bits    ; 1376 LEs      ; 1376 LEs             ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|mux:ResultSlc|out[30]               ;
+; 16:1               ; 2 bits    ; 20 LEs        ; 16 LEs               ; 4 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_execute:execute|alu:alu|Mux0                      ;
+; 258:1              ; 7 bits    ; 1204 LEs      ; 1204 LEs             ; 0 LEs                  ; No         ; |DE10_LITE_Golden_Top|top:cpu_top|top_memory:memory|mux:ResultSlc|out[10]               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Source assignments for top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0|altsyncram_ql71:auto_generated ;
++---------------------------------+--------------------+------+--------------------------------------------------+
+; Assignment                      ; Value              ; From ; To                                               ;
++---------------------------------+--------------------+------+--------------------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                                ;
++---------------------------------+--------------------+------+--------------------------------------------------+
+
+
++----------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top ;
++----------------+-------+---------------------------------+
+; Parameter Name ; Value ; Type                            ;
++----------------+-------+---------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                  ;
++----------------+-------+---------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_fetch:fetch ;
++----------------+-------+-------------------------------------------------+
+; Parameter Name ; Value ; Type                                            ;
++----------------+-------+-------------------------------------------------+
+; ADDRESS_WIDTH  ; 32    ; Signed Integer                                  ;
++----------------+-------+-------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_fetch:fetch|pc_reg:pc_reg ;
++----------------+-------+---------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                          ;
++----------------+-------+---------------------------------------------------------------+
+; ADDRESS_WIDTH  ; 32    ; Signed Integer                                                ;
++----------------+-------+---------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|inst_mem:inst_mem ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; ADDRESS_WIDTH  ; 32    ; Signed Integer                                    ;
+; DATA_WIDTH     ; 32    ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_decode:decode ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_decode:decode|sign_extend:sign_extend ;
++----------------+-------+---------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                      ;
++----------------+-------+---------------------------------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                                            ;
++----------------+-------+---------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|reg_file:reg_file ;
++----------------+-------+-----------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                  ;
++----------------+-------+-----------------------------------------------------------------------+
+; ADDRESS_WIDTH  ; 5     ; Signed Integer                                                        ;
+; DATA_WIDTH     ; 32    ; Signed Integer                                                        ;
++----------------+-------+-----------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|mux:ALuSrc1Sel ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|mux:ALuSrc2Sel ;
++----------------+-------+--------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                               ;
++----------------+-------+--------------------------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                                     ;
++----------------+-------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|mux:AluSrc2PcOpSel ;
++----------------+-------+------------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                   ;
++----------------+-------+------------------------------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                                         ;
++----------------+-------+------------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_execute:execute|alu:alu ;
++----------------+-------+-------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                        ;
++----------------+-------+-------------------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                              ;
++----------------+-------+-------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_memory:memory ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_memory:memory|data_mem:data_mem ;
++----------------+-------+---------------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                                ;
++----------------+-------+---------------------------------------------------------------------+
+; ADDRESS_WIDTH  ; 32    ; Signed Integer                                                      ;
+; DATA_WIDTH     ; 32    ; Signed Integer                                                      ;
++----------------+-------+---------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: top:cpu_top|top_memory:memory|mux:ResultSlc ;
++----------------+-------+-----------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                            ;
++----------------+-------+-----------------------------------------------------------------+
+; DATA_WIDTH     ; 32    ; Signed Integer                                                  ;
++----------------+-------+-----------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0   ;
++------------------------------------+-------------------------------------------------------+----------------+
+; Parameter Name                     ; Value                                                 ; Type           ;
++------------------------------------+-------------------------------------------------------+----------------+
+; BYTE_SIZE_BLOCK                    ; 8                                                     ; Untyped        ;
+; AUTO_CARRY_CHAINS                  ; ON                                                    ; AUTO_CARRY     ;
+; IGNORE_CARRY_BUFFERS               ; OFF                                                   ; IGNORE_CARRY   ;
+; AUTO_CASCADE_CHAINS                ; ON                                                    ; AUTO_CASCADE   ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                                                   ; IGNORE_CASCADE ;
+; WIDTH_BYTEENA                      ; 1                                                     ; Untyped        ;
+; OPERATION_MODE                     ; ROM                                                   ; Untyped        ;
+; WIDTH_A                            ; 32                                                    ; Untyped        ;
+; WIDTHAD_A                          ; 8                                                     ; Untyped        ;
+; NUMWORDS_A                         ; 256                                                   ; Untyped        ;
+; OUTDATA_REG_A                      ; UNREGISTERED                                          ; Untyped        ;
+; ADDRESS_ACLR_A                     ; NONE                                                  ; Untyped        ;
+; OUTDATA_ACLR_A                     ; NONE                                                  ; Untyped        ;
+; WRCONTROL_ACLR_A                   ; NONE                                                  ; Untyped        ;
+; INDATA_ACLR_A                      ; NONE                                                  ; Untyped        ;
+; BYTEENA_ACLR_A                     ; NONE                                                  ; Untyped        ;
+; WIDTH_B                            ; 1                                                     ; Untyped        ;
+; WIDTHAD_B                          ; 1                                                     ; Untyped        ;
+; NUMWORDS_B                         ; 1                                                     ; Untyped        ;
+; INDATA_REG_B                       ; CLOCK1                                                ; Untyped        ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1                                                ; Untyped        ;
+; RDCONTROL_REG_B                    ; CLOCK1                                                ; Untyped        ;
+; ADDRESS_REG_B                      ; CLOCK1                                                ; Untyped        ;
+; OUTDATA_REG_B                      ; UNREGISTERED                                          ; Untyped        ;
+; BYTEENA_REG_B                      ; CLOCK1                                                ; Untyped        ;
+; INDATA_ACLR_B                      ; NONE                                                  ; Untyped        ;
+; WRCONTROL_ACLR_B                   ; NONE                                                  ; Untyped        ;
+; ADDRESS_ACLR_B                     ; NONE                                                  ; Untyped        ;
+; OUTDATA_ACLR_B                     ; NONE                                                  ; Untyped        ;
+; RDCONTROL_ACLR_B                   ; NONE                                                  ; Untyped        ;
+; BYTEENA_ACLR_B                     ; NONE                                                  ; Untyped        ;
+; WIDTH_BYTEENA_A                    ; 1                                                     ; Untyped        ;
+; WIDTH_BYTEENA_B                    ; 1                                                     ; Untyped        ;
+; RAM_BLOCK_TYPE                     ; AUTO                                                  ; Untyped        ;
+; BYTE_SIZE                          ; 8                                                     ; Untyped        ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE                                             ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ                                  ; Untyped        ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ                                  ; Untyped        ;
+; INIT_FILE                          ; db/DE10_LITE_Golden_Top.ram0_inst_mem_ca4b5cb.hdl.mif ; Untyped        ;
+; INIT_FILE_LAYOUT                   ; PORT_A                                                ; Untyped        ;
+; MAXIMUM_DEPTH                      ; 0                                                     ; Untyped        ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL                                                ; Untyped        ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL                                                ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL                                                ; Untyped        ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL                                                ; Untyped        ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN                                       ; Untyped        ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN                                       ; Untyped        ;
+; ENABLE_ECC                         ; FALSE                                                 ; Untyped        ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                                                 ; Untyped        ;
+; WIDTH_ECCSTATUS                    ; 3                                                     ; Untyped        ;
+; DEVICE_FAMILY                      ; MAX 10                                                ; Untyped        ;
+; CBXI_PARAMETER                     ; altsyncram_ql71                                       ; Untyped        ;
++------------------------------------+-------------------------------------------------------+----------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------------+
+; altsyncram Parameter Settings by Entity Instance                                                     ;
++-------------------------------------------+----------------------------------------------------------+
+; Name                                      ; Value                                                    ;
++-------------------------------------------+----------------------------------------------------------+
+; Number of entity instances                ; 1                                                        ;
+; Entity Instance                           ; top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0 ;
+;     -- OPERATION_MODE                     ; ROM                                                      ;
+;     -- WIDTH_A                            ; 32                                                       ;
+;     -- NUMWORDS_A                         ; 256                                                      ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                             ;
+;     -- WIDTH_B                            ; 1                                                        ;
+;     -- NUMWORDS_B                         ; 1                                                        ;
+;     -- ADDRESS_REG_B                      ; CLOCK1                                                   ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                             ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                                     ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE                                                ;
++-------------------------------------------+----------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------+
+; Port Connectivity Checks: "top:cpu_top|top_execute:execute|mux:AluSrc2PcOpSel" ;
++------+-------+----------+------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                              ;
++------+-------+----------+------------------------------------------------------+
+; in1  ; Input ; Info     ; Stuck at GND                                         ;
++------+-------+----------+------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "top:cpu_top"                                                                                                                                   ;
++---------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port    ; Type  ; Severity ; Details                                                                                                                                      ;
++---------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; rst     ; Input ; Info     ; Stuck at GND                                                                                                                                 ;
+; trigger ; Input ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
++---------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 185                         ;
+; cycloneiii_ff         ; 3072                        ;
+;     ENA               ; 3042                        ;
+;     plain             ; 30                          ;
+; cycloneiii_io_obuf    ; 71                          ;
+; cycloneiii_lcell_comb ; 16247                       ;
+;     arith             ; 304                         ;
+;         2 data inputs ; 148                         ;
+;         3 data inputs ; 156                         ;
+;     normal            ; 15943                       ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 7                           ;
+;         2 data inputs ; 39                          ;
+;         3 data inputs ; 2872                        ;
+;         4 data inputs ; 13023                       ;
+; cycloneiii_ram_block  ; 32                          ;
+;                       ;                             ;
+; Max LUT depth         ; 30.90                       ;
+; Average LUT depth     ; 25.54                       ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:05:42     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
+    Info: Processing started: Fri Dec 13 14:32:01 2024
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off DE10_LITE_Golden_Top -c DE10_LITE_Golden_Top
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 14 of the 14 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file memory/top_memory.sv
+    Info (12023): Found entity 1: top_memory File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/top_memory.sv Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file memory/inst_mem.sv
+    Info (12023): Found entity 1: inst_mem File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file memory/data_mem.sv
+    Info (12023): Found entity 1: data_mem File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/data_mem.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file fetch/top_fetch.sv
+    Info (12023): Found entity 1: top_fetch File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/fetch/top_fetch.sv Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file fetch/pc_reg.sv
+    Info (12023): Found entity 1: pc_reg File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/fetch/pc_reg.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file decode/top_decode.sv
+    Info (12023): Found entity 1: top_decode File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/top_decode.sv Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file decode/sign_extend.sv
+    Info (12023): Found entity 1: sign_extend File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/sign_extend.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file decode/main_decoder.sv
+    Info (12023): Found entity 1: main_decoder File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/main_decoder.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file decode/control_unit.sv
+    Info (12023): Found entity 1: control_unit File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/control_unit.sv Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file decode/alu_decoder.sv
+    Info (12023): Found entity 1: alu_decoder File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/alu_decoder.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file execute/top_execute.sv
+    Info (12023): Found entity 1: top_execute File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/top_execute.sv Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file execute/reg_file.sv
+    Info (12023): Found entity 1: reg_file File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/reg_file.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file execute/alu.sv
+    Info (12023): Found entity 1: alu File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/alu.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file de10_lite_golden_top.v
+    Info (12023): Found entity 1: DE10_LITE_Golden_Top File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 6
+Info (12021): Found 1 design units, including 1 entities, in source file top.sv
+    Info (12023): Found entity 1: top File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv Line: 1
+Warning (12090): Entity "mux" obtained from "mux.sv" instead of from Quartus Prime megafunction library File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/mux.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file mux.sv
+    Info (12023): Found entity 1: mux File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/mux.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file rom_inst.v
+    Info (12023): Found entity 1: rom_inst File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/rom_inst.v Line: 40
+Info (12127): Elaborating entity "DE10_LITE_Golden_Top" for the top level hierarchy
+Warning (10858): Verilog HDL warning at DE10_LITE_Golden_Top.v(82): object binary_in used but never assigned File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 82
+Warning (10036): Verilog HDL or VHDL warning at DE10_LITE_Golden_Top.v(83): object "seg" assigned a value but never read File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 83
+Warning (10034): Output port "DRAM_ADDR" at DE10_LITE_Golden_Top.v(14) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+Warning (10034): Output port "DRAM_BA" at DE10_LITE_Golden_Top.v(15) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 15
+Warning (10034): Output port "LEDR[8..3]" at DE10_LITE_Golden_Top.v(38) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 38
+Warning (10034): Output port "VGA_B" at DE10_LITE_Golden_Top.v(44) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 44
+Warning (10034): Output port "VGA_G" at DE10_LITE_Golden_Top.v(45) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 45
+Warning (10034): Output port "VGA_R" at DE10_LITE_Golden_Top.v(47) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 47
+Warning (10034): Output port "DRAM_CAS_N" at DE10_LITE_Golden_Top.v(16) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 16
+Warning (10034): Output port "DRAM_CKE" at DE10_LITE_Golden_Top.v(17) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 17
+Warning (10034): Output port "DRAM_CLK" at DE10_LITE_Golden_Top.v(18) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 18
+Warning (10034): Output port "DRAM_CS_N" at DE10_LITE_Golden_Top.v(19) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 19
+Warning (10034): Output port "DRAM_LDQM" at DE10_LITE_Golden_Top.v(21) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 21
+Warning (10034): Output port "DRAM_RAS_N" at DE10_LITE_Golden_Top.v(22) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 22
+Warning (10034): Output port "DRAM_UDQM" at DE10_LITE_Golden_Top.v(23) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 23
+Warning (10034): Output port "DRAM_WE_N" at DE10_LITE_Golden_Top.v(24) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 24
+Warning (10034): Output port "VGA_HS" at DE10_LITE_Golden_Top.v(46) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 46
+Warning (10034): Output port "VGA_VS" at DE10_LITE_Golden_Top.v(48) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 48
+Warning (10034): Output port "GSENSOR_CS_N" at DE10_LITE_Golden_Top.v(51) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 51
+Warning (10034): Output port "GSENSOR_SCLK" at DE10_LITE_Golden_Top.v(53) has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 53
+Info (12128): Elaborating entity "top" for hierarchy "top:cpu_top" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 115
+Warning (10036): Verilog HDL or VHDL warning at top.sv(10): object "unused_trigger" assigned a value but never read File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv Line: 10
+Info (12128): Elaborating entity "top_fetch" for hierarchy "top:cpu_top|top_fetch:fetch" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv Line: 41
+Info (12128): Elaborating entity "pc_reg" for hierarchy "top:cpu_top|top_fetch:fetch|pc_reg:pc_reg" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/fetch/top_fetch.sv Line: 34
+Info (12128): Elaborating entity "inst_mem" for hierarchy "top:cpu_top|inst_mem:inst_mem" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv Line: 47
+Info (10648): Verilog HDL Display System Task info at inst_mem.sv(25): Loading instructions.... File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv Line: 25
+Warning (10850): Verilog HDL warning at inst_mem.sv(26): number of words (8) in memory file does not match the number of elements in the address range [0:255] File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv Line: 26
+Info (10648): Verilog HDL Display System Task info at inst_mem.sv(27): Finished Loading instructions! File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv Line: 27
+Warning (10030): Net "rom_array.data_a" at inst_mem.sv(21) has no driver or initial value, using a default initial value '0' File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv Line: 21
+Warning (10030): Net "rom_array.waddr_a" at inst_mem.sv(21) has no driver or initial value, using a default initial value '0' File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv Line: 21
+Warning (10030): Net "rom_array.we_a" at inst_mem.sv(21) has no driver or initial value, using a default initial value '0' File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/inst_mem.sv Line: 21
+Info (12128): Elaborating entity "top_decode" for hierarchy "top:cpu_top|top_decode:decode" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv Line: 61
+Info (12128): Elaborating entity "control_unit" for hierarchy "top:cpu_top|top_decode:decode|control_unit:control_unit" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/top_decode.sv Line: 34
+Warning (10230): Verilog HDL assignment warning at control_unit.sv(49): truncated value with size 32 to match size of target (1) File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/control_unit.sv Line: 49
+Info (12128): Elaborating entity "main_decoder" for hierarchy "top:cpu_top|top_decode:decode|control_unit:control_unit|main_decoder:main_decode" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/control_unit.sv Line: 32
+Info (12128): Elaborating entity "alu_decoder" for hierarchy "top:cpu_top|top_decode:decode|control_unit:control_unit|alu_decoder:alu_decode" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/control_unit.sv Line: 41
+Info (12128): Elaborating entity "sign_extend" for hierarchy "top:cpu_top|top_decode:decode|sign_extend:sign_extend" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/decode/top_decode.sv Line: 40
+Info (12128): Elaborating entity "top_execute" for hierarchy "top:cpu_top|top_execute:execute" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv Line: 80
+Info (12128): Elaborating entity "reg_file" for hierarchy "top:cpu_top|top_execute:execute|reg_file:reg_file" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/top_execute.sv Line: 38
+Info (12128): Elaborating entity "mux" for hierarchy "top:cpu_top|top_execute:execute|mux:ALuSrc1Sel" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/top_execute.sv Line: 45
+Info (12128): Elaborating entity "alu" for hierarchy "top:cpu_top|top_execute:execute|alu:alu" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/top_execute.sv Line: 69
+Warning (10230): Verilog HDL assignment warning at alu.sv(22): truncated value with size 32 to match size of target (1) File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/execute/alu.sv Line: 22
+Info (12128): Elaborating entity "top_memory" for hierarchy "top:cpu_top|top_memory:memory" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/top.sv Line: 90
+Info (12128): Elaborating entity "data_mem" for hierarchy "top:cpu_top|top_memory:memory|data_mem:data_mem" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/memory/top_memory.sv Line: 23
+Info (19000): Inferred 1 megafunctions from design logic
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "top:cpu_top|inst_mem:inst_mem|rom_array_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to ROM
+        Info (286033): Parameter WIDTH_A set to 32
+        Info (286033): Parameter WIDTHAD_A set to 8
+        Info (286033): Parameter NUMWORDS_A set to 256
+        Info (286033): Parameter OUTDATA_REG_A set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_A set to NONE
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter INIT_FILE set to db/DE10_LITE_Golden_Top.ram0_inst_mem_ca4b5cb.hdl.mif
+Info (12130): Elaborated megafunction instantiation "top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0"
+Info (12133): Instantiated megafunction "top:cpu_top|inst_mem:inst_mem|altsyncram:rom_array_rtl_0" with the following parameter:
+    Info (12134): Parameter "OPERATION_MODE" = "ROM"
+    Info (12134): Parameter "WIDTH_A" = "32"
+    Info (12134): Parameter "WIDTHAD_A" = "8"
+    Info (12134): Parameter "NUMWORDS_A" = "256"
+    Info (12134): Parameter "OUTDATA_REG_A" = "UNREGISTERED"
+    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
+    Info (12134): Parameter "OUTDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
+    Info (12134): Parameter "INIT_FILE" = "db/DE10_LITE_Golden_Top.ram0_inst_mem_ca4b5cb.hdl.mif"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_ql71.tdf
+    Info (12023): Found entity 1: altsyncram_ql71 File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/db/altsyncram_ql71.tdf Line: 28
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (13039): The following bidirectional pins have no drivers
+    Warning (13040): bidirectional pin "DRAM_DQ[0]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[1]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[2]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[3]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[4]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[5]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[6]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[7]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[8]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[9]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[10]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[11]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[12]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[13]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[14]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "DRAM_DQ[15]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 20
+    Warning (13040): bidirectional pin "GSENSOR_SDI" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 54
+    Warning (13040): bidirectional pin "GSENSOR_SDO" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 55
+    Warning (13040): bidirectional pin "ARDUINO_IO[0]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[1]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[2]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[3]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[4]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[5]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[6]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[7]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[8]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[9]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[10]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[11]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[12]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[13]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[14]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_IO[15]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 58
+    Warning (13040): bidirectional pin "ARDUINO_RESET_N" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 59
+    Warning (13040): bidirectional pin "GPIO[0]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[1]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[2]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[3]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[4]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[5]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[6]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[7]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[8]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[9]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[10]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[11]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[12]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[13]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[14]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[15]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[16]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[17]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[18]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[19]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[20]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[21]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[22]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[23]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[24]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[25]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[26]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[27]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[28]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[29]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[30]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[31]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[32]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[33]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[34]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+    Warning (13040): bidirectional pin "GPIO[35]" has no driver File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 63
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "DRAM_ADDR[0]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[1]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[2]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[3]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[4]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[5]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[6]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[7]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[8]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[9]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[10]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[11]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_ADDR[12]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 14
+    Warning (13410): Pin "DRAM_BA[0]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 15
+    Warning (13410): Pin "DRAM_BA[1]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 15
+    Warning (13410): Pin "DRAM_CAS_N" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 16
+    Warning (13410): Pin "DRAM_CKE" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 17
+    Warning (13410): Pin "DRAM_CLK" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 18
+    Warning (13410): Pin "DRAM_CS_N" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 19
+    Warning (13410): Pin "DRAM_LDQM" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 21
+    Warning (13410): Pin "DRAM_RAS_N" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 22
+    Warning (13410): Pin "DRAM_UDQM" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 23
+    Warning (13410): Pin "DRAM_WE_N" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 24
+    Warning (13410): Pin "HEX0[0]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX0[1]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX0[2]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX0[3]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX0[4]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX0[5]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX0[6]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX0[7]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 27
+    Warning (13410): Pin "HEX1[0]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX1[1]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX1[2]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX1[3]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX1[4]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX1[5]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX1[6]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX1[7]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 28
+    Warning (13410): Pin "HEX2[0]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX2[1]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX2[2]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX2[3]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX2[4]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX2[5]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX2[6]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX2[7]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 29
+    Warning (13410): Pin "HEX3[0]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX3[1]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX3[2]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX3[3]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX3[4]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX3[5]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX3[6]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX3[7]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 30
+    Warning (13410): Pin "HEX4[0]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX4[1]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX4[2]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX4[3]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX4[4]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX4[5]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX4[6]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX4[7]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 31
+    Warning (13410): Pin "HEX5[0]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "HEX5[1]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "HEX5[2]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "HEX5[3]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "HEX5[4]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "HEX5[5]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "HEX5[6]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "HEX5[7]" is stuck at VCC File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 32
+    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 38
+    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 38
+    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 38
+    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 38
+    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 38
+    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 38
+    Warning (13410): Pin "VGA_B[0]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 44
+    Warning (13410): Pin "VGA_B[1]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 44
+    Warning (13410): Pin "VGA_B[2]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 44
+    Warning (13410): Pin "VGA_B[3]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 44
+    Warning (13410): Pin "VGA_G[0]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 45
+    Warning (13410): Pin "VGA_G[1]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 45
+    Warning (13410): Pin "VGA_G[2]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 45
+    Warning (13410): Pin "VGA_G[3]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 45
+    Warning (13410): Pin "VGA_HS" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 46
+    Warning (13410): Pin "VGA_R[0]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 47
+    Warning (13410): Pin "VGA_R[1]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 47
+    Warning (13410): Pin "VGA_R[2]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 47
+    Warning (13410): Pin "VGA_R[3]" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 47
+    Warning (13410): Pin "VGA_VS" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 48
+    Warning (13410): Pin "GSENSOR_CS_N" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 51
+    Warning (13410): Pin "GSENSOR_SCLK" is stuck at GND File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 53
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 14 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "ADC_CLK_10" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 9
+    Warning (15610): No output dependent on input pin "MAX10_CLK2_50" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 11
+    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[3]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "SW[9]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 41
+    Warning (15610): No output dependent on input pin "GSENSOR_INT[1]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 52
+    Warning (15610): No output dependent on input pin "GSENSOR_INT[2]" File: C:/Users/Radaa/Desktop/FPGAdemo/Demonstrations/Golden_Top/DE10_LITE_Golden_Top.v Line: 52
+Info (21057): Implemented 17453 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 17 input pins
+    Info (21059): Implemented 97 output pins
+    Info (21060): Implemented 71 bidirectional pins
+    Info (21061): Implemented 17236 logic cells
+    Info (21064): Implemented 32 RAM segments
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 211 warnings
+    Info: Peak virtual memory: 4954 megabytes
+    Info: Processing ended: Fri Dec 13 14:38:03 2024
+    Info: Elapsed time: 00:06:02
+    Info: Total CPU time (on all processors): 00:02:31
+
+
