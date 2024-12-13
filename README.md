@@ -27,7 +27,27 @@ This project presents the design and implementation of a RISC-V32I processor wit
 
 ## Quick start
 
-// all the commands to execute the code / install the dependencies
+### Windows
+- Launch Ubuntu through WSL
+- Clone this repository inside Ubuntu
+- Open a terminal in the [tb](https://github.com/Wazab-75/RISC-V-Team4/tree/single_cycle/repo/tb) folder
+- Run the following command in the terminal
+```bash
+./doit.sh
+```
+
+### MacOS
+- Clone this repository
+- Open a terminal in the [tb](https://github.com/Wazab-75/RISC-V-Team4/tree/single_cycle/repo/tb) folder
+- Run the following command in the terminal
+```bash
+./doit.sh
+```
+### FPGA 
+- Clone the [FPGA](https://github.com/Wazab-75/RISC-V-Team4/tree/FPGA) branch of this repository
+- Open the project in [Quartus Prime Lite]()
+- Compile the project (15 -20 min)
+- Connect a DE10-lite FPGA board and click on start in Programmer
 
 ## CPU Design
 

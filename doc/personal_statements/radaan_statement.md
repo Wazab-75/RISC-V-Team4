@@ -46,9 +46,11 @@ Pipelining the CPU involved splitting the processes of the CPU into different cy
 - Memory 
 - Write(register)
 
-image here
+<p align="center">  
+    <img src="../image/pipeline.png" alt="FPGA Test Pass">  
+</p>  
 
-Each stage passes its output to the next stage through a pipeline register and thus has an offset of one cycle in between stages. Execute pipeline register logic shown below. 
+Each stage passes its output to the next stage through a pipeline register and thus has an offset of one cycle in between stages. However to get the best performance from pipelining, the previous single cycle CPU structure had to be redesigned to have the correct modules in the correct stages. Execute pipeline register logic shown below. 
 
 ```sv
     execute_reg pipeline_execute(
@@ -185,7 +187,9 @@ Testing the model on the FPGA proved to be the most difficult challenge. This wa
 	
 ``` 
 
-image of working fpga test here
+<p align="center">  
+    <img src="../image/FPGA_test_pass.jpeg" alt="FPGA Test Pass">  
+</p>  
 
 I was not able to run the reference test on the FPGA as the DE10_lite on-chip memory that I used had a maximum size of 64kb but the test require 128kb. 
 
