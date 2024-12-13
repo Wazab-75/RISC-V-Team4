@@ -63,7 +63,30 @@ RV32I Base Integer Instructions:
 
 
 ### Work Evidence
-// TODO: Add description and tests for the F1 program / sine / pdf
+#### F1 test
+- F1 test result link: https://www.youtube.com/watch?v=6uR81nI1_iw  
+- F1 pipelined test result link: https://www.youtube.com/watch?v=wtB4ZTANB38
+
+
+
+### Reference test
+#### Pipelined Test Results
+
+| Gaussian                                                                                   | Noisy                                                                                     |
+|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| <img src="doc/test_results/681462ef06bf3c84baf8f5024200be6.png" width="150" />            | <img src="doc/test_results/f8d76ad07916d43d87348d207cfa5da.png" width="150" />           |
+| **Sine**                                                                               | **Triangle**                                                                                |
+| <img src="doc/test_results/93eb1143bb1878fb0c00a05ea7a242a.png" width="150" />            | <img src="doc/test_results/f444b263f704aa9aaab6b1f866a2b60.png" width="150" />          |
+
+<br>
+
+#### 2-Way Associative Cache Test Results
+
+| Gaussian                                                                                   | Noisy                                                                                     |
+|--------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| <img src="doc/test_results/3e2dd63725751f1d9a43ca8e9636fc6.png" width="150" />            | <img src="doc/test_results/924bfd5aa070ede5961719fb59fb789.png" width="150" />           |
+| **Sine**                                                                               | **Triangle**                                                                                |
+| <img src="doc/test_results/7e5c652624a083f44021e08fcd2df92.png" width="150" />            | <img src="doc/test_results/c055a3b9133be986a8f3f52b0272bae.png" width="150" />          |
 
 
 ## Team Contribution
@@ -97,8 +120,8 @@ RV32I Base Integer Instructions:
 | Cache        | [Memory](./repo/rtl/memory/top_memory.sv)        |          /           |                  |              |          X         |
 |              | [Direct mapped cache]()                          |                      |                  |              |          X         |
 |              | [Two-way set associative cache]()                |                      |                  |              |          X         |
-|              | [Instruction Cache]()                            |                      |                  |      X       |          /         |
-| Full CPU     | [Combine Pipeline and Cache]()                   |          X           |        X         |              |                    |
+|              | [Instruction Cache]()                            |                      |                  |      X       |          X         |
+| Full CPU     | [Combine Pipeline and Cache]()                   |          X           |        X         |              |          /         |
 |              | [F1 test on vbuddy](./repo/tb/f1/f1_tb.cpp)      |                      |        X         |              |                    |
 |              | [Ref test on vbuddy](./repo/tb/ref/ref_tb.cpp)   |                      |        X         |              |                    |
 
@@ -137,12 +160,13 @@ RV32I Base Integer Instructions:
        commit id: "Complete CPU"
 ```
 ## Branch Overview
-This project includes four distinct branches:
+This project includes five distinct branches:
 
 1) Single-cycle (formerly main): Implements a single-cycle CPU with no cache or pipelining.
 2) Pipeline: Introduces pipelining to the CPU.
 3) Cache: Adds caching functionality to the CPU
 4) Final: Combines both cache and pipelining for a fully functioning CPU.
+5) RV32M: An additional CPU that computes multiplication MUL instructions. 
 
 ## File Structure
 The repository is organized into several main directories and files reflecting the hierarchical structure of a RISC-V CPU design and its testing environment. The rtl directory holds SystemVerilog modules organized by function: decode, execute, fetch, and memory. Within F1, there are specialized files for a particular application test (e.g., f1.s), along with assembly and testbench configurations (f1_tb.cpp), demonstrating how the CPU integrates and executes a practical program. The tb and tb_unit directories host test files and frameworks, including assembly and C programs used for verification, scripts to compile and run these tests, and a range of testbench (.cpp) files targeting individual modules and full-system scenarios. This structure enables clear separation of design files from test resources, facilitating both incremental module-level testing and comprehensive system-level validation.
@@ -180,32 +204,6 @@ The repository is organized into several main directories and files reflecting t
 │   └── top_fetch.sv
 ├── tb
 └── tb_unit
-    ├── asm
-    │   ├── program.S
-    │   └── program_sine.S
-    ├── c
-    │   └── return_5.c
-    ├── compile.sh
-    ├── doit.sh
-    ├── tests
-    │   ├── base_testbench.h
-    │   ├── decode
-    │   │   ├── alu_decoder_tb.cpp
-    │   │   ├── control_unit_tb.cpp
-    │   │   ├── main_decoder_tb.cpp
-    │   │   ├── sign_extend_tb.cpp
-    │   │   └── top_decode_tb.cpp
-    │   ├── execute
-    │   │   ├── alu_tb.cpp
-    │   │   ├── mux_tb.cpp
-    │   │   └── top_execute_tb.cpp
-    │   ├── fetch
-    │   │   └── pc_reg_tb.cpp
-    │   ├── memory
-    │   │   └── inst_mem_tb.cpp
-    │   ├── testbench.h
-    │   └── verify.cpp
-    └── top_fetch_tb.cpp
 ```
 
 
