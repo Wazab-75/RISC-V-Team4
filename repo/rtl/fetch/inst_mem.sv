@@ -1,11 +1,11 @@
 module inst_mem #(
-    parameter   ADDRESS_WIDTH = 128,
+    parameter   ADDRESS_WIDTH = 32,
                 DATA_WIDTH = 8,
                 MEM_START = 32'hBFC00000,
                 MEM_END = 32'hBFC00FFF
 )(
     input  logic [ADDRESS_WIDTH-1:0]   addr,
-    output logic [ADDRESS_WIDTH-1:0]   dout 
+    output logic [4*ADDRESS_WIDTH-1:0]   dout 
 );
 
 // rom array initialization

@@ -15,7 +15,6 @@ module top_memory #(
     output logic [DATA_WIDTH-1:0]  Result
 );
 
-logic [4*DATA_WIDTH-1:0] fetch_data;
 logic                    fetch_enable;
 logic [4*DATA_WIDTH-1:0] write_back_data;
 logic [DATA_WIDTH-1:0]   write_back_addr;
