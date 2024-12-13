@@ -154,12 +154,13 @@ Pipelined test results:
        commit id: "Complete CPU"
 ```
 ## Branch Overview
-This project includes four distinct branches:
+This project includes five distinct branches:
 
 1) Single-cycle (formerly main): Implements a single-cycle CPU with no cache or pipelining.
 2) Pipeline: Introduces pipelining to the CPU.
 3) Cache: Adds caching functionality to the CPU
 4) Final: Combines both cache and pipelining for a fully functioning CPU.
+5) RV32M: An additional CPU that computes multiplication MUL instructions. 
 
 ## File Structure
 The repository is organized into several main directories and files reflecting the hierarchical structure of a RISC-V CPU design and its testing environment. The rtl directory holds SystemVerilog modules organized by function: decode, execute, fetch, and memory. Within F1, there are specialized files for a particular application test (e.g., f1.s), along with assembly and testbench configurations (f1_tb.cpp), demonstrating how the CPU integrates and executes a practical program. The tb and tb_unit directories host test files and frameworks, including assembly and C programs used for verification, scripts to compile and run these tests, and a range of testbench (.cpp) files targeting individual modules and full-system scenarios. This structure enables clear separation of design files from test resources, facilitating both incremental module-level testing and comprehensive system-level validation.
