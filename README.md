@@ -79,10 +79,6 @@ Pipelined test results:
 - sine: <img src="test results/7e5c652624a083f44021e08fcd2df92.png" width="200" />   - triangle: <img src="test results/c055a3b9133be986a8f3f52b0272bae.png" width="200" />
 
 
-
-
-
-
 ## Team Contribution
 
 - Work Contribution Table
@@ -114,8 +110,8 @@ Pipelined test results:
 | Cache        | [Memory](./repo/rtl/memory/top_memory.sv)        |          /           |                  |              |          X         |
 |              | [Direct mapped cache]()                          |                      |                  |              |          X         |
 |              | [Two-way set associative cache]()                |                      |                  |              |          X         |
-|              | [Instruction Cache]()                            |                      |                  |      X       |          /         |
-| Full CPU     | [Combine Pipeline and Cache]()                   |          X           |        X         |              |                    |
+|              | [Instruction Cache]()                            |                      |                  |      X       |          X         |
+| Full CPU     | [Combine Pipeline and Cache]()                   |          X           |        X         |              |          /         |
 |              | [F1 test on vbuddy](./repo/tb/f1/f1_tb.cpp)      |                      |        X         |              |                    |
 |              | [Ref test on vbuddy](./repo/tb/ref/ref_tb.cpp)   |                      |        X         |              |                    |
 
@@ -198,32 +194,6 @@ The repository is organized into several main directories and files reflecting t
 │   └── top_fetch.sv
 ├── tb
 └── tb_unit
-    ├── asm
-    │   ├── program.S
-    │   └── program_sine.S
-    ├── c
-    │   └── return_5.c
-    ├── compile.sh
-    ├── doit.sh
-    ├── tests
-    │   ├── base_testbench.h
-    │   ├── decode
-    │   │   ├── alu_decoder_tb.cpp
-    │   │   ├── control_unit_tb.cpp
-    │   │   ├── main_decoder_tb.cpp
-    │   │   ├── sign_extend_tb.cpp
-    │   │   └── top_decode_tb.cpp
-    │   ├── execute
-    │   │   ├── alu_tb.cpp
-    │   │   ├── mux_tb.cpp
-    │   │   └── top_execute_tb.cpp
-    │   ├── fetch
-    │   │   └── pc_reg_tb.cpp
-    │   ├── memory
-    │   │   └── inst_mem_tb.cpp
-    │   ├── testbench.h
-    │   └── verify.cpp
-    └── top_fetch_tb.cpp
 ```
 
 
