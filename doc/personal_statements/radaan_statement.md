@@ -191,7 +191,7 @@ Testing the model on the FPGA proved to be the most difficult challenge. This wa
     <img src="../image/FPGA_test_pass.jpeg" alt="FPGA Test Pass">  
 </p>  
 
-I was not able to run the reference test on the FPGA as the DE10_lite on-chip memory that I used had a maximum size of 64kb but the test require 128kb. 
+I was not able to run the reference test on the FPGA as the DE10_lite on-chip memory that I used had a maximum size of 64kb as the test requires 128kb. 
 
 
 ## Learning Outcomes
