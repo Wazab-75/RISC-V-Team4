@@ -1,9 +1,7 @@
 # RISC-V RV32I Processor
 
 ## Project Description
-A RISC-V RV32I processor was implemented with cache and pipelining...
-
-// small introduction to the project / the goal of the project
+This project presents the design and implementation of a RISC-V32I processor with integrated caching and pipelining, undertaken by a team of four students to deepen our understanding of modern CPU architectures. Starting from a basic processor core, we gradually introduced pipelining stages to enhance performance and implemented caches to improve memory access efficiency. Each stage of development was carefully tested and validated, ensuring scalability. The final result is a fully functional, parameterizable RISC-V CPU capable of running various instructions and real-world programs, while also staying simple and clear enough to serve as a learning basis.
 
 ## Team #4 Members
 
@@ -21,10 +19,10 @@ A RISC-V RV32I processor was implemented with cache and pipelining...
 - [Conclusion](#conclusion)
 
 ## Personal statement
-- [Radaan Kumar Madhan](./doc/personal_statement/radaan_statement.md)
-- [Ivy Yu](/doc/personal_statement/ivy_statement.md)
-- [Will Zhang](/doc/personal_statement/will_statement.md)
-- [Athanase de Germay de Cirfontaine](/doc/personal_statement/ata_statement.md)
+- [Radaan Kumar Madhan](./doc/personal_statements/radaan_statement.md)
+- [Ivy Yu](/doc/personal_statements/ivy_statement.md)
+- [Will Zhang](/doc/personal_statements/will_statement.md)
+- [Athanase de Germay de Cirfontaine](/doc/personal_statements/ata_statement.md)
 
 
 ## Quick start
@@ -33,10 +31,10 @@ A RISC-V RV32I processor was implemented with cache and pipelining...
 
 ## CPU Design
 
-// small introduction to the different parts of the CPU / the instructions and the parameters
+The CPU architecture implemented in this project follows the RISC-V32I instruction set, and includes enhancements such as caching and pipelining. The design comprises several functional stages: fetch, decode, execute, memory, and write-back, that work together to process instructions in a streamlined manner. At its core, the CPU supports all base integer instructions of RV32I, which encompass arithmetic, logical, memory access, and control flow operations. Additionally, parameters like data width, memory size, and cache configurations are clearly defined and easily adjustable.
 
 ### Instructions Implemented
-All RV32I Base Integer Instructions
+RV32I Base Integer Instructions:
 | Type    | Instruction                   |
 | --------| ----------------------------- | 
 | R       | add, sub, xor, or, and        |               
@@ -48,8 +46,7 @@ All RV32I Base Integer Instructions
 | B       | beq, bne, blt, bge, bltu, begu|                                                 
 | J       | jal                           |                                                 
 | I       | jalr                          |     
-| U       | lui, auipc                    |                                                                                             
-| I       | ecall, ebreak                 |                                                                                             
+| U       | lui,  auipc      |                                                                                          
 
 ### Parameter Specifications
 | Parameter            | Value       |
@@ -66,7 +63,24 @@ All RV32I Base Integer Instructions
 
 
 ### Work Evidence
-// TODO: Add description and tests for the F1 program / sine / pdf
+#### F1 test
+- F1 test result link: https://www.youtube.com/watch?v=6uR81nI1_iw  
+- F1 pipelined test result link: https://www.youtube.com/watch?v=wtB4ZTANB38
+
+
+
+#### Reference test
+Pipelined test results:
+- gaussian: <img src="test results/681462ef06bf3c84baf8f5024200be6.png" width="200" />  - noisy: <img src="test results/f8d76ad07916d43d87348d207cfa5da.png" width="200" />
+- sine: <img src="test results/93eb1143bb1878fb0c00a05ea7a242a.png" width="200" />    - triangle: <img src="test results/f444b263f704aa9aaab6b1f866a2b60.png" width="200" />
+
+2-way associative cache test results:
+- gaussian: <img src="test results/3e2dd63725751f1d9a43ca8e9636fc6.png" width="200" />  - noisy: <img src="test results/924bfd5aa070ede5961719fb59fb789.png" width="200" />
+- sine: <img src="test results/7e5c652624a083f44021e08fcd2df92.png" width="200" />   - triangle: <img src="test results/c055a3b9133be986a8f3f52b0272bae.png" width="200" />
+
+
+
+
 
 
 ## Team Contribution
@@ -76,33 +90,34 @@ All RV32I Base Integer Instructions
 - `X` refers to **major contribution**
 
 | Steps        | Files  | Radaan (RadaanMadhan) | Will (will03216) | Ivy (Ivy-yu7) | Athanase (Wazab-75) |
-| ------------ | ----------------------------------------------- | :----: | :--: | :-: | :------: |
-| Lab 4        | [Program Counter](./repo/rtl/fetch/pc.sv)       |        |  X   |     |          |
-|              | [ALU](./repo/rtl/execute/alu.sv)                |        |      |     |    X     |
-|              | [Register File](./repo/rtl/decode/reg_module.sv)   |   /    |      |  /  |    X     |
-|              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv)  |   /    |      |  /  |          |
-|              | [Control Unit](./repo/rtl/decode/control_unit.sv)    |   /    |      |  X   |    /     |
-|              | [Sign Extend](./repo/rtl/decode/sign_extend.sv)     |        |      |  X  |          |
-|              | [Testbench](./repo/tb_unit/tests/verify.cpp)               |   X    |   /  |  /  |    /     |
-|              | [F1 program](./repo/rtl/F1/f1/f1_tb.cpp)             |        |  X   |     |          |
-| Single Cycle | [Data Memory](./repo/rtl/memory/data_mem.sv)        |   X    |      |     |    X     |
-|              | [Program Counter](./repo/rtl/fetch/pc.sv)       |        |  X    |     |          |
-|              | [ALU](./repo/rtl/execute/alu.sv)                |        |      |     |    X     |
-|              | [Register File](./repo/rtl/decode/reg_module.sv)   |   /    |      |     |          |
-|              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv)  |        |      |  X  |          |
-|              | [Control Unit](./repo/rtl/decode/control_unit.sv)    |   /    |      |  X  |    /     |
-|              | [Sign Extend](./repo/rtl/decode/sign_extend.sv)     |        |      |  X  |          |
-|              | [Testbench](./repo/tb/tests/verify.cpp)       |   X    |   /  |  /  |    /     |
-| Pipeline     | [Pipeline flip-flop stages]() |   X    |  X   |     |          |
-|              | [Hazard unit]()    |   X    |  X   |     |          |
-|              | [Prediction stage]() |   X    |   /  |     |          |
-| Cache        | [Memory](./repo/rtl/memory/top_memory.sv)              |   /    |      |     |    X     |
-|              | [Direct mapped cache]()  |        |      |     |    X     |
-|              | [Two-way set associative cache]() |        |      |     |    X     |
-|              | [Instruction Cache]() |        |      |  X  |          |
-| Full CPU     | [Combine Pipeline and Cache]() |   X    |  X   |     |          |
-|              | [F1 test on vbuddy](./repo/tb/f1/f1_tb.cpp)|        |   X   |     |       |
-|              | [Ref test on vbuddy](./repo/tb/ref/ref_tb.cpp)|        |    X   |     |       |
+| Steps        | Files                                            | Radaan (RadaanMadhan) | Will (will03216) | Ivy (Ivy-yu7) | Athanase (Wazab-75) |
+| ------------ | ------------------------------------------------ | :------------------: | :--------------: | :----------: | :----------------: |
+| Lab 4        | [Program Counter](./repo/rtl/fetch/pc.sv)        |                      |        X         |              |                    |
+|              | [ALU](./repo/rtl/execute/alu.sv)                 |                      |                  |              |          X         |
+|              | [Register File](./repo/rtl/decode/reg_module.sv) |          /           |                  |      /       |          /         |
+|              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv) |          /           |                  |      /       |                    |
+|              | [Control Unit](./repo/rtl/decode/control_unit.sv) |          /           |                  |      X       |          /         |
+|              | [Sign Extend](./repo/rtl/decode/sign_extend.sv)  |                      |                  |      X       |                    |
+|              | [Testbench](./repo/tb_unit/tests/verify.cpp)     |          X           |        /         |      /       |          /         |
+|              | [F1 program](./repo/rtl/F1/f1/f1_tb.cpp)         |                      |        X         |              |                    |
+| Single Cycle | [Data Memory](./repo/rtl/memory/data_mem.sv)     |          X           |                  |              |          X         |
+|              | [Program Counter](./repo/rtl/fetch/pc.sv)        |                      |        X         |              |                    |
+|              | [ALU](./repo/rtl/execute/alu.sv)                 |                      |                  |              |          X         |
+|              | [Register File](./repo/rtl/decode/reg_module.sv) |          /           |                  |              |                    |
+|              | [Instruction Memory](./repo/rtl/memory/inst_mem.sv) |                      |                  |      X       |                    |
+|              | [Control Unit](./repo/rtl/decode/control_unit.sv) |          /           |                  |      X       |          /         |
+|              | [Sign Extend](./repo/rtl/decode/sign_extend.sv)  |                      |                  |      X       |                    |
+|              | [Testbench](./repo/tb/tests/verify.cpp)          |          X           |        /         |      /       |          /         |
+| Pipeline     | [Pipeline flip-flop stages]()                    |          X           |        X         |              |                    |
+|              | [Hazard unit]()                                  |          X           |        X         |              |                    |
+|              | [Prediction stage]()                             |          X           |        /         |              |                    |
+| Cache        | [Memory](./repo/rtl/memory/top_memory.sv)        |          /           |                  |              |          X         |
+|              | [Direct mapped cache]()                          |                      |                  |              |          X         |
+|              | [Two-way set associative cache]()                |                      |                  |              |          X         |
+|              | [Instruction Cache]()                            |                      |                  |      X       |          X         |
+| Full CPU     | [Combine Pipeline and Cache]()                   |          X           |        X         |              |          /         |
+|              | [F1 test on vbuddy](./repo/tb/f1/f1_tb.cpp)      |                      |        X         |              |                    |
+|              | [Ref test on vbuddy](./repo/tb/ref/ref_tb.cpp)   |                      |        X         |              |                    |
 
 
 ## Project Progression
@@ -118,35 +133,86 @@ All RV32I Base Integer Instructions
        checkout pipeline
        commit id: "Pipeline flip-flop stages"
        commit id: "Hazard unit"
+       commit id: "Prediction stage"
 
        checkout cache
-       commit id: "Memory"
+       commit id: "Memory (Data cache)"
        commit id: "Direct mapped cache"
+       commit id: "Instruction Cache"
+       commit id: "Two-way set associative cache"
 
        checkout pipeline
        commit id: "Debugging"
        commit id: "F1 program"
        commit id: "PDF program"
 
-       checkout main
-       merge pipeline
+       checkout pipeline
+       branch final
        merge cache
-       commit id: "Combine Pipeline and Cache"
+       commit id: "merge pipeline and cache"
+       commit id: "testing on vbuddy"
        commit id: "Complete CPU"
 ```
+## Branch Overview
+This project includes five distinct branches:
 
+1) Single-cycle (formerly main): Implements a single-cycle CPU with no cache or pipelining.
+2) Pipeline: Introduces pipelining to the CPU.
+3) Cache: Adds caching functionality to the CPU
+4) Final: Combines both cache and pipelining for a fully functioning CPU.
+5) RV32M: An additional CPU that computes multiplication MUL instructions. 
 
 ## File Structure
+The repository is organized into several main directories and files reflecting the hierarchical structure of a RISC-V CPU design and its testing environment. The rtl directory holds SystemVerilog modules organized by function: decode, execute, fetch, and memory. Within F1, there are specialized files for a particular application test (e.g., f1.s), along with assembly and testbench configurations (f1_tb.cpp), demonstrating how the CPU integrates and executes a practical program. The tb and tb_unit directories host test files and frameworks, including assembly and C programs used for verification, scripts to compile and run these tests, and a range of testbench (.cpp) files targeting individual modules and full-system scenarios. This structure enables clear separation of design files from test resources, facilitating both incremental module-level testing and comprehensive system-level validation.
 
-// TODO: Add the file structure of the repo
+```
+.
+├── rtl
+│   ├── decode
+│   │   ├── alu_decoder.sv
+│   │   ├── control_unit.sv
+│   │   ├── main_decoder.sv
+│   │   ├── reg_file.sv
+│   │   ├── sign_extend.sv
+│   │   └── top_decode.sv
+│   ├── execute
+│   │   ├── alu.sv
+│   │   └── top_execute.sv
+│   ├── fetch
+│   │   ├── inst_cache.sv
+│   │   ├── inst_mem.sv
+│   │   ├── pc.sv
+│   │   └── top_fetch.sv
+│   ├── memory
+│   │   ├── cache.sv
+│   │   ├── data_mem.sv
+│   │   └── top_memory.sv
+│   ├── pipeline
+│   │   ├── decode_reg.sv
+│   │   ├── execute_reg.sv
+│   │   ├── fetch_reg.sv
+│   │   ├── hazard_unit.sv
+│   │   └── memory_reg.sv
+│   ├── mux.sv
+│   ├── program.hex
+│   └── top.sv
+├── tb
+└── tb_unit
+```
+
 
 ## Other Files
 | File Name   | Content               |
 | ------------| --------------------| 
-| README.md   |      |               
-| .gitignore  |  |
-TBC...
+| README.md   | Comprehensive overview of the project, including its implementation details, instructions supported, team contributions, project progression, and related documentation.   |               
+| .gitignore  | This file specifies a list of generated files and directories, such as object files, binaries, and output logs, to be excluded from version control. |
 
 ## Conclusion
 
-// TODO: Add the conclusion of the project
+In conclusion, this project successfully demonstrates the design, implementation, and verification of a fully functional RISC-V RV32I processor enhanced with caching and pipelining. By partitioning the work among team members and incrementally building from a simple baseline CPU to a more complex, high-performance architecture, we gained a thorough understanding of both the theoretical foundations and practical challenges of hardware design.
+ Throughout this process, our team also strengthened essential non-technical skills like clear communication, effective time management, and collaborative problem-solving. The project’s modular structure enabled us to divide tasks efficiently, support one another’s learning, and maintain a collective vision of our end goal. Ultimately, this combination of technical innovation and teamwork provided a valuable and rewarding educational experience, culminating in a CPU capable of executing a range of RV32I instructions and running real-world programs with robust reliability.
+
+
+
+
+

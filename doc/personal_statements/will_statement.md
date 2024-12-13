@@ -251,4 +251,3 @@ Through the process of building the processor during this project, I have gained
 ## Future Improvements
 
 In future works, I would add more pipelining stages by spitting existing stages(`decode_reg, execute_reg`) into finer sub-stages, which allow higher clock speeds and make execution of inistructions faster. Secondly, I would have liked to work on the data cache and try to apply state machine on cache design. Futhermore, I am also eager to integrate multiple cores within the processor, allowing each core to execute tasks independently. To conclude, I enjoyed the time I spent working with my team on the project and I feel satisfied with what we achieved and learned from it.
-
